@@ -64,7 +64,7 @@
                     </small>
                 </div>
 
-                <b-modal id="mdlCustomer" title="BootstrapVue" hide-header hide-footer dialog-class="mydialogclass">
+                <b-modal id="mdlCustomer" title="Yolcu" hide-header hide-footer dialog-class="mydialogclass">
                     <p>Kişi Seçimi</p>
                         <div class="myDiv">
                             <table class="mytable2">
@@ -137,7 +137,7 @@
         created() {
             eventBus.$on('returnBack', () => {
                 this.isSelected = false
-                eventBus.$emit('updateHeaderText', 'Restaurant')
+                eventBus.$emit('updateHeaderText', this.$t('pages.restaurant'))
             })
         },
         destroyed() {

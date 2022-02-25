@@ -6,7 +6,7 @@
             <div class="row formControl formControlFE" v-if="getAssistantType.length > 0" style="background: none; box-shadow: none; max-width: 97%">
                 <div style="width: 100%">
                     <button class="mybutton" style="height: 60%;" v-for="assistant in getAssistantType" :key="assistant.AssistantTypeId" @click="AssistanSelected(assistant)">
-                        <img class="myimage" :src="require(`../../assets/asistantType/png/${assistant.PNGUrl}`)" :alt="assistant.Description"></button>
+                        <img class="myimage" :src="require(`../../../../images/asistantType/png/${assistant.PNGUrl}`)" :alt="assistant.Description"></button>
                 </div>
             </div>
             <div class="alert alert-warning" v-else>
@@ -19,7 +19,7 @@
             
         </div>
         <div v-else>
-            <img :src="require(`../../assets/asistantType/jpg/${selectedAssistant.ImageUrl}`)" :alt="selectedAssistant.Description" class="requestImage">
+            <img :src="require(`../../../../images/asistantType/jpg/${selectedAssistant.ImageUrl}`)" :alt="selectedAssistant.Description" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
                     <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereye</strong> </label>
@@ -129,7 +129,7 @@
         created() {
             eventBus.$on('returnBack', () => {
                 this.isSelected = false
-                eventBus.$emit('updateHeaderText', 'Asistan')
+                eventBus.$emit('updateHeaderText', this.$t('pages.assistant'))
             })
         },
         destroyed() {

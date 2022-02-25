@@ -231,13 +231,13 @@
 
     .mybutton {
         background-size: cover;
-        width: 45%;
+        width: 47%;
         margin: 1%;
         border: none;
         padding: 0;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         background-color: white;
-        height: 45%;
+        height: 47%;
     }
 
     .myimage {

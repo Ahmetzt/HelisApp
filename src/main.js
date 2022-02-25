@@ -12,12 +12,14 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
-
+import i18n from './i18n/index'
+import FlagIcon from 'vue-flag-icon'
 
 Vue.use(VueSidebarMenu)
 Vue.use(NavbarPlugin)
 Vue.use(Vuelidate)
 Vue.use(Vuetify)
+Vue.use(FlagIcon)
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
@@ -25,13 +27,16 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Axios.defaults.baseURL = "http://192.168.10.71/HelisAppWebAPI/api"
+// Axios.defaults.baseURL = "http://192.168.1.24/HelisAppWebAPI/api"
+// Axios.defaults.baseURL = "http://192.168.1.39/HelisAppWebAPI/api"
 
 export const eventBus = new Vue();
 
 new Vue({
     el: '#app',
-    vuetify: new Vuetify(),
+    // vuetify: new Vuetify(),
     router,
     store,
+    i18n,
     render: h => h(App),
-}).$mount('#app')
+})

@@ -1,0 +1,173 @@
+{
+    "general": {
+        "copyright": "BCWorks 2022"
+    },
+    "pages": {
+        "auth": "Giriş",
+        "": "AnaSayfa",
+        "new": "AnaSayfa",
+        "rent": "Rent a car & boat",
+        "transfer": "Transfer",
+        "about": "Hakkımızda",
+        "restaurant": "Restaurant",
+        "activity": "Aktiviteler",
+        "cleaner": "Kuru Temizleme",
+        "mansion": "Konaklama",
+        "assistant": "Asistan",
+        "requests": "İşlemler",
+        "property": "Mülk",
+        "secondary": "İkincil Kullanıcı",
+        "settings": "Ayarlar",
+        "newUser": "Yeni Kullanıcı"
+    },
+    "OrderTypes": {
+        "1": "Konaklama",
+        "2": "Transfer",
+        "3": "Rent a Car & Boat",
+        "4": "Restaurant",
+        "5": "Kuru Temizleme",
+        "6": "Aktiviteler",
+        "7": "Asistan"
+    },
+    "OrderStatus": {
+        "1": "Talep Oluşturuldu" , 
+        "2": "Bekliyor" , 
+        "3": "Teklif Sunuldu" , 
+        "4": "Teklif Kabul Edildi", 
+        "5": "Teklif Red Edildi" 
+    },
+    "PossessionStatus": {
+        "1": "Müşteri Sahip" ,
+        "2": "Müşteri Sahip Kiralık" ,
+        "3": "Firma Sahip Satılık" ,
+        "4": "Firma Sahip Kiralık" ,
+        "5": "Firma Sahip Ziyaretlik" ,
+        "6": "Kullanım Dışı" 
+    },
+    "RentableStatus": {
+        "1": " Yeni İstek" , 
+        "2": " Teklif Sunuldu" , 
+        "3": " Sözleşme Aşamasında" , 
+        "4": " Kabul Edildi" , 
+        "5": " Reddedildi"
+    },
+    "NRauthorizedMessage": {
+        "mansion": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "transfer": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "rent": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "restaurant": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "cleaner": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "activity": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "assistant": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor"
+    },
+    "ErrorMsg": {
+        "-100": "Kullanıcı Bulunamadı",
+        "-110": "Kullanıcı Aktif Değil",
+        "-120": "Session Süresi Doldu",
+        "-130": "Kullanıcı Yetkiye Sahip Değil",
+
+        "-200": "Kullanıcı adı veya şifre bulunamadı",
+        "-210": "Pasif Kullanıcı",
+        "-220": "Kabul",
+
+        "-300": "Bu sayfaya girmeye yetkiniz bulunmamaktadır",
+
+        "-900": "API hatası"
+    },
+    "Auth": {
+        "Lmail": {
+            "title": "E-posta Adresiniz",
+            "placeholder": "Kullanıcı adı veya E-posta adresinizi giriniz"
+        },
+        "Lpassword": {
+            "title": "Şifre",
+            "placeholder": "Şifreniz..."
+        },
+        "submitSignUp": "Giriş Yap",
+        "submitReset": "Parola Sıfırla",
+        "submitForgetton": "Parolamı Unuttum",
+        "submitNotForgetton": "Parolamı Hatırlıyorum",
+        "submitRegister": "Kayıt Olunuz",
+        "UserName": {
+            "title": "Kullanıcı:",
+            "placeholder": "Kullanıcı Adı Giriniz",
+            "required": "Lütfen Kullanıcı Adı Giriniz",
+            "minLength": "Kullanıcı Adı en az 6 karakterden oluşmaktadır",
+            "isUnique": "Kullanıcı Adı Kullanılmaktadır"
+        },
+        "Mail": {
+            "title": "Mail:",
+            "placeholder": "Mail Giriniz",
+            "required": "Lütfen Mail Giriniz",
+            "email": "Lütfen Mail Adresini Doğru Formatta Giriniz",
+            "isUnique": "Mail Adresi Kullanılmaktadır"
+        },
+        "Password": {
+            "title": "Parola:",
+            "placeholder": "Parola Giriniz",
+            "required": "Lütfen Parola Adı Giriniz",
+            "minLength": "Parolanız en az 6 karakterden oluşmalıdır"
+        },
+        "RePassword": {
+            "title": "Parola:",
+            "placeholder": "Parola Giriniz",
+            "required": "Lütfen Parola Adı Giriniz",
+            "minLength": "Parolanız en az 6 karakterden oluşmalıdır",
+            "sameAs": "Parolalar birbiriyle uyuşmuyor"
+        },
+        "FirstName": {
+            "title": "Ad:",
+            "placeholder": "Ad Giriniz",
+            "required": "Lütfen Ad Giriniz"
+        },
+        "LastName": {
+            "title": "Soyad:",
+            "placeholder": "Soyad Giriniz",
+            "required": "Lütfen Soyad Giriniz"
+        },
+        "DateOfBirth": {
+            "title": "Doğum Tarihi:",
+            "placeholder": "Doğum Tarihi Seçiniz"
+        },
+        "Address": {
+            "title": "Adres:",
+            "placeholder": "Adres Giriniz"
+        },
+        "PhoneNumber": {
+            "title": "Telefon:",
+            "placeholder": "Telefon Giriniz"
+        },
+        "RoleId": {
+            "title": "Rol:",
+            "placeholder": "Rol Seçiniz"
+        },
+        "MansionId": {
+            "title": "Hotel:",
+            "placeholder": "Hotel Seçiniz",
+            "minValue": "Lütfen Otel Seçiniz"
+        },
+        "BlockId": {
+            "title": "Blok:",
+            "placeholder": "Blok Seçiniz",
+            "minValue": "Lütfen Blok Seçiniz"
+        },
+        "PossessionId": {
+            "title": "Oda No:",
+            "placeholder": "Oda No Seçiniz",
+            "minValue": "Lütfen Oda No Seçiniz"
+        },
+        "BeginDate": {
+            "title": "Giriş Tarihi:",
+            "placeholder": "Giriş Tarihi Seçiniz",
+            "required": "Lütfen Giriş Tarihi Seçiniz"
+        },
+        "EndDate": {
+            "title": "Çıkış Tarihi:",
+            "placeholder": "Çıkış Tarihi Seçiniz",
+            "required": "Lütfen Çıkış Tarihi Seçiniz"
+        },
+        "submit": "Gönder",
+        "reset": "Temizle",
+        "cancel": "İptal"
+    }
+}

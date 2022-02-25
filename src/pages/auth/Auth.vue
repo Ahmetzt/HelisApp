@@ -2,46 +2,78 @@
     <div class="container">
         <div class="row  mt-5">
             <div class="col-md-12 card card-primary "
-                 :class="{'border-primary' : isUser, 'border-success' : !isUser }">
+                 :class="{'border-primary' : IsUser, 'border-success' : !IsUser }">
                 <!-- <h3
-                        :class="{'text-primary' : isUser, 'text-success' : !isUser }"
+                        :class="{'text-primary' : IsUser, 'text-success' : !IsUser }"
                         class="text-center mb-3 mt-3">Helis Giriş</h3>
 
                 <img class="img-fluid" alt="logo" src="../../assets/helisLogo.png"/> -->
                 <hr>
-                <div v-if="!isNew">
+                
+                <div class="loginLang">
+                    <input 
+                        type="radio" 
+                        id="rd_en" 
+                        name="Lang" 
+                        v-model="Lang" 
+                        class="loginLang-cb" 
+                        value="tr" 
+                        @change="setLanguage">
+                    <label for="rd_en"><flag iso="tr" /></label>
+                    <input 
+                        type="radio" 
+                        id="rd_tr" 
+                        name="Lang" 
+                        v-model="Lang" 
+                        class="loginLang-cb" 
+                        value="en" 
+                        @change="setLanguage">
+                    <label for="rd_tr"><flag iso="gb" /></label>
+                    <input 
+                        type="radio" 
+                        id="rd_ua" 
+                        name="Lang" 
+                        v-model="Lang" 
+                        class="loginLang-cb" 
+                        value="en" 
+                        @change="setLanguage">
+                    <label for="rd_ua"><flag iso="ua" /></label>
+                </div>
+                <hr>
+                <div v-if="!IsNew">
                     <form @submit.prevent="onSubmit">
                         <div class="form-group">
-                            <label>E-posta Adresiniz</label>
-                            <input v-model="User.email" type="email" class="form-control"
-                                placeholder="E-posta adresinizi giriniz"
-                                style="font-size: xx-large; height: auto">
+                            <label> {{ $t('Auth.Lmail.title') }} </label>
+                            <input 
+                                v-model="User.email" 
+                                class="form-control"
+                                :placeholder="$t('Auth.Lmail.placeholder')">
                         </div>
-                        <div class="form-group" :style="{visibility: !isForgotten ? 'visible' : 'hidden'}">
-                            <label>Şifre</label>
-                            <input v-model="User.password" type="password" class="form-control" placeholder="Şifreniz..."
-                                style="font-size: xx-large; height: auto">
+                        <div class="form-group" :style="{visibility: !IsForgotten ? 'visible' : 'hidden'}">
+                            <label> {{ $t('Auth.Lpassword.title') }} </label>
+                            <input 
+                                v-model="User.password" 
+                                type="password" 
+                                class="form-control" 
+                                :placeholder="$t('Auth.Lpassword.placeholder')"
+                                >
                         </div>
                         <div class="button-container d-flex  flex-column align-items-center">
-                            <!-- <button type="submit" :class="{'btn-primary' : isUser, 'btn-success' : !isUser }"
-                                    class="btn btn-block mb-2">
-                                {{ isUser ? 'Giriş Yap' : 'Kayıt Ol' }}
-                            </button> -->
-                            <button type="submit" :class="{'button-yellow' : !isForgotten, 'button-blue' : isForgotten }"
-                                    class="btn btn-block mb-2">
-                                {{ !isForgotten ? 'Giriş Yap' : 'Mail Sıfırla' }}
+                            <button type="submit" :class="{'button-submit' : !IsForgotten, 'button-forget' : IsForgotten }"
+                                    class="btn btn-block">
+                                {{ !IsForgotten ? $t('Auth.submitSignUp') : $t('Auth.submitReset') }}
                             </button>
                             <span class="loginErSpan" v-show="IsError">
                                 {{ LoginError }}
                             </span>
-                            <a href="#" @click.prevent="isUser=!isUser" class="text-secondary" style="display: none">
-                                {{ isUser ? 'Üye değilim' : 'Üyeliğim var'}}
+                            <a href="#" @click.prevent="IsUser=!IsUser" class="text-secondary" style="display: none">
+                                {{ IsUser ? 'Üye değilim' : 'Üyeliğim var'}}
                             </a>
-                            <a href="#" @click.prevent="isForgotten=!isForgotten" class="text-secondary">
-                                {{ isForgotten ? 'Parolamı Hatırlıyorum' : 'Parolamı Unuttum'}}
+                            <a href="#" @click.prevent="IsForgotten=!IsForgotten" class="text-secondary">
+                                {{ IsForgotten ? $t('Auth.submitNotForgetton') : $t('Auth.submitForgetton') }}
                             </a>
                             <a href="#" @click.prevent="onCancel" class="text-secondary">
-                                Kayıt Olunuz
+                                {{ $t('Auth.submitRegister') }}
                             </a>
                         </div>
                     </form>
@@ -49,206 +81,252 @@
                 <div v-else>
                     <b-form @submit.prevent="onSubmit" @reset="onReset">
                         <b-form-group
-                            id="input-group-1"
-                            label="Kullanıcı Adı:"
+                            :label="$t('Auth.UserName.title')"
                             label-for="input-1">
                             <b-form-input
                                 id="input-1"
                                 v-model.lazy="Form.UserName"
-                                placeholder="Kullanıcı Adı Giriniz"
+                                :placeholder="$t('Auth.UserName.placeholder')"
                                 :state="$v.Form.UserName.$dirty ? !$v.Form.UserName.$anyError : null"
                                 @blur="$v.Form.UserName.$touch()"
                             ></b-form-input>
                             <div v-if="$v.Form.UserName.$dirty">
                                 <b-form-invalid-feedback v-if="!$v.Form.UserName.required" :state="$v.Form.UserName.required">
-                                    Lütfen Kullanıcı Adı Giriniz
+                                    {{ $t('Auth.UserName.required') }}
                                 </b-form-invalid-feedback>
                                 <b-form-invalid-feedback v-else-if="!$v.Form.UserName.minLength" :state="$v.Form.UserName.minLength">
-                                    Kullanıcı Adı en az 6 karakterden oluşmaktadır
+                                    {{ $t('Auth.UserName.minLength') }}
                                 </b-form-invalid-feedback>
                                 <b-form-invalid-feedback v-else-if="!$v.Form.UserName.isUnique" :state="$v.Form.UserName.isUnique">
-                                    Kullanıcı Adı Kullanılmaktadır
+                                    {{ $t('Auth.UserName.isUnique') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
                         <b-form-group
-                            id="input-group-11"
-                            label="Mail:"
-                            label-for="input-11"
-                        >
+                            :label="$t('Auth.Mail.title')"
+                            label-for="input-11">
                             <b-form-input
                                 id="input-11"
                                 v-model.lazy="Form.Mail"
                                 type="email"
-                                placeholder="Mail Giriniz"
+                                :placeholder="$t('Auth.Mail.placeholder')"
                                 :state="$v.Form.Mail.$dirty ? !$v.Form.Mail.$anyError : null"
                                 @blur="$v.Form.Mail.$touch()"
                             ></b-form-input>
                             <div v-if="$v.Form.Mail.$dirty">
                                 <b-form-invalid-feedback v-if="!$v.Form.Mail.required" :state="$v.Form.Mail.required">
-                                    Lütfen Mail Adresi Giriniz
+                                    {{ $t('Auth.Mail.required') }}
                                 </b-form-invalid-feedback>
                                 <b-form-invalid-feedback v-else-if="!$v.Form.Mail.email" :state="$v.Form.Mail.email">
-                                    Lütfen Mail Adresini Doğru Formatta Giriniz
+                                    {{ $t('Auth.Mail.email') }}
                                 </b-form-invalid-feedback>
                                 <b-form-invalid-feedback v-else-if="!$v.Form.Mail.isUnique" :state="$v.Form.Mail.isUnique">
-                                    Mail Adresi Kullanılmaktadır
+                                    {{ $t('Auth.Mail.isUnique') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
-                        <b-form-group id="input-group-21" label="Parola:" label-for="input-21">
+                        <b-form-group 
+                            :label="$t('Auth.Password.title')"
+                            label-for="input-21">
                             <b-form-input
                                 id="input-21"
                                 type="password"
                                 v-model="Form.Password"
-                                placeholder="Parola Giriniz"
+                                :placeholder="$t('Auth.Password.placeholder')"
                                 :state="$v.Form.Password.$dirty ? !$v.Form.Password.$anyError : null"
                                 @blur="$v.Form.Password.$touch()"
                             ></b-form-input>
                             <div v-if="$v.Form.Password.$dirty">
                                 <b-form-invalid-feedback v-if="!$v.Form.Password.required" :state="$v.Form.Password.required">
-                                    Lütfen Parola Giriniz
+                                    {{ $t('Auth.Password.required') }}
                                 </b-form-invalid-feedback>
                                 <b-form-invalid-feedback v-else-if="!$v.Form.Password.minLength" :state="$v.Form.Password.minLength">
-                                    Parolanız en az 6 karakterden oluşmalıdır
+                                    {{ $t('Auth.Password.minLength') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
-                        <b-form-group id="input-group-2" label="Ad:" label-for="input-2">
+                        <b-form-group 
+                            :label="$t('Auth.RePassword.title')"
+                            label-for="input-22">
+                            <b-form-input
+                                id="input-22"
+                                type="password"
+                                v-model="Form.RePassword"
+                                :placeholder="$t('Auth.RePassword.placeholder')"
+                                :state="$v.Form.RePassword.$dirty ? !$v.Form.RePassword.$anyError : null"
+                                @blur="$v.Form.RePassword.$touch()"
+                            ></b-form-input>
+                            <div v-if="$v.Form.RePassword.$dirty">
+                                <b-form-invalid-feedback v-if="!$v.Form.RePassword.required" :state="$v.Form.RePassword.required">
+                                    {{ $t('Auth.RePassword.required') }}
+                                </b-form-invalid-feedback>
+                                <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.minLength" :state="$v.Form.RePassword.minLength">
+                                    {{ $t('Auth.RePassword.minLength') }}
+                                </b-form-invalid-feedback>
+                                <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.sameAs" :state="$v.Form.RePassword.sameAs">
+                                    {{ $t('Auth.RePassword.sameAs') }}
+                                </b-form-invalid-feedback>
+                            </div>
+                        </b-form-group>
+
+                        <b-form-group 
+                            :label="$t('Auth.FirstName.title')"
+                            label-for="input-2">
                             <b-form-input
                                 id="input-2"
                                 v-model="Form.FirstName"
-                                placeholder="Ad Giriniz"
+                                :placeholder="$t('Auth.FirstName.placeholder')"
                                 :state="$v.Form.FirstName.$dirty ? !$v.Form.FirstName.$anyError : null"
                                 @blur="$v.Form.FirstName.$touch()"
                             ></b-form-input>
                             <div v-if="$v.Form.FirstName.$dirty">
                                 <b-form-invalid-feedback :state="$v.Form.FirstName.required">
-                                    Lütfen Ad Giriniz
+                                    {{ $t('Auth.FirstName.required') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
-                        <b-form-group id="input-group-3" label="Soyad:" label-for="input-3">
+                        <b-form-group 
+                            :label="$t('Auth.LastName.title')"
+                            label-for="input-3">
                             <b-form-input
                                 id="input-3"
                                 v-model="Form.LastName"
-                                placeholder="Soyad Giriniz"
+                                :placeholder="$t('Auth.LastName.placeholder')"
                                 :state="$v.Form.LastName.$dirty ? !$v.Form.LastName.$anyError : null"
                                 @blur="$v.Form.LastName.$touch()"
                             ></b-form-input>
                             <div v-if="$v.Form.LastName.$dirty">
                                 <b-form-invalid-feedback :state="$v.Form.LastName.required">
-                                    Lütfen Soyad Giriniz
+                                    {{ $t('Auth.LastName.required') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
-                        <b-form-group id="input-group-31" label="Telefon:" label-for="input-31">
+                        <b-form-group 
+                            :label="$t('Auth.PhoneNumber.title')"
+                            label-for="input-31">
                             <b-form-input
                                 id="input-31"
                                 type="text"
                                 v-model="Form.PhoneNumber"
+                                :placeholder="$t('Auth.PhoneNumber.placeholder')"
                                 @change="formatPhone"
-                                placeholder="Telefon Giriniz"
                             ></b-form-input>
                         </b-form-group>
 
-                        <b-form-group label="Hotel:" label-for="select1">
+                        <b-form-group 
+                            :label="$t('Auth.MansionId.title')"
+                            label-for="select1">
                             <b-form-select
                                 id="select1"
                                 v-model="Form.MansionId"
                                 :state="$v.Form.MansionId.$dirty ? !$v.Form.MansionId.$anyError : null"
                                 @input="setMansion"
                             >
-                                <option selected disabled value="-1">Lütfen Hotel Seçiniz</option>
+                                <option selected disabled value="-1">{{ $t('Auth.MansionId.placeholder') }}</option>
                                 <option v-for="Mansion in getMansions" :value="Mansion.MansionId" :key="Mansion.MansionId">{{ Mansion.Name }}
                                 </option>
                             </b-form-select>
                                 <div v-if="$v.Form.MansionId.$dirty">
                                     <b-form-invalid-feedback v-if="!$v.Form.MansionId.minValue" :state="$v.Form.MansionId.minValue">
-                                        Lütfen Otel Seçiniz
+                                        {{ $t('Auth.MansionId.minValue') }}
                                     </b-form-invalid-feedback>
                                 </div>
                         </b-form-group>
 
-                        <b-form-group label="Block:" label-for="select2" v-if="IsBlocky" >
+                        <b-form-group 
+                            :label="$t('Auth.BlockId.title')"
+                            label-for="select2" 
+                            v-if="IsBlocky" >
                             <b-form-select
                                 id="select2"
                                 v-model="Form.BlockId"
                                 :state="$v.Form.BlockId.$dirty ? !$v.Form.BlockId.$anyError : null"
                                 @input="setBlock"
                             >
-                                <option selected disabled value="-1">Lütfen Blok Seçiniz</option>
+                                <option selected disabled value="-1">{{ $t('Auth.BlockId.placeholder') }}</option>
                                 <option v-for="Block in getBlocks" :value="Block.BlockId" :key="Block.BlockId">{{ Block.Name }}
                                 </option>
                             </b-form-select>
                                 <div v-if="$v.Form.BlockId.$dirty">
                                     <b-form-invalid-feedback v-if="!$v.Form.BlockId.minValue" :state="$v.Form.BlockId.minValue">
-                                        Lütfen Blok Seçiniz
+                                        {{ $t('Auth.BlockId.minValue') }}
                                     </b-form-invalid-feedback>
                                 </div>
                         </b-form-group>
 
-                        <b-form-group label="Oda:" label-for="select3" v-if="IsRoom">
+                        <b-form-group 
+                            :label="$t('Auth.PossessionId.title')"
+                            label-for="select3" 
+                            v-if="IsRoom"
+                            >
                             <b-form-select
                                 id="select3"
                                 v-model="Form.PossessionId"
                                 :state="$v.Form.PossessionId.$dirty ? !$v.Form.PossessionId.$anyError : null"
                                 @input="$v.Form.PossessionId.$touch()"
                             >
-                                <option selected disabled value="-1">Lütfen Oda No Seçiniz</option>
+                                <option selected disabled value="-1">{{ $t('Auth.PossessionId.placeholder') }}</option>
                                 <option v-for="Possession in getPossessions" :value="Possession.PossessionId" :key="Possession.PossessionId">{{ Possession.No }}
                                 </option>
                             </b-form-select>
                                 <div v-if="$v.Form.PossessionId.$dirty">
                                     <b-form-invalid-feedback v-if="!$v.Form.PossessionId.minValue" :state="$v.Form.PossessionId.minValue">
-                                        Lütfen Oda No Seçiniz
+                                        {{ $t('Auth.PossessionId.minValue') }}
                                     </b-form-invalid-feedback>
                                 </div>
                         </b-form-group>
 
                         
                         
-                        <b-form-group id="input-group-4" label="Giriş Tarihi:" label-for="input-4">
+                        <b-form-group 
+                            id="input-group-4" 
+                            :label="$t('Auth.BeginDate.title')"
+                            label-for="input-4" 
+                            v-if="IsDated">
                             <b-form-input
                                 id="input-4"
                                 v-model="Form.BeginDate"
-                                placeholder="Lütfen Giriş Tarihi Seçiniz"
+                                :placeholder="$t('Auth.BeginDate.placeholder')"
                                 :state="$v.Form.BeginDate.$dirty ? !$v.Form.BeginDate.$anyError : null"
                                 @blur="$v.Form.BeginDate.$touch()"
                                 type="date" 
                             ></b-form-input>
                             <div v-if="$v.Form.BeginDate.$dirty">
                                 <b-form-invalid-feedback :state="$v.Form.BeginDate.required">
-                                    Lütfen Giriş Tarihi Seçiniz
+                                    {{ $t('Auth.BeginDate.required') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
 
-                        <b-form-group id="input-group-41" label="Çıkış Tarihi:" label-for="input-41">
+                        <b-form-group 
+                            id="input-group-41" 
+                            :label="$t('Auth.EndDate.title')"
+                            label-for="input-41" 
+                            v-if="IsDated">
                             <b-form-input
                                 id="input-41"
                                 v-model="Form.EndDate"
-                                placeholder="Lütfen Çıkış Tarihi Seçiniz"
+                                :placeholder="$t('Auth.EndDate.placeholder')"
                                 :state="$v.Form.EndDate.$dirty ? !$v.Form.EndDate.$anyError : null"
                                 @blur="$v.Form.EndDate.$touch()"
                                 type="date" 
                             ></b-form-input>
                             <div v-if="$v.Form.EndDate.$dirty">
                                 <b-form-invalid-feedback :state="$v.Form.EndDate.required">
-                                    Lütfen Çıkış Tarihi Seçiniz
+                                    {{ $t('Auth.EndDate.required') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
 
-                        <b-button type="submit" variant="primary" style="margin-right: 5px;">Gönder</b-button>
-                        <b-button type="reset" variant="warning" style="margin-right: 5px;">Temizle</b-button>
-                        <b-button variant="danger" style="margin-right: 5px;" @click="onCancel">İptal</b-button>
+                        <b-button type="submit" variant="primary" style="margin-right: 5px;"> {{ $t('Auth.submit') }} </b-button>
+                        <b-button type="reset" variant="warning" style="margin-right: 5px;"> {{ $t('Auth.reset') }} </b-button>
+                        <b-button variant="danger" style="margin-right: 5px;" @click="onCancel"> {{ $t('Auth.cancel') }} </b-button>
                     </b-form>
                 </div>
             </div>
@@ -256,8 +334,8 @@
     </div>
 </template>
 <script>
-    import {mapGetters} from "vuex";
-    import {required, email, minLength, minValue } from "vuelidate/lib/validators"
+    import { mapGetters} from "vuex";
+    import { required, email, minLength, sameAs, minValue, requiredIf } from "vuelidate/lib/validators"
     import axios from "axios"
 
     export default {
@@ -267,12 +345,13 @@
                     email: null,
                     password: null
                 },
-                isUser: true,
-                isForgotten: false,
-                isNew: false,
+                IsUser: true,
+                IsForgotten: false,
+                IsNew: false,
                 Form: {
                     UserName: '',
                     Password: '',
+                    RePassword: '',
                     Mail: '',
                     FirstName: '',
                     LastName: '',
@@ -292,6 +371,15 @@
                 IsRoom: false,
                 LoginError: '',
                 IsError: false,
+                IsDated: false,
+                Lang: 'tr',
+            }
+        },
+        created () {
+            let locale = localStorage.getItem("Lang")
+            if (locale != null) {
+                this.Lang = locale
+                this.$store.dispatch("SetLocale", this.Lang)
             }
         },
         validations() {
@@ -310,6 +398,13 @@
                     Password: {
                         required,
                         minLength: minLength (6)
+                    },
+                    RePassword: {
+                        required,
+                        minLength: minLength (6),
+                        sameAs: sameAs(vm => {
+                            return vm.Password
+                        })
                     },
                     Mail: {
                         required,
@@ -337,10 +432,14 @@
                         minValue: minValue (1)
                     },
                     BeginDate: {
-                        required
+                        required: requiredIf(function() {
+                            return this.IsDated;
+                        }),
                     },
                     EndDate: {
-                        required
+                        required: requiredIf(function() {
+                            return this.IsDated;
+                        }),
                     },
                 }
             }
@@ -357,8 +456,11 @@
                 this.$v.Form.MansionId.$touch()
                 this.Form.BlockId = -1
                 this.Form.PossessionId = -1
+                this.$v.Form.BeginDate.$reset()
+                this.$v.Form.EndDate.$reset()
 
                 let Mansion = this.$store.getters.getMansions.find(x => x.MansionId == this.Form.MansionId)
+                this.IsDated = Mansion.PossessionType == 4
 
                 if (Mansion.IsBlocky) {
                     // this.ResetBlock()
@@ -390,9 +492,11 @@
                 this.IsBlocky = false
                 this.IsRoom = false
                 this.IsError = false
+                this.IsDated = false
                 this.Form = {
                     UserName: '',
                     Password: '',
+                    RePassword: '',
                     Mail: '',
                     FirstName: '',
                     LastName: '',
@@ -409,14 +513,13 @@
                     IsApproved: false,
                 }
                 this.User = {
-
                     email: null,
                     password: null
                 }
                 this.$v.Form.$reset()
             },
             onSubmit() {
-                if (this.isNew) {
+                if (this.IsNew) {
                     this.$v.Form.$touch()
 
                     if (this.$v.Form.$anyError) {
@@ -429,43 +532,62 @@
                             .then(() =>{
                                     this.User.email = this.Form.Mail
                                     this.User.password = this.Form.Password
-                                    this.isNew = false
+                                    this.IsNew = false
                                     this.onSubmit()
                                 }
                             )
                     }
 
                 } else {
-                    this.$store.dispatch("login", { ...this.User, isUser : this.isUser, isForgotten : this.isForgotten })
+                    this.$store.dispatch("login", { ...this.User, IsUser : this.IsUser, IsForgotten : this.IsForgotten })
                         .then(data => {
                             if (data.UserId > 0) {
                                 
                                 this.$store.dispatch("initAuth")
                             } else {
                                 this.IsError = true
-                                this.LoginError = data.Session
+                                this.LoginError = this.$t(`ErrorMsg.${data.ErrorCode}`)
                             }
                         })
                 }
             },
             onCancel() {
                 this.onReset()
-                this.isNew = !this.isNew
-            }
+                this.IsNew = !this.IsNew
+            },
+            setLanguage() {
+                // this.$i18n.locale = this.Form.Language
+                this.$store.dispatch("SetLocale", this.Lang)
+            },
         }
     }
 </script>
 
-<style scoped>
-    .button-submit {
-        color: #fff;
-        background-color: #D6B761;
-        border-color: #D6B761;
-    }
-    .button-forget {
-        color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
+<style lang="scss" scoped>
+    .button {
+        &-submit {
+            background-color: #D6B761;
+            border-color: #D6B761;
+            color: #fff !important;
+            font-size: xx-large;
+            height: 100px;
+        }
+        &-forget {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff !important;
+            font-size: xx-large;
+            height: 100px;
+        }
+        & > * {
+            color: #fff !important;
+            font-size: xx-large;
+            height: 100px;
+        }
+        
+        color: #fff !important;
+        font-size: xx-large;
+        height: 100px;
     }
     .container {
         margin: auto;
@@ -491,5 +613,33 @@
         color: red;
         font-size: xx-large;
         text-align: center;
+    }
+
+    .loginLang {
+        display: inline-flex;
+        height: 120px;
+
+        &-cb
+         {
+            display: none;
+
+            &:checked + label {
+                border-color: #e0e0e0;
+                background: #e0e0e0;
+            }
+        }
+
+        span {
+            font-size: 80px;
+        }
+
+        label {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            margin: 0 10px;
+            border: 2px solid lightgrey;
+            transition: all 0.3s ease;
+        }
     }
 </style>

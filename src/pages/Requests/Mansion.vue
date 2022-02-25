@@ -105,7 +105,7 @@
             <table class="table table-hover table-striped table-bordered" v-if="getMansionsByLocation.length > 0">
                 <tbody>
                     <tr v-for="Mansion in getMansionsByLocation" :key="Mansion.MansionId" @click="setMansionOrder(Mansion)">
-                        <td class="align-middle text-center" height=220 width=220><img :src="require(`../../assets/hotels/${Mansion.ImageUrl}`)" alt="" border=3 height=200 width=200></td>
+                        <td class="align-middle text-center" height=220 width=220><img :src="require(`../../../../images/hotels/${Mansion.ImageUrl}`)" alt="" border=3 height=200 width=200></td>
                         <td colspan="2"  class="align-middle text-left">
                             <strong> {{ Mansion.Name }} </strong>
                             <br> {{ Mansion.Definition}} <br> 

@@ -1,0 +1,174 @@
+{
+    "general": {
+        "copyright": "BCWorks 2022"
+    },
+    "pages": {
+        "auth": "Login",
+        "main": "Main Page",
+        "rent": "Rent a car & boat",
+        "transfer": "Transfer",
+        "about": "About Us",
+        "restaurant": "Restaurant",
+        "activity": "Aktiviteler",
+        "cleaner": "Kuru Temizleme",
+        "mansion": "Mansion",
+        "assistant": "Asistan",
+        "requests": "İşlemler",
+        "property": "Mülk",
+        "secondary": "İkincil Kullanıcı",
+        "settings": "Settings"
+    },
+    "OrderTypes": {
+        "1": "Konaklama",
+        "2": "Transfer",
+        "3": "Rent a Car & Boat",
+        "4": "Restaurant",
+        "5": "Kuru Temizleme",
+        "6": "Aktiviteler",
+        "7": "Asistan"
+    },
+    "OrderStatus": {
+        "1": "Talep Oluşturuldu" , 
+        "2": "Bekliyor" , 
+        "3": "Teklif Sunuldu" , 
+        "4": "Teklif Kabul Edildi", 
+        "5": "Teklif Red Edildi" 
+    },
+    "PossessionStatus": {
+        "1": "Müşteri Sahip" ,
+        "2": "Müşteri Sahip Kiralık" ,
+        "3": "Firma Sahip Satılık" ,
+        "4": "Firma Sahip Kiralık" ,
+        "5": "Firma Sahip Ziyaretlik" ,
+        "6": "Kullanım Dışı" 
+    },
+    "RentableStatus": {
+        "1": "New Request" , 
+        "2": "Teklif Sunuldu" , 
+        "3": "Sözleşme Aşamasında" , 
+        "4": "Accepted" , 
+        "5": "Rejected"
+    },
+    "NRauthorizedMessage": {
+        "mansion": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "transfer": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "rent": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "restaurant": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "cleaner": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "activity": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
+        "assistant": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor"
+    },
+    "ErrorMsg": {
+        "-100": "User not found",
+        "-110": "Kullanıcı Aktif Değil",
+        "-120": "Session Süresi Doldu",
+        "-130": "Kullanıcı Yetkiye Sahip Değil",
+
+        "-200": "User or password not found",
+        "-210": "Pasif Kullanıcı",
+        "-220": "Kabul",
+
+        "-300": "Bu sayfaya girmeye yetkiniz bulunmamaktadır",
+
+        "-900": "API hatası"
+    },
+    "Login": {
+        "mail": "E-"
+    },
+    "Auth": {
+        "Lmail": {
+            "title": "E-mail",
+            "placeholder": "Username or E-mail"
+        },
+        "Lpassword": {
+            "title": "Password",
+            "placeholder": "Your Password..."
+        },
+        "submitSignUp": "Login",
+        "submitReset": "Reset Your Password",
+        "submitForgetton": "I Forgat my password",
+        "submitNotForgetton": "I Remember my password",
+        "submitRegister": "Register",
+        "UserName": {
+            "title": "UserName:",
+            "placeholder": "Enter Username",
+            "required": "Please Enter Username",
+            "minLength": "Username should be at least 6 character",
+            "isUnique": "Username is not valid"
+        },
+        "Mail": {
+            "title": "Mail:",
+            "placeholder": "Enter Mail",
+            "required": "Please Enter Mail",
+            "email": "E-mail is not valid format",
+            "isUnique": "E-mail is in use"
+        },
+        "Password": {
+            "title": "Password:",
+            "placeholder": "Enter Password",
+            "required": "Please Enter Password",
+            "minLength": "Password should be at least 6 character"
+        },
+        "RePassword": {
+            "title": "Password:",
+            "placeholder": "Enter Password",
+            "required": "Please Enter Password",
+            "minLength": "Password should be at least 6 character",
+            "sameAs": "Passwords do not match"
+        },
+        "FirstName": {
+            "title": "Firstname:",
+            "placeholder": "Enter Firstname",
+            "required": "Please Enter Firstname"
+        },
+        "LastName": {
+            "title": "LastName:",
+            "placeholder": "Enter LastName",
+            "required": "Please Enter LastName"
+        },
+        "DateOfBirth": {
+            "title": "BirthDate:",
+            "placeholder": "Plase pick BirthDate"
+        },
+        "Address": {
+            "title": "Adress:",
+            "placeholder": "Enter Adress"
+        },
+        "PhoneNumber": {
+            "title": "Phone:",
+            "placeholder": "Enter Phone"
+        },
+        "RoleId": {
+            "title": "Role:",
+            "placeholder": "Enter Role"
+        },
+        "MansionId": {
+            "title": "Mansion:",
+            "placeholder": "Pick Mansion",
+            "minValue": "Please Pick Mansion"
+        },
+        "BlockId": {
+            "title": "Mansion:",
+            "placeholder": "Pick Mansion",
+            "minValue": "Please Pick Mansion"
+        },
+        "PossessionId": {
+            "title": "Room:",
+            "placeholder": "Pick Room",
+            "minValue": "Please Pick Room"
+        },
+        "BeginDate": {
+            "title": "Begin Date:",
+            "placeholder": "Set Begin Date",
+            "required": "Please Set Begin Date"
+        },
+        "EndDate": {
+            "title": "End Date:",
+            "placeholder": "Set End Date",
+            "required": "Please Set End Date"
+        },
+        "submit": "Send",
+        "reset": "Clear",
+        "cancel": "Cancel"
+    }
+}

@@ -24,7 +24,7 @@
 
         </div>
         <div v-else>
-            <img :src="require(`../../assets/activityType/${selectedActivity.ImageUrl}`)" :alt="selectedActivity.Name" class="requestImage">
+            <img :src="require(`../../../../images/activityType/${selectedActivity.ImageUrl}`)" :alt="selectedActivity.Name" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
                     <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereye</strong> </label>
@@ -178,7 +178,7 @@
         created() {
             eventBus.$on('returnBack', () => {
                 this.isSelected = false
-                eventBus.$emit('updateHeaderText', 'Aktiviteler')
+                eventBus.$emit('updateHeaderText', this.$t('pages.activity'))
             })
         },
         destroyed() {

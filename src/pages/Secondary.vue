@@ -2,6 +2,13 @@
     <div class="container">
             <div v-if="isNew || isEdit">
                 <b-form @submit.prevent="onSubmit" @reset="onReset" class="formNew">
+                    <b-form-group label="Dil:">
+                        <b-form-radio-group v-model="Form.Language" buttons button-variant="outline-info" size="lg" @input="setLanguage">
+                            <b-form-radio size="xl" name="Lang" value="tr"><flag iso="tr" /></b-form-radio>
+                            <b-form-radio size="xl" name="Lang" value="en"><flag iso="gb" /></b-form-radio>
+                        </b-form-radio-group>
+                    </b-form-group>
+
                     <b-form-group
                         id="input-group-1"
                         label="Kullanıcı Adı:"
@@ -75,6 +82,31 @@
                         </div>
                     </b-form-group>
 
+                    <b-form-group 
+                        id="input-group-22" 
+                        label="Parola:" 
+                        label-for="input-22">
+                        <b-form-input
+                            id="input-22"
+                            type="password"
+                            v-model="Form.RePassword"
+                            placeholder="Parola Giriniz"
+                            :state="$v.Form.RePassword.$dirty ? !$v.Form.RePassword.$anyError : null"
+                            @blur="$v.Form.RePassword.$touch()"
+                        ></b-form-input>
+                        <div v-if="$v.Form.RePassword.$dirty">
+                            <b-form-invalid-feedback v-if="!$v.Form.RePassword.required" :state="$v.Form.RePassword.required">
+                                Lütfen Parola Giriniz
+                            </b-form-invalid-feedback>
+                            <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.minLength" :state="$v.Form.RePassword.minLength">
+                                Parolanız en az 6 karakterden oluşmalıdır
+                            </b-form-invalid-feedback>
+                            <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.sameAs" :state="$v.Form.RePassword.sameAs">
+                                Parolalar birbiriyle uyuşmuyor
+                            </b-form-invalid-feedback>
+                        </div>
+                    </b-form-group>
+                    
                     <b-form-group 
                         id="input-group-2" 
                         label="Ad:" 
@@ -161,8 +193,9 @@
 
 <script>
     import { mapGetters} from "vuex";
-    import { required, email, minLength } from "vuelidate/lib/validators"
+    import { required, email, minLength, sameAs } from "vuelidate/lib/validators"
     import axios from "axios"
+    import {eventBus} from "../main"
 
     export default {
         data() {
@@ -178,6 +211,7 @@
                     UserId: -1,
                     UserName: '',
                     Password: '',
+                    RePassword: '',
                     Mail: '',
                     FirstName: '',
                     LastName: '',
@@ -185,6 +219,7 @@
                     Address: '',
                     PhoneNumber: '',
                     RoleId: 3,
+                    Language: 'tr',
                 },
             }
         },
@@ -204,6 +239,13 @@
                     Password: {
                         required,
                         minLength: minLength (6)
+                    },
+                    RePassword: {
+                        required,
+                        minLength: minLength (6),
+                        sameAs: sameAs(vm => {
+                            return vm.Password
+                        })
                     },
                     Mail: {
                         required,
@@ -226,6 +268,14 @@
         },
         created(){
             this.secondaryList()
+            eventBus.$on('returnBack', () => {
+                this.isEdit = false
+                this.isNew = false
+                eventBus.$emit('updateHeaderText', this.$t('pages.secondary'))
+            })
+        },
+        destroyed() {
+            eventBus.$off('returnBack');
         },
         computed: {
             ...mapGetters(["getSecondary"]),
@@ -243,6 +293,7 @@
                     UserId: -1,
                     UserName: '',
                     Password: '',
+                    RePassword: '',
                     Mail: '',
                     FirstName: '',
                     LastName: '',
@@ -250,6 +301,7 @@
                     Address: '',
                     PhoneNumber: '',
                     RoleId: 3,
+                    Language: localStorage.Lang,
                 }
                 this.$v.Form.$reset()
             },
@@ -288,19 +340,29 @@
                 this.isEdit = false
             },
             newUser() {
+                this.onReset()
                 this.isNew = true
+                eventBus.$emit('submitPage')
+                eventBus.$emit('updateHeaderText', this.$t('pages.newUser'))
             },
             updateUser(User) {
                 this.Form.UserId = User.UserId
                 this.Form.UserName = User.UserName
                 this.Form.Mail = User.Mail
                 this.Form.Password = User.Password
+                this.Form.RePassword = User.Password
                 this.Form.FirstName = User.FirstName
                 this.Form.LastName = User.LastName
                 this.Form.DateOfBirth = User.DateOfBirth
                 this.Form.PhoneNumber = User.PhoneNumber
+                this.Form.Language = User.Language
                 this.isEdit = true
-            }
+                eventBus.$emit('submitPage')
+                eventBus.$emit('updateHeaderText', User.UserName)
+            },
+            setLanguage() {
+                console.log(this.Form.Language)
+            },
         }
     }
 </script>

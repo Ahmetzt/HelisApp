@@ -2,6 +2,14 @@
     <div class="container">
 
         <b-form @submit.prevent="onSubmit" class="formNew">
+
+            <b-form-group label="Dil:">
+                <b-form-radio-group v-model="Form.Language" buttons button-variant="outline-info" size="lg" @input="setLanguage">
+                    <b-form-radio size="xl" name="Lang" value="tr"><flag iso="tr" /></b-form-radio>
+                    <b-form-radio size="xl" name="Lang" value="en"><flag iso="gb" /></b-form-radio>
+                </b-form-radio-group>
+            </b-form-group>
+
             <b-form-group
                 id="input-group-1"
                 label="Kullanıcı Adı:"
@@ -45,6 +53,31 @@
                     </b-form-invalid-feedback>
                     <b-form-invalid-feedback v-else-if="!$v.Form.Password.minLength" :state="$v.Form.Password.minLength">
                         Parolanız en az 6 karakterden oluşmalıdır
+                    </b-form-invalid-feedback>
+                </div>
+            </b-form-group>
+
+            <b-form-group 
+                id="input-group-22" 
+                label="Parola:" 
+                label-for="input-22">
+                <b-form-input
+                    id="input-22"
+                    type="password"
+                    v-model="Form.RePassword"
+                    placeholder="Parola Giriniz"
+                    :state="$v.Form.RePassword.$dirty ? !$v.Form.RePassword.$anyError : null"
+                    @blur="$v.Form.RePassword.$touch()"
+                ></b-form-input>
+                <div v-if="$v.Form.RePassword.$dirty">
+                    <b-form-invalid-feedback v-if="!$v.Form.RePassword.required" :state="$v.Form.RePassword.required">
+                        Lütfen Parola Giriniz
+                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.minLength" :state="$v.Form.RePassword.minLength">
+                        Parolanız en az 6 karakterden oluşmalıdır
+                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.sameAs" :state="$v.Form.RePassword.sameAs">
+                        Parolalar birbiriyle uyuşmuyor
                     </b-form-invalid-feedback>
                 </div>
             </b-form-group>
@@ -102,7 +135,7 @@
 
 <script>
     import { mapGetters} from "vuex";
-    import { required,  minLength } from "vuelidate/lib/validators"
+    import { required, sameAs, minLength } from "vuelidate/lib/validators"
 
     export default {
         data() {
@@ -110,13 +143,15 @@
                 Form: {
                     UserName: '',
                     Password: '',
+                    RePassword: '',
                     Mail: '',
                     FirstName: '',
                     LastName: '',
                     DateOfBirth: null,
                     Address: '',
                     PhoneNumber: '',
-                    RoleId: -1
+                    RoleId: -1,
+                    Language: 'tr',
                 },
             }
         },
@@ -126,6 +161,13 @@
                     Password: {
                         required,
                         minLength: minLength (6)
+                    },
+                    RePassword: {
+                        required,
+                        minLength: minLength (6),
+                        sameAs: sameAs(vm => {
+                            return vm.Password
+                        })
                     },
                     FirstName: {
                         required
@@ -149,11 +191,13 @@
                         this.Form.UserName      = data.UserName
                         this.Form.Mail          = data.Mail
                         this.Form.Password      = data.Password
+                        this.Form.RePassword    = data.Password
                         this.Form.FirstName     = data.FirstName
                         this.Form.LastName      = data.LastName
                         this.Form.DateOfBirth   = data.DateOfBirth
                         this.Form.PhoneNumber   = data.PhoneNumber
                         this.Form.RoleId        = data.RoleId
+                        this.Form.Language      = "tr"
                     })
             },
             formatPhone() {
@@ -170,10 +214,15 @@
                         this.Form.PhoneNumber = this.Form.PhoneNumber.replace(/\D/g,'')
                         this.$store.dispatch("UpdateSelf", { ...this.Form })
                             .then(() =>{
-                            this.$router.push({path: '/new'});
+                                this.$router.push({path: '/new'});
                             })
                 }
 
+            },
+            setLanguage() {
+                console.log(this.Form.Language)
+                // this.$i18n.locale = this.Form.Language
+                // this.$store.dispatch("SetLocale", this.Form.Language)
             },
         }
     }

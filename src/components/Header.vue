@@ -29,7 +29,7 @@
             <b-navbar-nav style="margin-left: auto; margin-right: 10px; align-items: center; border-top: azure solid; margin-top: 20px;">
                 <b-button name="hakkimizda" class="nav-item" variant="dark" >
                     <router-link class="nav-link" to="/about">
-                        <i class="fa fa-briefcase me-2" aria-hidden="true"></i>&nbsp;Hakkımızda
+                        <i class="fa fa-briefcase me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.about') }}
                     </router-link>
                 </b-button>
                 <b-button name="yeniislem" class="nav-item" variant="dark" >
@@ -121,55 +121,10 @@
                     // document.title = to.meta.title || 'Some Default Title';
                     this.isHome = false
                     this.isSubmitted = false
-                    // this.backPath = from.fullPath
-                    switch (to.fullPath) {
-                        case '/':
-                            this.urlText = 'Anasayfa'
-                            this.isHome = true
-                            break
-                        case '/new':
-                            this.urlText = 'Anasayfa'
-                            this.isHome = true
-                            break
-                        case '/rent':
-                            this.urlText = 'Rent a car & boat'
-                            break
-                        case '/transfer':
-                            this.urlText = 'Transfer'
-                            break
-                        case '/about':
-                            this.urlText = 'Hakkımızda'
-                            break
-                        case '/restaurant':
-                            this.urlText = 'Restaurant'
-                            break
-                        case '/activity':
-                            this.urlText = 'Aktiviteler'
-                            break
-                        case '/cleaner':
-                            this.urlText = 'Kuru Temizleme'
-                            break
-                        case '/mansion':
-                            this.urlText = 'Konaklama'
-                            break
-                        case '/assistant':
-                            this.urlText = 'Asistan'
-                            break
-                        case '/requests':
-                            this.urlText = 'İşlemler'
-                            break
-                        case '/property':
-                            this.urlText = 'Mülk'
-                            break
-                        case '/secondary':
-                            this.urlText = 'İkincil Kullanıcı'
-                            break
-                        case '/settings':
-                            this.urlText = 'Ayarlar'
-                            break
-                        default:
-                            '/'
+                    if (to.fullPath == '/' || to.fullPath == '/new') {
+                        this.isHome = true
                     }
+                    this.urlText = this.$t(`pages.${to.fullPath.substring(1)}`)
                 }
             },
         }
