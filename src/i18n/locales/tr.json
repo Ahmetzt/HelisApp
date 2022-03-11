@@ -4,8 +4,8 @@
     },
     "pages": {
         "auth": "Giriş",
-        "": "AnaSayfa",
-        "new": "AnaSayfa",
+        "": "Yeni İşlem",
+        "new": "Yeni İşlem",
         "rent": "Rent a car & boat",
         "transfer": "Transfer",
         "about": "Hakkımızda",
@@ -18,7 +18,8 @@
         "property": "Mülk",
         "secondary": "İkincil Kullanıcı",
         "settings": "Ayarlar",
-        "newUser": "Yeni Kullanıcı"
+        "newUser": "Yeni Kullanıcı",
+        "logout": "Çıkış Yap"
     },
     "OrderTypes": {
         "1": "Konaklama",
@@ -45,11 +46,11 @@
         "6": "Kullanım Dışı" 
     },
     "RentableStatus": {
-        "1": " Yeni İstek" , 
-        "2": " Teklif Sunuldu" , 
-        "3": " Sözleşme Aşamasında" , 
-        "4": " Kabul Edildi" , 
-        "5": " Reddedildi"
+        "1": "Yeni İstek" , 
+        "2": "Teklif Sunuldu" , 
+        "3": "Sözleşme Aşamasında" , 
+        "4": "Kabul Edildi" , 
+        "5": "Reddedildi"
     },
     "NRauthorizedMessage": {
         "mansion": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
@@ -71,6 +72,9 @@
         "-220": "Kabul",
 
         "-300": "Bu sayfaya girmeye yetkiniz bulunmamaktadır",
+
+        "-500": "Belirtilen Tarih Aralığında Oda Kiralandı",
+        "-510": "Belirtilen Tarih Aralığında Mülk Kiralandı",
 
         "-900": "API hatası"
     },
@@ -159,12 +163,16 @@
         "BeginDate": {
             "title": "Giriş Tarihi:",
             "placeholder": "Giriş Tarihi Seçiniz",
-            "required": "Lütfen Giriş Tarihi Seçiniz"
+            "required": "Lütfen Giriş Tarihi Seçiniz",
+            "dateMax": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
+            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
         },
         "EndDate": {
             "title": "Çıkış Tarihi:",
             "placeholder": "Çıkış Tarihi Seçiniz",
-            "required": "Lütfen Çıkış Tarihi Seçiniz"
+            "required": "Lütfen Çıkış Tarihi Seçiniz",
+            "dateMin": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
+            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
         },
         "submit": "Gönder",
         "reset": "Temizle",

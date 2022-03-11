@@ -253,4 +253,9 @@
         white-space: pre;
         /* padding: 11px; */
     }
+
+    .smallCloseButton {
+        flex-grow: 0 !important;
+        margin-right: 20px;
+    }
 </style>

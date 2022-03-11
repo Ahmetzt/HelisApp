@@ -145,7 +145,7 @@ const store = new Vuex.Store({
     },
     actions : {
         SetLocale({ commit }, locale ){
-            // localStorage.setItem("Lang", locale)
+            localStorage.setItem("Lang", locale)
             i18n.locale =        locale
             commit("SetLanguage", locale)
         },
@@ -213,6 +213,7 @@ const store = new Vuex.Store({
                     localStorage.setItem("PossessionId", data.PossessionId)
                     localStorage.setItem("Lang", data.Lang)
                     commit("setSession", data)
+                    router.push("/")
                 } else {
                     commit("removeLocalStorage");
                 }
@@ -503,9 +504,10 @@ const store = new Vuex.Store({
         Register({ commit }, registerData ) {
             return axios.post("Session/Register?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 
                 "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + 
-                "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + "&PhoneNumber=" + registerData.PhoneNumber + 
-                "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId + "&BeginDate=" + registerData.BeginDate +
-                "&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info + "&IsApproved=" + registerData.IsApproved)
+                "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
+                "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId + 
+                "&BeginDate=" + registerData.BeginDate +"&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info + 
+                "&IsApproved=" + registerData.IsApproved)
             .then(response => {
                 let data = response.data;
                 
@@ -717,8 +719,18 @@ const store = new Vuex.Store({
         getOrderTypes(state) {
             return state.OrderTypes;
         },
+        getOrderTypesById: state => OrderType => {
+            return state.OrderTypes.find(element => 
+                element.OrderType === OrderType
+            )
+        },
         getOrderStatus(state) {
             return state.OrderStatus;
+        },
+        getOrderStatusById: state => OrderStatus => {
+            return state.OrderStatus.find(element => 
+                element.OrderStatus === OrderStatus
+            )
         },
         getMansions(state) {
             return state.Mansions;

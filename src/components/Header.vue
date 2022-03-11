@@ -34,7 +34,7 @@
                 </b-button>
                 <b-button name="yeniislem" class="nav-item" variant="dark" >
                     <router-link class="nav-link" to="/new">
-                        <i class="fa fa-plane me-2" aria-hidden="true"></i>&nbsp;Yeni İşlem
+                        <i class="fa fa-plane me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.new') }}
                     </router-link>
                 </b-button> 
                 <b-button name="admin" class="nav-item" variant="dark" v-if="$store.state.roleId == 1">
@@ -44,27 +44,27 @@
                 </b-button> 
                 <b-button name="property" class="nav-item" variant="dark" v-if="$store.state.PossessionId > 0">
                     <router-link class="nav-link" to="/property">
-                        <i class="fa fa-home me-2" aria-hidden="true"></i>&nbsp;Mülk
+                        <i class="fa fa-home me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.property') }}
                     </router-link>
                 </b-button> 
                 <b-button name="islemMenu" class="nav-item" variant="dark">
                     <router-link class="nav-link" to="/requests">
-                        <i class="fa fa-history me-2" aria-hidden="true"></i>&nbsp;İşlemler
+                        <i class="fa fa-history me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.requests') }}
                     </router-link>
                 </b-button>
                 <b-button name="secondary" class="nav-item" variant="dark" v-if="$store.state.PossessionId > 0">
                     <router-link class="nav-link" to="/secondary">
-                        <i class="fa fa-user me-2" aria-hidden="true"></i>&nbsp;Ek Kullanıcılar
+                        <i class="fa fa-user me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.secondary') }}
                     </router-link>
                 </b-button> 
                 <b-button name="settings" class="nav-item" variant="dark">
                     <router-link class="nav-link" to="/settings">
-                        <i class="fa fa-user-cog me-2" aria-hidden="true"></i>&nbsp;Ayarlar
+                        <i class="fa fa-user-cog me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.settings') }}
                     </router-link>
                 </b-button> 
                 <b-button name="logout" class="nav-item" variant="dark" >
                     <a @click.prevent="logout" class="nav-link" href="#">
-                        <i class="fa fa-sign-out-alt me-2" aria-hidden="true"></i>&nbsp;Çıkış Yap
+                        <i class="fa fa-sign-out-alt me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.logout') }}
                     </a>
                 </b-button> 
             </b-navbar-nav>

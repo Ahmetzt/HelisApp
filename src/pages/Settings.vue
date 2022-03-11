@@ -197,7 +197,7 @@
                         this.Form.DateOfBirth   = data.DateOfBirth
                         this.Form.PhoneNumber   = data.PhoneNumber
                         this.Form.RoleId        = data.RoleId
-                        this.Form.Language      = "tr"
+                        this.Form.Language      = data.Language
                     })
             },
             formatPhone() {
@@ -223,6 +223,7 @@
                 console.log(this.Form.Language)
                 // this.$i18n.locale = this.Form.Language
                 // this.$store.dispatch("SetLocale", this.Form.Language)
+                this.$store.dispatch("SetLocale", this.Form.Language)
             },
         }
     }

@@ -4,7 +4,8 @@
     },
     "pages": {
         "auth": "Login",
-        "main": "Main Page",
+        "": "New Request",
+        "new": "New Request",
         "rent": "Rent a car & boat",
         "transfer": "Transfer",
         "about": "About Us",
@@ -13,10 +14,12 @@
         "cleaner": "Kuru Temizleme",
         "mansion": "Mansion",
         "assistant": "Asistan",
-        "requests": "İşlemler",
-        "property": "Mülk",
-        "secondary": "İkincil Kullanıcı",
-        "settings": "Settings"
+        "requests": "Requests",
+        "property": "Property",
+        "secondary": "Secondary USer",
+        "settings": "Settings",
+        "newUser": "New User",
+        "logout": "LogOut"
     },
     "OrderTypes": {
         "1": "Konaklama",
@@ -24,7 +27,7 @@
         "3": "Rent a Car & Boat",
         "4": "Restaurant",
         "5": "Kuru Temizleme",
-        "6": "Aktiviteler",
+        "6": "Activities",
         "7": "Asistan"
     },
     "OrderStatus": {
@@ -86,7 +89,7 @@
         },
         "submitSignUp": "Login",
         "submitReset": "Reset Your Password",
-        "submitForgetton": "I Forgat my password",
+        "submitForgetton": "I forgot my password",
         "submitNotForgetton": "I Remember my password",
         "submitRegister": "Register",
         "UserName": {
@@ -122,13 +125,13 @@
             "required": "Please Enter Firstname"
         },
         "LastName": {
-            "title": "LastName:",
-            "placeholder": "Enter LastName",
-            "required": "Please Enter LastName"
+            "title": "Lastname:",
+            "placeholder": "Enter Lastname",
+            "required": "Please Enter Lastname"
         },
         "DateOfBirth": {
             "title": "BirthDate:",
-            "placeholder": "Plase pick BirthDate"
+            "placeholder": "Plase pick Birthdate"
         },
         "Address": {
             "title": "Adress:",
@@ -160,12 +163,16 @@
         "BeginDate": {
             "title": "Begin Date:",
             "placeholder": "Set Begin Date",
-            "required": "Please Set Begin Date"
+            "required": "Please Set Begin Date",
+            "dateMax": "Begindate should be before enddate",
+            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
         },
         "EndDate": {
             "title": "End Date:",
             "placeholder": "Set End Date",
-            "required": "Please Set End Date"
+            "required": "Please Set End Date",
+            "dateMin": "Begindate should be before enddate",
+            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
         },
         "submit": "Send",
         "reset": "Clear",

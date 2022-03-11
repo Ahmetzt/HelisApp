@@ -297,8 +297,14 @@
                                 type="date" 
                             ></b-form-input>
                             <div v-if="$v.Form.BeginDate.$dirty">
-                                <b-form-invalid-feedback :state="$v.Form.BeginDate.required">
+                                <b-form-invalid-feedback v-if="!$v.Form.BeginDate.required" :state="$v.Form.BeginDate.required">
                                     {{ $t('Auth.BeginDate.required') }}
+                                </b-form-invalid-feedback>
+                                <b-form-invalid-feedback v-else-if="!$v.Form.BeginDate.dateMax" :state="$v.Form.BeginDate.dateMax">
+                                    {{ $t('Auth.BeginDate.dateMax') }}
+                                </b-form-invalid-feedback>
+                                <b-form-invalid-feedback v-else-if="!$v.Form.BeginDate.isBusy" :state="$v.Form.BeginDate.isBusy">
+                                    {{ $t('Auth.BeginDate.busyRoom') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
@@ -318,8 +324,14 @@
                                 type="date" 
                             ></b-form-input>
                             <div v-if="$v.Form.EndDate.$dirty">
-                                <b-form-invalid-feedback :state="$v.Form.EndDate.required">
+                                <b-form-invalid-feedback v-if="!$v.Form.EndDate.required" :state="$v.Form.EndDate.required">
                                     {{ $t('Auth.EndDate.required') }}
+                                </b-form-invalid-feedback>
+                                <b-form-invalid-feedback v-else-if="!$v.Form.EndDate.dateMin" :state="$v.Form.EndDate.dateMin">
+                                    {{ $t('Auth.EndDate.dateMin') }}
+                                </b-form-invalid-feedback>
+                                <b-form-invalid-feedback v-else-if="!$v.Form.EndDate.isBusy" :state="$v.Form.EndDate.isBusy">
+                                    {{ $t('Auth.EndDate.busyRoom') }}
                                 </b-form-invalid-feedback>
                             </div>
                         </b-form-group>
@@ -355,6 +367,7 @@
                     Mail: '',
                     FirstName: '',
                     LastName: '',
+                    Language: 'tr',
                     DateOfBirth: null,
                     Address: '',
                     PhoneNumber: '',
@@ -379,6 +392,7 @@
             let locale = localStorage.getItem("Lang")
             if (locale != null) {
                 this.Lang = locale
+                this.Form.Language = this.Lang
                 this.$store.dispatch("SetLocale", this.Lang)
             }
         },
@@ -390,7 +404,7 @@
                         minLength: minLength (6),
                         isUnique(UserName) {
                             return UserName.length >= 6 ?
-                                 axios.get("User/CheckUserName?UserName=" + UserName)
+                                axios.get("User/CheckUserName?UserName=" + UserName)
                                     .then(response => { return response.data})
                                 : true
                         }
@@ -411,7 +425,7 @@
                         email,
                         isUnique(Mail) {
                             return Mail.length >= 6 ?
-                                 axios.get("User/CheckMail?Mail=" + Mail)
+                                axios.get("User/CheckMail?Mail=" + Mail)
                                     .then(response => { return response.data})
                                 : true
                         }
@@ -435,11 +449,29 @@
                         required: requiredIf(function() {
                             return this.IsDated;
                         }),
+                        dateMax(val, { EndDate }) {
+                            return EndDate != null && val > EndDate ? false : true
+                        },
+                        isBusy(PossessionId, BeginDate, EndDate) {
+                            return PossessionId > 0 && BeginDate != null && EndDate != null ?
+                                axios.get("User/CheckBusy?PossessionId=" + PossessionId + "&BeginDate=" + BeginDate + "&EndDate=" + EndDate)
+                                    .then(response => { return response.data})
+                                : true
+                        }
                     },
                     EndDate: {
                         required: requiredIf(function() {
                             return this.IsDated;
                         }),
+                        dateMin(val, { BeginDate }) {
+                            return BeginDate != null && val < BeginDate ? false : true
+                        },
+                        isBusy(PossessionId, BeginDate, EndDate) {
+                            return PossessionId > 0 && BeginDate != null && EndDate != null ?
+                                axios.get("User/CheckBusy?PossessionId=" + PossessionId + "&BeginDate=" + BeginDate + "&EndDate=" + EndDate)
+                                    .then(response => { return response.data})
+                                : true
+                        }
                     },
                 }
             }
@@ -500,6 +532,7 @@
                     Mail: '',
                     FirstName: '',
                     LastName: '',
+                    Language: 'tr',
                     DateOfBirth: null,
                     Address: '',
                     PhoneNumber: '',
@@ -529,7 +562,7 @@
                         // alert(JSON.stringify(this.Form))
                         this.Form.PhoneNumber = this.Form.PhoneNumber.replace(/\D/g,'')
                         this.$store.dispatch("Register", { ...this.Form })
-                            .then(() =>{
+                            .then(() => {
                                     this.User.email = this.Form.Mail
                                     this.User.password = this.Form.Password
                                     this.IsNew = false
@@ -557,6 +590,7 @@
             },
             setLanguage() {
                 // this.$i18n.locale = this.Form.Language
+                this.Form.Language = this.Lang
                 this.$store.dispatch("SetLocale", this.Lang)
             },
         }
