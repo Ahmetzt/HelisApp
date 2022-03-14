@@ -29,15 +29,7 @@
                         value="en" 
                         @change="setLanguage">
                     <label for="rd_tr"><flag iso="gb" /></label>
-                    <input 
-                        type="radio" 
-                        id="rd_ua" 
-                        name="Lang" 
-                        v-model="Lang" 
-                        class="loginLang-cb" 
-                        value="en" 
-                        @change="setLanguage">
-                    <label for="rd_ua"><flag iso="ua" /></label>
+                    
                 </div>
                 <hr>
                 <div v-if="!IsNew">
