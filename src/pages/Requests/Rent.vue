@@ -53,6 +53,7 @@
             <input 
                 type="date" 
                 class="formElement" 
+                :placeholder="RentOrder.BeginDate == null || RentOrder.BeginDate == '' ? 'Tarih Seçiniz' : ''" 
                 id="dateEnter" 
                 v-model="RentOrder.BeginDate"
                 @blur="$v.RentOrder.BeginDate.$touch()">
@@ -68,6 +69,7 @@
             <input 
                 type="date" 
                 class="formElement" 
+                :placeholder="RentOrder.EndDate == null || RentOrder.EndDate == '' ? 'Tarih Seçiniz' : ''" 
                 id="dateBack" 
                 v-model="RentOrder.EndDate"
                 @blur="$v.RentOrder.EndDate.$touch()">

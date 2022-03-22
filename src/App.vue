@@ -258,4 +258,37 @@
         flex-grow: 0 !important;
         margin-right: 20px;
     }
+
+    input[type=date], input[type=datetime-local], input[type=month], input[type=time] {
+        background-color: #fff;
+        border: 1px solid #ced4da;
+    }
+
+    .formElement input {
+        border: none;
+        box-sizing: border-box;
+        outline: 0;
+        padding: .75rem;
+        position: relative;
+        width: 100%;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+    
+    input[type="date"]:before, input[type="time"]:before {
+        color: lightgrey;
+        content: attr(placeholder) !important;
+        margin-right: 0.5em;
+    }
 </style>

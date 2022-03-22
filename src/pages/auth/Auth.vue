@@ -283,7 +283,7 @@
                             <b-form-input
                                 id="input-4"
                                 v-model="Form.BeginDate"
-                                :placeholder="$t('Auth.BeginDate.placeholder')"
+                                :placeholder="Form.BeginDate == null || Form.BeginDate == '' ? $t('Auth.BeginDate.placeholder') : ''" 
                                 :state="$v.Form.BeginDate.$dirty ? !$v.Form.BeginDate.$anyError : null"
                                 @blur="$v.Form.BeginDate.$touch()"
                                 type="date" 
@@ -310,7 +310,7 @@
                             <b-form-input
                                 id="input-41"
                                 v-model="Form.EndDate"
-                                :placeholder="$t('Auth.EndDate.placeholder')"
+                                :placeholder="Form.EndDate == null || Form.EndDate == '' ? $t('Auth.EndDate.placeholder') : ''" 
                                 :state="$v.Form.EndDate.$dirty ? !$v.Form.EndDate.$anyError : null"
                                 @blur="$v.Form.EndDate.$touch()"
                                 type="date" 

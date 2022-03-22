@@ -68,7 +68,7 @@
                 <input 
                     type="date" 
                     class="formElement" 
-                    placeholder="Tarih Seçiniz" 
+                    :placeholder="requestDate == null || requestDate == '' ? 'Tarih Seçiniz' : ''" 
                     id="dateEnter" 
                     v-model="requestDate"
                     @blur="$v.requestDate.$touch()">
@@ -84,7 +84,7 @@
                 <input 
                     type="time" 
                     class="formElement" 
-                    placeholder="Saat Seçiniz" 
+                    :placeholder="requestTime == null || requestTime == '' ? 'Saat Seçiniz' : ''" 
                     id="dateBack" 
                     v-model="requestTime"
                     @blur="$v.requestTime.$touch()">
@@ -167,10 +167,13 @@
 
 <style scoped>
     .formOneLine {
-        width: 80%;
+        width: 90%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin: 0px 0px 20px 75px;
+        margin: 0px 0px 20px 60px;
+        padding: 10px 25px;
+        background-color: #fff;
+        border: 1px solid #ced4da;
     }
 </style>

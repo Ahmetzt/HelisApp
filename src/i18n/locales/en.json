@@ -11,9 +11,9 @@
         "about": "About Us",
         "restaurant": "Restaurant",
         "activity": "Aktiviteler",
-        "cleaner": "Kuru Temizleme",
+        "cleaner": "Dry Cleaner",
         "mansion": "Mansion",
-        "assistant": "Asistan",
+        "assistant": "Assistant",
         "requests": "Requests",
         "property": "Property",
         "secondary": "Secondary USer",
@@ -22,58 +22,61 @@
         "logout": "LogOut"
     },
     "OrderTypes": {
-        "1": "Konaklama",
+        "1": "Mansion",
         "2": "Transfer",
         "3": "Rent a Car & Boat",
         "4": "Restaurant",
-        "5": "Kuru Temizleme",
+        "5": "Dry Cleaner",
         "6": "Activities",
-        "7": "Asistan"
+        "7": "Assistant"
     },
     "OrderStatus": {
-        "1": "Talep Oluşturuldu" , 
-        "2": "Bekliyor" , 
-        "3": "Teklif Sunuldu" , 
-        "4": "Teklif Kabul Edildi", 
-        "5": "Teklif Red Edildi" 
+        "1": "Request Created" , 
+        "2": "Waiting" , 
+        "3": "Request Sent" , 
+        "4": "Request Accepted", 
+        "5": "Request Rejected" 
     },
     "PossessionStatus": {
-        "1": "Müşteri Sahip" ,
-        "2": "Müşteri Sahip Kiralık" ,
-        "3": "Firma Sahip Satılık" ,
-        "4": "Firma Sahip Kiralık" ,
-        "5": "Firma Sahip Ziyaretlik" ,
-        "6": "Kullanım Dışı" 
+        "1": "Customer Owner" ,
+        "2": "Customer Rentable" ,
+        "3": "Corporation For Sale" ,
+        "4": "Corporation For Rent" ,
+        "5": "Corporation For Visitors" ,
+        "6": "Unused" 
     },
     "RentableStatus": {
         "1": "New Request" , 
-        "2": "Teklif Sunuldu" , 
-        "3": "Sözleşme Aşamasında" , 
+        "2": "Offer Submitted" , 
+        "3": "Contract Phase" , 
         "4": "Accepted" , 
         "5": "Rejected"
     },
     "NRauthorizedMessage": {
-        "mansion": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
-        "transfer": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
-        "rent": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
-        "restaurant": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
-        "cleaner": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
-        "activity": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
-        "assistant": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor"
+        "mansion": "You don't have permission to create a new Mansion request",
+        "transfer": "You don't have permission to create a new Transfer request",
+        "rent": "You don't have permission to create a new Rent a Vehicle request",
+        "restaurant": "You don't have permission to create a new Restaurant request",
+        "cleaner": "You don't have permission to create a new Dry Cleaning request",
+        "activity": "You don't have permission to create a new Activity request",
+        "assistant": "You don't have permission to create a new Assistant request"
     },
     "ErrorMsg": {
         "-100": "User not found",
-        "-110": "Kullanıcı Aktif Değil",
-        "-120": "Session Süresi Doldu",
-        "-130": "Kullanıcı Yetkiye Sahip Değil",
+        "-110": "User is not active",
+        "-120": "Session time out",
+        "-130": "User is not authorized",
 
         "-200": "User or password not found",
-        "-210": "Pasif Kullanıcı",
+        "-210": "Inactive user",
         "-220": "Kabul",
 
-        "-300": "Bu sayfaya girmeye yetkiniz bulunmamaktadır",
+        "-300": "You are not allowed to enter page",
 
-        "-900": "API hatası"
+        "-500": "The Room is not available between selected dates",
+        "-510": "The Property is not available between selected dates",
+
+        "-900": "API error"
     },
     "Login": {
         "mail": "E-"
@@ -177,5 +180,8 @@
         "submit": "Send",
         "reset": "Clear",
         "cancel": "Cancel"
+    },
+    "Request": {
+
     }
 }

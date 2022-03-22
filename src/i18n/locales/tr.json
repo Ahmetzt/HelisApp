@@ -177,5 +177,13 @@
         "submit": "Gönder",
         "reset": "Temizle",
         "cancel": "İptal"
+    },
+    "Request": {
+        "warning": {
+            
+        },
+        "label": {
+
+        }
     }
 }

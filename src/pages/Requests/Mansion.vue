@@ -32,6 +32,7 @@
                 <input 
                     type="date" 
                     class="formElement" 
+                    :placeholder="searchData.BeginDate == null || searchData.BeginDate == '' ? 'Tarih Seçiniz' : ''" 
                     id="dateEnter" 
                     v-model="searchData.BeginDate"
                     @blur="$v.searchData.BeginDate.$touch()">
@@ -47,6 +48,7 @@
                 <input 
                     type="date" 
                     class="formElement" 
+                    :placeholder="searchData.EndDate == null || searchData.EndDate == '' ? 'Tarih Seçiniz' : ''" 
                     id="dateBack" 
                     v-model="searchData.EndDate"
                     @blur="$v.searchData.EndDate.$touch()">
