@@ -3,41 +3,39 @@
         <img src="../../assets/requests/rent.jpg" alt="boat" class="requestImage">
         <div class="form-group formControl formControlFE">
             <label class="formLabel"> 
-                <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereden</strong> </label>
-            <select 
-                class="form-control formElement" 
-                v-model="$v.selectedLocation.$model" 
-                @blur="$v.selectedLocation.$touch()"
-                @change="locationSelected">
-                <option selected disabled value=-1>İl veya İlçe Seçiniz</option>
-                <option 
-                    :disabled="location.count == 0"
-                    :value="location.IlceId + '_' + location.IlId"
-                    :IlId="location.IlId"
-                    :IlceId="location.IlceId"
-                    v-for="location in getLocations"
-                    :key="location.RowId">
-                    {{ location.Ilce.length > 0 ? location.Ilce + ", " : "" }} {{ location.Il }}</option>
-            </select>
-            <div v-if="$v.selectedLocation.$dirty">
-                <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
-                    Lütfen Lokasyon Seçiniz
-                </small>
-            </div>
-
+                <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Lokasyon</strong> </label>
+            <input 
+                type="text" 
+                class="form-control formElement"
+                v-model="getSessionDetail.CurrentLocation"
+                disabled
+            >
         </div>
         <div class="form-group formControl">
             <label class="formLabel"> 
-                <i class="fa fa-ship faclass fa-lg"></i> <strong>Araç</strong> </label>
+                <i class="fa fa-random faclass fa-lg"></i> <strong>Araç Türü</strong> </label>
+            <label class="formRadio">
+                <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="1"/>
+                <i class="fa fa-car faclass fa-lg"></i> Araç
+            </label>    
+            <label class="formRadio">
+                <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="2"/>
+                <i class="fa fa-ship faclass fa-lg"></i> Bot
+            </label>
+        </div>
+        <div class="form-group formControl">
+            <label class="formLabel"> 
+                <span v-show="VehicleType == 2" ><i class="fa fa-ship faclass fa-lg"></i> <strong>Bot</strong></span> 
+                <span v-show="VehicleType == 1" ><i class="fa fa-car faclass fa-lg"></i> <strong>Araç</strong></span>  </label>
             <select 
                 class="form-control formElement" 
                 v-model="$v.selectedVehicle.$model" 
                 @blur="$v.selectedVehicle.$touch()">
-                <option selected disabled value=-1>Araç veya Bot Seçiniz</option>
+                <option selected disabled value=-1>{{ VehicleType == 1 ? 'Araç Seçiniz' : VehicleType == 2 ? 'Bot Seçiniz' : '' }}</option>
                 <option 
                     :disabled="vehicle.count == 0"
                     :value="vehicle.VehicleId"
-                    v-for="vehicle in getVehicles"
+                    v-for="vehicle in getVehiclesByType(VehicleType == 1 ? 'Araç' : VehicleType == 2 ? 'Tekne' : '')"
                     :key="vehicle.VehicleId">
                     {{ vehicle.Model }}</option>
             </select>
@@ -49,7 +47,7 @@
         </div>
         <div class="form-group formControl">
             <label class="formLabel"> 
-                <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>Giriş Tarihi</strong> </label>
+                <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>Kiralama Başlangıç Tarihi</strong> </label>
             <input 
                 type="date" 
                 class="formElement" 
@@ -65,7 +63,7 @@
         </div>
         <div class="form-group formControl">
             <label class="formLabel"> 
-                <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>Çıkış Tarihi</strong> </label>
+                <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>Kiralama Bitiş Tarihi</strong> </label>
             <input 
                 type="date" 
                 class="formElement" 
@@ -105,17 +103,11 @@
                     BeginDate : null,
                     EndDate: null,
                     ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
-                }
+                },
+                VehicleType: 1,
             }
         },
         validations: {
-            selectedLocation: {
-                required,
-                minValue: 0,
-                checked(val, vm) {
-                    return vm.selectedLocation === -1 ? false : true
-                }
-            },
             selectedVehicle: {
                 required,
                 minValue: 0,
@@ -133,8 +125,7 @@
             }
         },
         computed: {
-            ...mapGetters(["getLocations"]),
-            ...mapGetters(["getVehicles"]),
+            ...mapGetters(["getLocations", "getVehicles", "getSessionDetail", "getVehiclesByType"]),
         },
         methods: {
             locationSelected() {
@@ -147,6 +138,10 @@
                 this.RentOrder.FromToType = 1
 
                 this.$store.dispatch("SetRentOrder", { ...this.RentOrder })
+            },
+            changeType() {
+                this.selectedVehicle = -1
+                this.$v.selectedVehicle.$reset()
             }
         }
     }

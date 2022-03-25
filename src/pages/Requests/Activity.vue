@@ -6,12 +6,9 @@
                 <tbody>
                     <tr v-for="activity in getActivityType" :key="activity.ActivityTypeId" @click="ActivitySelected(activity)">
                         <td class="align-middle text-center" style="position: relative;">
-                            <img :src="require(`../../assets/activityType/${activity.ImageUrl}`)" :alt="activity.Name" border=3 class="listImage">
+                            <img :src="require(`../../../../images/activityType/${activity.ImageUrl}`)" :alt="activity.Name" border=3 class="listImage">
                             <div style="position: absolute; right: 16px; bottom: 8px; color: white; font-size: xxx-large;"><strong> {{ activity.Name }} </strong></div>
                         </td>
-                        <!-- <td colspan="2"  class="align-middle text-center">
-                            <strong style="float: left; margin-left: 5px"> {{ activity.Name }} </strong>
-                            <i aria-hidden="true" class="fa fa-arrow-circle-right me-2" style="float: right;"></i> </td> -->
                     </tr>
                 </tbody>
             </table>

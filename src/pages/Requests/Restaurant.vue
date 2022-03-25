@@ -24,7 +24,7 @@
             <img src="../../assets/requests/restaurant.jpg" alt="restaurant" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel">       
-                    <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Tarih</strong> </label>
+                    <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Rezervasyon Tarihi</strong> </label>
                 <input 
                     type="date" 
                     class="formElement" 
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group formControl">
                 <label class="formLabel">       
-                    <i class="fa fa-clock faclass fa-lg"></i> <strong>Saat</strong> </label>
+                    <i class="fa fa-clock faclass fa-lg"></i> <strong>Rezervasyon Saati</strong> </label>
                 <input 
                     type="time" 
                     class="formElement" 

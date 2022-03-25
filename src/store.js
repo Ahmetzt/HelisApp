@@ -13,6 +13,8 @@ const store = new Vuex.Store({
         SessionKey: "",
         BookingId: null,
         PossessionId: null,
+        CurrentPossession: null,
+        CurrentLocation: null,
         Lang: "tr",
         locations: [],
         airports: [],
@@ -72,7 +74,9 @@ const store = new Vuex.Store({
             state.loginUserId = data.UserId
             state.BookingId = data.BookingId
             state.PossessionId = data.PossessionId
+            state.CurrentPossession = parseInt(data.BookingId) || parseInt(data.PossessionId)
             state.Lang = data.Lang
+            state.CurrentLocation = data.CurrentLocation
         },
         clearSession(state) {
             state.loginUserId = null
@@ -125,6 +129,8 @@ const store = new Vuex.Store({
             localStorage.removeItem("UserId")
             localStorage.removeItem("BookingId")
             localStorage.removeItem("PossessionId")
+            localStorage.removeItem("CurrentPossession")
+            localStorage.removeItem("CurrentLocation")
             localStorage.removeItem("Lang")
         },
         SetLanguage(state, locale) {
@@ -159,13 +165,15 @@ const store = new Vuex.Store({
                         if(response.data) {
                             let SessionData = {}
                             
-                            SessionData.RoleId =        localStorage.getItem("RoleId")
-                            SessionData.Session =       localStorage.getItem("Session")
-                            SessionData.UserId =        localStorage.getItem("UserId")
-                            SessionData.BookingId =     localStorage.getItem("BookingId")
-                            SessionData.PossessionId =  localStorage.getItem("PossessionId")
-                            SessionData.Lang =          localStorage.getItem("Lang")
-                            i18n.locale =               localStorage.getItem("Lang")
+                            SessionData.RoleId =            localStorage.getItem("RoleId")
+                            SessionData.Session =           localStorage.getItem("Session")
+                            SessionData.UserId =            localStorage.getItem("UserId")
+                            SessionData.BookingId =         localStorage.getItem("BookingId")
+                            SessionData.PossessionId =      localStorage.getItem("PossessionId")
+                            SessionData.CurrentPossession = parseInt(localStorage.getItem("BookingId")) || parseInt(localStorage.getItem("PossessionId"))
+                            SessionData.CurrentLocation =   localStorage.getItem("CurrentLocation")
+                            SessionData.Lang =              localStorage.getItem("Lang")
+                            i18n.locale =                   localStorage.getItem("Lang")
                             
                             commit("setSession", SessionData)
 
@@ -211,6 +219,8 @@ const store = new Vuex.Store({
                     localStorage.setItem("UserId", data.UserId)
                     localStorage.setItem("BookingId", data.BookingId)
                     localStorage.setItem("PossessionId", data.PossessionId)
+                    localStorage.setItem("CurrentPossession", parseInt(data.BookingId) || parseInt(data.PossessionId))
+                    localStorage.setItem("CurrentLocation", data.CurrentLocation)
                     localStorage.setItem("Lang", data.Lang)
                     commit("setSession", data)
                     router.push("/")
@@ -383,7 +393,7 @@ const store = new Vuex.Store({
         SetMansionOrder({ state, dispatch }, MansionOrder) {
             //Hotel Seçili İsteği gönder
             axios.post("Set/AddMansionOrder?" + "MansionId=" + MansionOrder.MansionId + "&BeginDate=" + MansionOrder.BeginDate + "&EndDate=" + MansionOrder.EndDate + 
-                "&Adults=" + MansionOrder.Adults + "&Kids=" + MansionOrder.Kids + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                "&Adults=" + MansionOrder.Adults + "&Kids=" + MansionOrder.Kids + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
                 
@@ -399,8 +409,9 @@ const store = new Vuex.Store({
             })
         },
         SetTransferOrder({ state, dispatch }, TransferOrder) {
-            axios.post("Set/AddTransferOrder?" + "Description='" + TransferOrder.Description + "'&IlId=" + TransferOrder.IlId + "&IlceId=" + TransferOrder.IlceId + 
-                "&AirportId=" + TransferOrder.AirportId + "&Adults=" + TransferOrder.Adults + "&Kids=" + TransferOrder.Kids + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+            axios.post("Set/AddTransferOrder?" + "Description=" + TransferOrder.Description + "&AirportId=" + TransferOrder.AirportId + "&Adults=" + TransferOrder.Adults + 
+                "&Kids=" + TransferOrder.Kids + "&FromToType=" + TransferOrder.FromToType + "&RequestDate=" + TransferOrder.RequestDate + 
+                "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
 
@@ -416,8 +427,8 @@ const store = new Vuex.Store({
             })
         },
         SetRentOrder({ state, dispatch }, RentOrder) {
-            axios.post("Set/AddRentOrder?" + "VehicleId=" + RentOrder.VehicleId + "&IlId=" + RentOrder.IlId + "&IlceId=" + RentOrder.IlceId + "&BeginDate=" + RentOrder.BeginDate + 
-                "&EndDate=" + RentOrder.EndDate + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+            axios.post("Set/AddRentOrder?" + "VehicleId=" + RentOrder.VehicleId + "&BeginDate=" + RentOrder.BeginDate + "&EndDate=" + RentOrder.EndDate + 
+                "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
                 
@@ -434,7 +445,7 @@ const store = new Vuex.Store({
         },
         SetRestaurantOrder({ state, dispatch }, RestaurantOrder) {
             axios.post("Set/AddRestaurantOrder?" + "RestaurantId=" + RestaurantOrder.RestaurantId + "&RequestDate=" + RestaurantOrder.RequestDate + 
-                "&Adults=" + RestaurantOrder.Adults + "&Kids=" + RestaurantOrder.Kids + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                "&Adults=" + RestaurantOrder.Adults + "&Kids=" + RestaurantOrder.Kids + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
                 
@@ -451,7 +462,8 @@ const store = new Vuex.Store({
         },
         SetActivityOrder({ state, dispatch }, ActivityOrder) {
             axios.post("Set/AddActivityOrder?" + "ActivityTypeId=" + ActivityOrder.ActivityTypeId + "&IlId=" + ActivityOrder.IlId + "&IlceId=" + ActivityOrder.IlceId + 
-                "&RequestDate=" + ActivityOrder.RequestDate + "&Adults=" + ActivityOrder.Adults + "&Kids=" + ActivityOrder.Kids + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                "&RequestDate=" + ActivityOrder.RequestDate + "&Adults=" + ActivityOrder.Adults + "&Kids=" + ActivityOrder.Kids + "&PossessionId=" + state.CurrentPossession + 
+                "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
                 
@@ -467,8 +479,8 @@ const store = new Vuex.Store({
             })
         },
         SetAssistantOrder({ state, dispatch }, AssistantOrder) {
-            axios.post("Set/AddAssistantOrder?" + "AssistantTypeId=" + AssistantOrder.AssistantTypeId + "&IlId=" + AssistantOrder.IlId + "&IlceId=" + AssistantOrder.IlceId + 
-                "&RequestDate=" + AssistantOrder.RequestDate + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+            axios.post("Set/AddAssistantOrder?" + "AssistantTypeId=" + AssistantOrder.AssistantTypeId + "&RequestDate=" + AssistantOrder.RequestDate + 
+                "&PossessionId=" + state.CurrentPossession + "&Note=" + AssistantOrder.Note + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
                 
@@ -485,7 +497,7 @@ const store = new Vuex.Store({
         },
         SetCleanerOrder({ state, dispatch }, CleanerOrder) {
             axios.post("Set/AddCleanerOrder?" + "WomanMan=" + CleanerOrder.WomanMan + "&HomeTextiles=" + CleanerOrder.HomeTextiles + "&ChildProduct=" + CleanerOrder.ChildProduct + 
-                "&RequestDate=" + CleanerOrder.RequestDate + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                "&RequestDate=" + CleanerOrder.RequestDate + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
             .then(response => {
                 let data = response.data;
                 
@@ -501,23 +513,13 @@ const store = new Vuex.Store({
             })
         },
         
-        Register({ commit }, registerData ) {
+        Register(registerData ) {
             return axios.post("Session/Register?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 
                 "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + 
                 "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
                 "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId + 
                 "&BeginDate=" + registerData.BeginDate +"&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info + 
                 "&IsApproved=" + registerData.IsApproved)
-            .then(response => {
-                let data = response.data;
-                
-                localStorage.setItem("RoleId", data.RoleId)
-                localStorage.setItem("Session", data.Session)
-                localStorage.setItem("UserId", data.UserId)
-                localStorage.setItem("BookingId", data.BookingId)
-                localStorage.setItem("PossessionId", data.PossessionId)
-                commit("setSession", data)
-            })
         },
         RegisterSecondary({ dispatch, state }, registerData ) {
             return axios.post("User/RegisterSecondary?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 
@@ -677,9 +679,15 @@ const store = new Vuex.Store({
             return state.SessionKey !== ""
         },
         getSessionDetail(state) {
-            return { roleId: state.roleId, SessionKey: state.SessionKey, 
-                loginUserId: state.loginUserId, BookingId: state.BookingId, 
-                PossessionId: state.PossessionId,}
+            return { 
+                roleId: state.roleId, 
+                SessionKey: state.SessionKey, 
+                loginUserId: state.loginUserId, 
+                BookingId: state.BookingId, 
+                PossessionId: state.PossessionId, 
+                CurrentPossession: state.CurrentPossession,
+                CurrentLocation: state.CurrentLocation
+            }
         },
         isResultPage(state) {
             return state.isResult
@@ -692,6 +700,9 @@ const store = new Vuex.Store({
         },
         getVehicles(state) {
             return state.vehicles;
+        },
+        getVehiclesByType: state => Type => {
+            return state.vehicles.filter(e => e.Type == Type);
         },
         getRestaurants(state) {
             return state.restaurants;

@@ -14,35 +14,18 @@
                 <br>
                 <small>Detaylı açıklama burada yer almaktadır wait and see :)
                 </small>
-            </div>
-
-            
+            </div>            
         </div>
         <div v-else>
             <img :src="require(`../../../../images/asistantType/jpg/${selectedAssistant.ImageUrl}`)" :alt="selectedAssistant.Description" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
                     <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereye</strong> </label>
-                <select 
-                    class="form-control formElement" 
-                    v-model="$v.selectedLocation.$model" 
-                    @blur="$v.selectedLocation.$touch()"
-                    @change="locationSelected">
-                    <option selected disabled value=-1>İl veya İlçe Seçiniz</option>
-                    <option 
-                        :disabled="location.count == 0"
-                        :value="location.IlceId + '_' + location.IlId"
-                        :IlId="location.IlId"
-                        :IlceId="location.IlceId"
-                        v-for="location in getLocations"
-                        :key="location.RowId">
-                        {{ location.Ilce.length > 0 ? location.Ilce + ", " : "" }} {{ location.Il }}</option>
-                </select>
-                <div v-if="$v.selectedLocation.$dirty">       
-                    <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
-                        Lütfen Lokasyon Seçiniz
-                    </small>
-                </div>
+                <input 
+                    type="text" 
+                    class="form-control formElement"
+                    v-model="getSessionDetail.CurrentLocation"
+                    disabled>
             </div>
             <div class="form-group formControl">
                 <label class="formLabel">       
@@ -76,9 +59,23 @@
                     </small>
                 </div>
             </div>
+            <div class="form-group formControl">
+                <label class="formLabel">       
+                    <i class="fa fa-info faclass fa-lg"></i> <strong>Detay</strong> </label>
+                <input 
+                    class="formElement" 
+                    v-model="AssistantOrder.Note"
+                    placeholder="Problemi Yazınız"
+                >
+            </div>
             <div class="button-container d-flex  flex-column align-items-center buttonControl">
                 <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setAssistantOrder" :disabled="$v.$invalid">
                     Talep Oluştur
+                </button>
+            </div>
+            <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="selectedAssistant.Description == 'Destek'">
+                <button type="submit" class="btn btn-block mb-2 button-green">
+                    <i class="fa fa-phone faclass fa-lg"></i> Canlı Desteğe Ulaşın
                 </button>
             </div>
         </div>
@@ -107,18 +104,12 @@
                     IlId : null,
                     IlceId: null,
                     RequestDate : null,
+                    Note: '', 
                     ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
                 }
             }
         },
         validations: {
-            selectedLocation: {
-                required,
-                minValue: 0,
-                checked(val, vm) {
-                    return vm.selectedLocation === -1 ? false : true
-                }
-            },
             requestDate: {
                 required
             },
@@ -136,8 +127,7 @@
             eventBus.$off('returnBack');
         },
         computed: {
-            ...mapGetters(["getLocations"]),
-            ...mapGetters(["getAssistantType"]),
+            ...mapGetters(["getLocations", "getAssistantType", "getSessionDetail"]),
         },
         methods: {
             AssistanSelected(assistant) {

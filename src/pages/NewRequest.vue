@@ -44,49 +44,49 @@
 
                 switch (pageName) {
                     case "mansion":
-                        if (Session.BookingId > 0 || Session.PossessionId > 0) {
+                        if (Session.BookingId <= 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))
                         }
                         break;
                     case "transfer":
-                        if (Session.BookingId < 0 || Session.PossessionId < 0) {
+                        if (Session.CurrentPossession > 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))
                         }
                         break;
                     case "rent":
-                        if (Session.BookingId < 0 || Session.PossessionId < 0) {
+                        if (Session.CurrentPossession > 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))
                         }
                         break;
                     case "restaurant":
-                        if (Session.BookingId < 0 || Session.PossessionId < 0) {
+                        if (Session.CurrentPossession > 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))
                         }
                         break;
                     case "cleaner":
-                        if (Session.BookingId < 0 || Session.PossessionId < 0) {
+                        if (Session.CurrentPossession > 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))
                         }
                         break;
                     case "activity":
-                        if (Session.BookingId < 0 || Session.PossessionId < 0) {
+                        if (Session.CurrentPossession > 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))
                         }
                         break;
                     case "assistant":
-                        if (Session.BookingId < 0 || Session.PossessionId < 0) {
+                        if (Session.CurrentPossession > 0) {
                             this.$router.push({path: '/' + pageName});
                         } else {
                             this.openModal(this.$t(`NRauthorizedMessage.${pageName}`))

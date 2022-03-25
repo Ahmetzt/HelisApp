@@ -27,7 +27,7 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     body {
         font-size: xx-large !important;
         background-color: #f6f6f6;
@@ -45,6 +45,13 @@
         color: #fff;
         background-color: #007bff;
         border-color: #007bff;
+        font-size: xx-large;
+        height: 100px;
+    }
+    .button-green {
+        color: #fff;
+        background-color: #7cd840;
+        border-color: #7cd840;
         font-size: xx-large;
         height: 100px;
     }
@@ -117,6 +124,7 @@
         margin-bottom: 20px;
         margin-left: 60px;
         padding: 15px;
+        border: 1px solid #ced4da;
     }
 
     .formDDL {
@@ -131,6 +139,42 @@
     .formCB {
         width: 25px;
         height: 25px;
+    }
+   
+    input[type="radio"] {
+        -webkit-appearance: none;
+        appearance: none;
+
+        color: currentColor;
+        width: 1.15em;
+        height: 1.15em;
+        border: 0.15em solid currentColor;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+
+        display: grid;
+        place-content: center;
+    }
+
+    input[type="radio"]::before {
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em var(--form-control-color);
+        background-color: CanvasText;
+    }
+
+    input[type="radio"]:checked::before {
+        transform: scale(1);
+    }
+
+    .formRadio {
+        margin-left:60px;
+        display: flex;
+        gap: 20px;
     }
 
     .faclass {
@@ -242,7 +286,6 @@
 
     .myimage {
         background-color: white;
-        /* width: 70%; */
         padding: 50px;
         height: 80%;
     }
@@ -271,6 +314,8 @@
         padding: .75rem;
         position: relative;
         width: 100%;
+        background-color: #fff;
+        border: 1px solid #ced4da;
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
@@ -285,10 +330,48 @@
         top: 0;
         width: auto;
     }
-    
+
     input[type="date"]:before, input[type="time"]:before {
         color: lightgrey;
         content: attr(placeholder) !important;
         margin-right: 0.5em;
+    }
+
+    .formMoving {
+        display: flex;
+        gap: 2px;
+        margin-top: -85px;
+        background-color: #f6f6f6;
+
+        //Flex Direction
+        &-upSide {
+            flex-direction: column;
+        }
+
+        &-downSide {
+            flex-direction: column-reverse;
+        }
+
+        & > * {
+            position: relative;
+            background-color: #f6f6f6;
+        }
+
+        &-Between {
+            display: flex;
+            flex-direction: row;
+            margin: 0 20px 0px 60px;
+        }
+
+        &-Line {
+            border-top: 3px solid #E3E0DB;
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        &-Button {
+            background-color: #f6f6f6;
+            font-size: 30px;
+        }
     }
 </style>
