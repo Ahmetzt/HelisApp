@@ -63,6 +63,15 @@
         margin: 0 auto;
     }
     
+    .rightFloat {
+        float: right;
+    }
+    
+    .leftFloat {
+        float: left; 
+        margin-left: 5px;
+    }
+
     .formControl {
         /* border: 1px solid black; */
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;
@@ -80,6 +89,39 @@
         background-color: #f6f6f6;
     }
 
+    .formAssistant {
+        background: none;
+        box-shadow: none;
+        max-width: 94%;
+        margin: -85px auto 5px !important;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .formAssistantImage {
+        background-color: white;
+        padding: 70px;
+        height: 350px;
+    }
+
+    .formAssistantButton {
+        box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+        background-color: white;
+        width: 48%;
+        margin-bottom: 40px;
+    }
+
+    .activityTD {
+        position: relative;
+        padding: 0 !important;
+        border: none;
+    }
+
+    .activityText {
+        position: absolute; right: 16px; bottom: 8px; color: white; font-size: xxx-large;
+    }
     .requestImage {
         width: 100%; 
         height: 25vh; 
@@ -90,6 +132,7 @@
         width: 100%; 
         height: 21vh; 
         object-fit: cover;
+        margin-bottom: 5px;
     }
 
     .buttonControl {
@@ -108,6 +151,12 @@
         padding: 0;
         max-width: 100%;
         margin: auto;
+    }
+
+    .request-container {
+        padding: 0;
+        width: 100%;
+        margin: 0;
     }
 
     .formLabel {
@@ -342,6 +391,7 @@
         gap: 2px;
         margin-top: -85px;
         background-color: #f6f6f6;
+        position: relative;
 
         //Flex Direction
         &-upSide {

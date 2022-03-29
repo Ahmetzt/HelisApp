@@ -2,7 +2,7 @@
     RewriteEngine On
     RewriteBase /
     RewriteCond %{ENV:HTTPS} !on [NC]
-    RewriteRule ^(.*)$ http://192.168.1.24:7700/$1 [R,L]
+    RewriteRule ^(.*)$ http://192.168.1.63:7700/$1 [R,L]
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule . index.html [L]

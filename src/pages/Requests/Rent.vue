@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <img src="../../assets/requests/rent.jpg" alt="boat" class="requestImage">
         <div class="form-group formControl formControlFE">
             <label class="formLabel"> 

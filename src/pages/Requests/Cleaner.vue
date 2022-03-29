@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <div>
             <img src="../../assets/requests/cleaner.jpg" alt="kurutemizleme" class="requestImage">
-            <div class="form-group formControl">
+            <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
                     <i class="fas fa-user-circle faclass fa-lg"></i>&nbsp; 
                     <label for="cbWM"><strong>&nbsp;Kadın & Erkek</strong></label> 

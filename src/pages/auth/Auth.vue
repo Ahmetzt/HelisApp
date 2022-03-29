@@ -58,7 +58,7 @@
                             <span class="loginErSpan" v-show="IsError">
                                 {{ LoginError }}
                             </span>
-                            <a href="#" @click.prevent="IsUser=!IsUser" class="text-secondary" style="display: none">
+                            <a href="#" @click.prevent="IsUser=!IsUser" class="text-secondary d-none">
                                 {{ IsUser ? 'Üye değilim' : 'Üyeliğim var'}}
                             </a>
                             <a href="#" @click.prevent="IsForgotten=!IsForgotten" class="text-secondary">
@@ -328,9 +328,9 @@
                             </div>
                         </b-form-group>
 
-                        <b-button type="submit" variant="primary" style="margin-right: 5px;"> {{ $t('Auth.submit') }} </b-button>
-                        <b-button type="reset" variant="warning" style="margin-right: 5px;"> {{ $t('Auth.reset') }} </b-button>
-                        <b-button variant="danger" style="margin-right: 5px;" @click="onCancel"> {{ $t('Auth.cancel') }} </b-button>
+                        <b-button type="submit" variant="primary" class="rightFloat"> {{ $t('Auth.submit') }} </b-button>
+                        <b-button type="reset" variant="warning" class="rightFloat"> {{ $t('Auth.reset') }} </b-button>
+                        <b-button variant="danger" class="rightFloat" @click="onCancel"> {{ $t('Auth.cancel') }} </b-button>
                     </b-form>
                 </div>
             </div>

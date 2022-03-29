@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <div v-if="!isSearched">
             <img src="../../assets/requests/konaklama.jpg" alt="konaklama" class="requestImage">
             <div class="form-group formControl formControlFE">

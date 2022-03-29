@@ -153,9 +153,9 @@
                         ></b-form-input>
                     </b-form-group>
                     
-                    <b-button type="submit" variant="primary" style="margin-right: 5px;">Gönder</b-button>
-                    <b-button type="reset" variant="warning" style="margin-right: 5px;" v-if="isNew">Temizle</b-button>
-                    <b-button variant="danger" style="margin-right: 5px;" @click="onCancel">İptal</b-button>
+                    <b-button type="submit" variant="primary" class="rightFloat">Gönder</b-button>
+                    <b-button type="reset" variant="warning" class="rightFloat" v-if="isNew">Temizle</b-button>
+                    <b-button variant="danger" class="rightFloat" @click="onCancel">İptal</b-button>
                 </b-form>
             </div>
             <div v-else>

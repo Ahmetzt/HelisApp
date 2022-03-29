@@ -1,13 +1,13 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <div v-if="!isSelected" class="tableRestaurant">
             <table class="table table-hover table-striped table-bordered" v-if="getRestaurants.length > 0">
                 <tbody>
                     <tr v-for="restaurant in getRestaurants" :key="restaurant.RestaurantId" @click="restaurantSelected(restaurant)">
                         <!-- <td class="align-middle text-center" height=220 width=220><img :src="require(`../../assets/restaurants/${restaurant.ImageUrl}`)" alt="" border=3 height=200 width=200></td> -->
                         <td colspan="2"  class="align-middle text-center">
-                            <strong style="float: left; margin-left: 5px"> {{ restaurant.Name }} </strong>
-                            <i aria-hidden="true" class="fa fa-arrow-circle-right me-2" style="float: right;"></i> </td>
+                            <strong class="leftFloat"> {{ restaurant.Name }} </strong>
+                            <i aria-hidden="true" class="fa fa-arrow-circle-right me-2 rightFloat"></i> </td>
                     </tr>
                 </tbody>
             </table>
@@ -21,7 +21,8 @@
             
         </div>
         <div v-else>
-            <img src="../../assets/requests/restaurant.jpg" alt="restaurant" class="requestImage">
+            <!-- <img src="../../assets/requests/restaurant.jpg" alt="restaurant" class="requestImage"> -->
+            <img :src="require(`../../../../images/restaurants/${selectedRestaurant.ImageUrl}`)" :alt="selectedRestaurant.Name" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel">       
                     <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Rezervasyon Tarihi</strong> </label>
@@ -107,7 +108,7 @@
     export default {
         data() {
             return {
-                selectedRestaurant: -1,
+                selectedRestaurant: {},
                 isSelected: false,
                 requestDate: null,
                 requestTime: null,
@@ -164,13 +165,14 @@
                 this.RestaurantOrder.Kids = this.RestaurantOrder.Kids < 0 ? 0 : this.RestaurantOrder.Kids
             },
             restaurantSelected(Restaurant) {
-                this.selectedRestaurant = Restaurant.RestaurantId
+                // this.selectedRestaurant = Restaurant.RestaurantId
+                this.selectedRestaurant = Object.assign(Restaurant)
                 this.isSelected = true
                 eventBus.$emit('submitPage')
                 eventBus.$emit('updateHeaderText', Restaurant.Name)
             },
             setRestaurantOrder() {
-                this.RestaurantOrder.RestaurantId = this.selectedRestaurant
+                this.RestaurantOrder.RestaurantId = this.selectedRestaurant.RestaurantId
                 this.RestaurantOrder.RequestDate = this.requestDate + " " + this.requestTime
 
                 this.$store.dispatch("SetRestaurantOrder", { ...this.RestaurantOrder })

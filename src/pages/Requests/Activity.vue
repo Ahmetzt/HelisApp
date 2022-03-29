@@ -1,13 +1,12 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <div v-if="!isSelected">
-            
             <table class="table" v-if="getActivityType.length > 0">
                 <tbody>
                     <tr v-for="activity in getActivityType" :key="activity.ActivityTypeId" @click="ActivitySelected(activity)">
-                        <td class="align-middle text-center" style="position: relative;">
+                        <td class="activityTD">
                             <img :src="require(`../../../../images/activityType/${activity.ImageUrl}`)" :alt="activity.Name" border=3 class="listImage">
-                            <div style="position: absolute; right: 16px; bottom: 8px; color: white; font-size: xxx-large;"><strong> {{ activity.Name }} </strong></div>
+                            <div class=activityText><strong> {{ activity.Name }} </strong></div>
                         </td>
                     </tr>
                 </tbody>

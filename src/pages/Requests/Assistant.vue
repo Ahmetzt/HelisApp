@@ -1,13 +1,11 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <div v-if="!isSelected">
             <img src="../../assets/requests/assistant.jpg" alt="Asistan" class="requestImage">
                 
-            <div class="row formControl formControlFE" v-if="getAssistantType.length > 0" style="background: none; box-shadow: none; max-width: 97%">
-                <div style="width: 100%">
-                    <button class="mybutton" style="height: 60%;" v-for="assistant in getAssistantType" :key="assistant.AssistantTypeId" @click="AssistanSelected(assistant)">
-                        <img class="myimage" :src="require(`../../../../images/asistantType/png/${assistant.PNGUrl}`)" :alt="assistant.Description"></button>
-                </div>
+            <div class="formControl formAssistant" v-if="getAssistantType.length > 0" >
+                    <button class="formAssistantButton" v-for="assistant in getAssistantType" :key="assistant.AssistantTypeId" @click="AssistanSelected(assistant)">
+                        <img class="formAssistantImage" :src="require(`../../../../images/asistantType/png/${assistant.PNGUrl}`)" :alt="assistant.Description"></button>
             </div>
             <div class="alert alert-warning" v-else>
                 <strong>Bir Asistan Görüntülenemiyor</strong>
@@ -27,7 +25,7 @@
                     v-model="getSessionDetail.CurrentLocation"
                     disabled>
             </div>
-            <div class="form-group formControl">
+            <div class="form-group formControl" v-if="!isSupport">
                 <label class="formLabel">       
                     <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Tarih</strong> </label>
                 <input 
@@ -43,7 +41,7 @@
                     </small>
                 </div>
             </div>
-            <div class="form-group formControl">
+            <div class="form-group formControl" v-if="!isSupport">
                 <label class="formLabel">       
                     <i class="fa fa-clock faclass fa-lg"></i> <strong>Saat</strong> </label>
                 <input 
@@ -61,19 +59,24 @@
             </div>
             <div class="form-group formControl">
                 <label class="formLabel">       
-                    <i class="fa fa-info faclass fa-lg"></i> <strong>Detay</strong> </label>
+                    <i class="fa fa-info faclass fa-lg"></i> <strong>Mesajınız</strong> </label>
                 <input 
                     class="formElement" 
                     v-model="AssistantOrder.Note"
-                    placeholder="Problemi Yazınız"
-                >
+                    placeholder="Mesajınızı Yazınız"
+                    @blur="$v.AssistantOrder.Note.$touch()">
+                <div v-if="$v.AssistantOrder.Note.$dirty">
+                    <small v-if="!$v.AssistantOrder.Note.required" class="form-text text-danger">
+                        Lütfen Not Giriniz
+                    </small>
+                </div>
             </div>
             <div class="button-container d-flex  flex-column align-items-center buttonControl">
                 <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setAssistantOrder" :disabled="$v.$invalid">
                     Talep Oluştur
                 </button>
             </div>
-            <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="selectedAssistant.Description == 'Destek'">
+            <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="isSupport">
                 <button type="submit" class="btn btn-block mb-2 button-green">
                     <i class="fa fa-phone faclass fa-lg"></i> Canlı Desteğe Ulaşın
                 </button>
@@ -83,9 +86,9 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
-    import {required} from "vuelidate/lib/validators"
-    import {eventBus} from "../../main"
+    import { mapGetters } from "vuex";
+    import { requiredIf } from "vuelidate/lib/validators"
+    import { eventBus } from "../../main"
 
     export default {
         data() {
@@ -111,10 +114,21 @@
         },
         validations: {
             requestDate: {
-                required
+                required: requiredIf(function() {
+                    return !this.isSupport;
+                }),
             },
             requestTime: {
-                required
+                required: requiredIf(function() {
+                    return !this.isSupport;
+                }),
+            },
+            AssistantOrder: {
+                Note: {
+                    required: requiredIf(function() {
+                        return this.isSupport;
+                    }),
+                }
             },
         },
         created() {
@@ -128,15 +142,27 @@
         },
         computed: {
             ...mapGetters(["getLocations", "getAssistantType", "getSessionDetail"]),
+            isSupport() {
+                return this.selectedAssistant.Description == "Destek" ? true : false
+            }
         },
         methods: {
             AssistanSelected(assistant) {
                 this.selectedAssistant.AssistantTypeId = assistant.AssistantTypeId
                 this.selectedAssistant.ImageUrl = assistant.ImageUrl
                 this.selectedAssistant.Description = assistant.Description
+                this.CleanSelection();
                 this.isSelected = true
                 eventBus.$emit('submitPage')
                 eventBus.$emit('updateHeaderText', assistant.Description)
+            },
+            CleanSelection() {
+
+                this.requestDate = null
+                this.requestTime = null
+                this.AssistantOrder.AssistantTypeId = null
+                this.AssistantOrder.RequestDate = null
+                this.AssistantOrder.Note = ''
             },
             locationSelected() {
                 this.AssistantOrder.IlceId = this.selectedLocation.split('_')[0]

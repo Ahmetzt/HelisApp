@@ -5,28 +5,25 @@
         class="navbar-dark"
     > 
         <b-navbar-nav v-if="!isHome">
-            <!-- <router-link class="nav-link" :to="backPath" style="border: none; background-color: #1A2A32;" ref="backPath">
-                <i class="fa fa-chevron-left me-2" aria-hidden="true"></i>
-            </router-link> -->
             <b-button class="nav-item" variant="dark" @click="returnBack">
-                <a class="nav-link" style="border: none; background-color: #1A2A32;">
+                <a class="nav-link nav-brand">
                     <i class="fa fa-chevron-left me-2" aria-hidden="true"></i>
                 </a>
             </b-button> 
         </b-navbar-nav>
         <b-navbar-brand class="mx-auto" v-else>
-            <router-link class="navbar-brand me-5" to="/new" style="border: none; background-color: #1A2A32;">
-                <img class="img-fluid" style="width: 100%;" alt="logo" src="../assets/helisLogoWhite.png"/>
+            <router-link class="navbar-brand nav-brand me-5" to="/new">
+                <img class="img-fluid fullWidth" alt="logo" src="../assets/helisLogoWhite.png"/>
             </router-link>
         </b-navbar-brand>
         <b-navbar-nav v-if="!isHome">
-            <b-nav-text style="padding: 16px">{{urlText}}</b-nav-text>
+            <b-nav-text class="nav-text">{{urlText}}</b-nav-text>
         </b-navbar-nav>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
             <!-- Right aligned nav items -->
-            <b-navbar-nav style="margin-left: auto; margin-right: 10px; align-items: center; border-top: azure solid; margin-top: 20px;">
+            <b-navbar-nav class="nav-main">
                 <b-button name="hakkimizda" class="nav-item" variant="dark" >
                     <router-link class="nav-link" to="/about">
                         <i class="fa fa-briefcase me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.about') }}
@@ -167,6 +164,19 @@
         font-size: xx-large !important;
     }
 
+    .nav-main {
+        margin-left: auto; 
+        margin-right: 10px; 
+        align-items: center; 
+        border-top: azure solid; 
+        margin-top: 20px;
+    }
+
+    .nav-brand {
+        border: none; 
+        background-color: #1A2A32;
+    }
+
     .router-link-active {
         border: 1px solid white;
         border-radius: 30px;
@@ -183,5 +193,13 @@
 
     .custom-toggler.navbar-toggler {
         border-color: rgb(255,102,203);
-    } 
+    }
+    
+    .fullWidth {
+        width: 100%;
+    }
+    
+    .nav-text {
+        padding: 16px
+    }
 </style>

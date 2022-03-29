@@ -128,7 +128,7 @@
                 ></b-form-input>
             </b-form-group>
             
-            <b-button type="submit" variant="primary" style="margin-right: 5px;">Gönder</b-button>
+            <b-button type="submit" variant="primary" class="rightFloat">Gönder</b-button>
         </b-form>
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="request-container">
         <img src="../../assets/requests/transfer.jpg" alt="transfer" class="requestImage">
         
         <div :class="FromToClass">
@@ -167,13 +167,6 @@
             }
         },
         validations: {
-            // selectedLocation: {
-            //     required,
-            //     minValue: 0,
-            //     checked(val, vm) {
-            //         return vm.selectedLocation === -1 ? false : true
-            //     }
-            // },
             selectedAirport: {
                 required,
                 minValue: 0,
