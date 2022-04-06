@@ -10,13 +10,13 @@
         "transfer": "Transfer",
         "about": "About Us",
         "restaurant": "Restaurant",
-        "activity": "Aktiviteler",
+        "activity": "Activities",
         "cleaner": "Dry Cleaner",
         "mansion": "Mansion",
         "assistant": "Assistant",
         "requests": "Requests",
         "property": "Property",
-        "secondary": "Secondary USer",
+        "secondary": "Secondary User",
         "settings": "Settings",
         "newUser": "New User",
         "logout": "LogOut"
@@ -51,6 +51,22 @@
         "3": "Contract Phase" , 
         "4": "Accepted" , 
         "5": "Rejected"
+    },
+    "AssistantType": {
+        "technical": "Technical Services",
+        "cleaning": "Cleaning Services",
+        "secretary": "Secretary",
+        "landscape": "Landscape",
+        "support": "Support"
+    },
+    "ActivityType": {
+        "aquatics": "Aquatics",
+        "paragliding": "Paragliding",
+        "spa": "SPA",
+        "yoga": "YOGA",
+        "atv": "ATV Tour",
+        "yacht": "Yacht Trip",
+        "adventure": "Adventure Tour"
     },
     "NRauthorizedMessage": {
         "mansion": "You don't have permission to create a new Mansion request",
@@ -168,20 +184,110 @@
             "placeholder": "Set Begin Date",
             "required": "Please Set Begin Date",
             "dateMax": "Begindate should be before enddate",
-            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
+            "busyRoom": "Room is not available between selected dates"
         },
         "EndDate": {
             "title": "End Date:",
             "placeholder": "Set End Date",
             "required": "Please Set End Date",
             "dateMin": "Begindate should be before enddate",
-            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
+            "busyRoom": "Room is not available between selected dates"
         },
         "submit": "Send",
         "reset": "Clear",
         "cancel": "Cancel"
     },
     "Request": {
-
+        "warning": {
+            "noActivity": "Activity was not found",
+            "noActivityDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noAssistant": "Assistant was not found",
+            "noAssistantDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noMansion": "Mansion is not available",
+            "noMansionDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noRestaurant": "Restaurant is not available",
+            "noRestaurantDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noLocation": "Please choose location",
+            "noAirport": "Please choose airport",
+            "noDate": "Please set date",
+            "noBeginDate": "Please set begin date",
+            "noEndDate": "Please set end date",
+            "noTime": "Please set time",
+            "adultObliged": "At least 1 adult required",
+            "noNote": "Please enter comment",
+            "noProduct": "Please add minimum 1 product",
+            "noVehicle": "Please choose boat or vehicle"
+        },
+        "label": {
+            "toWhere": "To",
+            "fromWhere": "From",
+            "date": "Date",
+            "beginDate": "Check-in",
+            "endDate": "Check-out",
+            "rentBeginDate": "Rent check-in",
+            "rentEndDate": "Rent check-out",
+            "time": "Time",
+            "reservationDate": "Booking Date",
+            "reservationTime": "Booking Time",
+            "people": "Guest",
+            "adult": "Adults:",
+            "kid": "Kids:",
+            "close": "Close",
+            "newRequest": "Send Request",
+            "selectPeople": "Select guest",
+            "note": "Your comments",
+            "liveSupport": "Contact to live support",
+            "productWM": "Women & men",
+            "productHT": "Home textiles",
+            "productCP": "Child products",
+            "location": "Location",
+            "hotelSearch": "Search room",
+            "vehicle": "Vehicle",
+            "boat": "Boat",
+            "vehicleType": "Vehicle type"
+        },
+        "placeholder": {
+            "selectLocation": "Select location",
+            "selectAirport": "Pick airport",
+            "date": "Set Date",
+            "time": "Set Time",
+            "people": "Select passenger",
+            "note": "Write your comment",
+            "selectVehicle": "Vehicle",
+            "selectBoat": "Boat"
+        },
+        "text": {
+            "activityResult": "Your request has been successfully created. Our assistants will contact you soon.",
+            "assistantResult": "Your request has been successfully created. Our assistants will contact you soon.",
+            "cleanerResult": "Your request has been successfully created. Our assistants will contact you soon.",
+            "rentResult": "Your request has been successfully created. Our assistants will contact you soon.",
+            "restaurantResult": "Your request has been successfully created. Our assistants will contact you soon.",
+            "transferResult": "Your request has been successfully created. Our assistants will contact you soon.",
+            "mansionResult": "Your mansion request has been successfully created for <b>#Mansion#</b> between #BeginDate# - #EndDate# dates. Our assistants will contact you soon."
+        }
+    },
+    "Property": {
+        "Info": {
+            "Hotel": "HOtel",
+            "Block": "Block",
+            "No": "No",
+            "Info": "Info",
+            "Rentable": "Rentable"
+        },
+        "Rent": {
+            "NewRentable": "New Rent",
+            "Add": "Add",
+            "NoUsedDays": "No Used Days",
+            "ApproveRent": "I Confirm the Rental Outside the Specified Dates",
+            "Send": "Send",
+            "ApproveSent": "Your Rental Permit Transaction has been recorded.",
+            "RequestDate": "Request Date",
+            "Finishing": "Last Record",
+            "NoDates": "Dates",
+            "RentHistory": "Rent History",
+            "Index": "Index",
+            "User": "User",
+            "DateSpan": "Dates"
+        }
     }
 }

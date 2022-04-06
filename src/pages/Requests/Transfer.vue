@@ -1,31 +1,11 @@
 <template>
     <div class="request-container">
-        <img src="../../assets/requests/transfer.jpg" alt="transfer" class="requestImage">
+        <img src="../../../../images/requests/jpg/transfer.jpg" alt="transfer" class="requestImage">
         
         <div :class="FromToClass">
             <div class="">
                 <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ FromTo ? "Nereden" : "Nereye" }}</strong> </label>
-                <!-- <select 
-                    class="form-control formElement" 
-                    v-model="$v.selectedLocation.$model" 
-                    @blur="$v.selectedLocation.$touch()"
-                    @change="locationSelected">
-                    <option selected disabled value=-1>İl veya İlçe Seçiniz</option>
-                    <option 
-                        :disabled="location.count == 0"
-                        :value="location.IlceId + '_' + location.IlId"
-                        :IlId="location.IlId"
-                        :IlceId="location.IlceId"
-                        v-for="location in getLocations"
-                        :key="location.RowId">
-                        {{ location.Ilce.length > 0 ? location.Ilce + ", " : "" }} {{ location.Il }}</option>
-                </select>
-                <div v-if="$v.selectedLocation.$dirty">       
-                    <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
-                        Lütfen Lokasyon Seçiniz
-                    </small>
-                </div> -->
+                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ FromTo ? $t('Request.label.fromWhere') : $t('Request.label.toWhere') }}</strong> </label>
                 <input 
                     type="text" 
                     class="form-control formElement"
@@ -33,6 +13,9 @@
                     disabled>
             </div>
             <div class="formMoving-Between">
+                <div class="formMoving-Dotted">
+
+                </div>
                 <div class="formMoving-Line">
 
                 </div>
@@ -42,12 +25,12 @@
             </div>
             <div class="">
                 <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ FromTo ? "Nereye" : "Nereden" }}</strong> </label>
+                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ FromTo ? $t('Request.label.toWhere') : $t('Request.label.fromWhere') }}</strong> </label>
                 <select 
                     class="form-control formElement" 
                     v-model="$v.selectedAirport.$model" 
                     @blur="$v.selectedAirport.$touch()">
-                    <option selected disabled value=-1>Hava Limanı Seçiniz</option>
+                    <option selected disabled value=-1>{{ $t('Request.placeholder.selectAirport') }}</option>
                     <option 
                         :disabled="airport.count == 0"
                         :value="airport.AirportId"
@@ -59,58 +42,64 @@
                 </select>
                 <div v-if="$v.selectedAirport.$dirty">       
                     <small v-if="!$v.selectedAirport.checked" class="form-text text-danger">
-                        Lütfen Havalimanı Seçiniz
+                        {{ $t('Request.warning.noAirport') }}
                     </small>
                 </div>
             </div>
         </div>
-        <div class="form-group formControl">
-            <label class="formLabel">       
-                <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Tarih</strong> </label>
-            <input 
-                type="date" 
-                class="formElement" 
-                :placeholder="requestDate == null || requestDate == '' ? 'Tarih Seçiniz' : ''" 
-                id="dateEnter" 
-                v-model="requestDate"
-                @blur="$v.requestDate.$touch()">
-            <div v-if="$v.requestDate.$dirty">
-                <small v-if="!$v.requestDate.required" class="form-text text-danger">
-                    Lütfen Saat Seçiniz
-                </small>
+        
+        <div class="formTwoCols">
+            <div class="form-group formControl formTwoCols-inner">
+                <label class="formLabel">       
+                    <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.date') }}</strong> </label>
+                <input 
+                    type="date" 
+                    class="formElement" 
+                    :placeholder="requestDate == null || requestDate == '' ? $t('Request.placeholder.date') : ''" 
+                    id="dateEnter" 
+                    v-model="requestDate"
+                    @blur="$v.requestDate.$touch()">
+                <div v-if="$v.requestDate.$dirty">
+                    <small v-if="!$v.requestDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noDate') }}
+                    </small>
+                </div>
             </div>
-        </div>
-        <div class="form-group formControl">
-            <label class="formLabel">       
-                <i class="fa fa-clock faclass fa-lg"></i> <strong>Saat</strong> </label>
-            <input 
-                type="time" 
-                class="formElement" 
-                :placeholder="requestTime == null || requestTime == '' ? 'Saat Seçiniz' : ''" 
-                id="dateBack" 
-                v-model="requestTime"
-                @blur="$v.requestTime.$touch()">
-            <div v-if="$v.requestTime.$dirty">
-                <small v-if="!$v.requestTime.required" class="form-text text-danger">
-                    Lütfen Saat Seçiniz
-                </small>
+
+            <div class="form-group formControl formTwoCols-inner">
+                <label class="formLabel">       
+                    <i class="fa fa-clock faclass fa-lg"></i> <strong>{{ $t('Request.label.time') }}</strong> </label>
+                <input 
+                    type="time" 
+                    class="formElement" 
+                    :placeholder="requestTime == null || requestTime == '' ? $t('Request.placeholder.time') : ''" 
+                    id="dateBack" 
+                    v-model="requestTime"
+                    @blur="$v.requestTime.$touch()">
+                <div v-if="$v.requestTime.$dirty">
+                    <small v-if="!$v.requestTime.required" class="form-text text-danger">
+                        {{ $t('Request.warning.noTime') }}
+                    </small>
+                </div>
             </div>
+
         </div>
+
         <div class="form-group formControl">
             <label class="formLabel"> 
-                <i class="fa fa-user-alt faclass fa-lg"></i> <strong>Kişi Sayısı</strong> </label>
-            <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : "Kişi Sayısı Seçiniz" }}</b-button>
+                <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
+            <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
             <div v-if="$v.TransferOrder.Adults.$dirty">
                 <small v-if="!$v.TransferOrder.Adults.minValue" class="form-text text-danger">
-                    En Az 1 Yetişkin olmalıdır
+                    {{ $t('Request.warning.adultObliged') }}
                 </small>
             </div>
             <b-modal id="mdlCustomer" title="BootstrapVue" hide-header hide-footer dialog-class="mydialogclass">
-                <p>Kişi Seçimi</p>
+                <p>{{ $t('Request.label.selectPeople') }}</p>
                     <div class="myDiv">
                         <table class="mytable2">
                             <tr>
-                                <td colspan="3"><label> <strong>Yetişkin:</strong> </label></td>
+                                <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
                                 <td><button @click="changeVisitor('adult', -1)">
                                         <i class="fa fa-minus faclass fa-lg"></i></button>
                                     <label > {{ TransferOrder.Adults }} </label>
@@ -118,7 +107,7 @@
                                         <i class="fa fa-plus faclass fa-lg"></i></button></td>
                             </tr>
                             <tr>
-                                <td colspan="3"><label> <strong>Çocuk:</strong> </label></td>
+                                <td colspan="3"><label> <strong>{{ $t('Request.label.kid') }}</strong> </label></td>
                                 <td><button @click="changeVisitor('Kids', -1)">
                                         <i class="fa fa-minus faclass fa-lg"></i></button>
                                     <label> {{ TransferOrder.Kids }} </label>
@@ -128,12 +117,12 @@
                         </table>
                     </div>
                     
-                <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">Kapat</b-button>
+                <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">{{ $t('Request.label.close') }}</b-button>
             </b-modal>
         </div>
         <div class="button-container d-flex  flex-column align-items-center buttonControl">
             <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setTransferOrder" :disabled="$v.$invalid">
-                Talep Oluştur
+                {{ $t('Request.label.newRequest') }}
             </button>
         </div>
     </div>
@@ -161,7 +150,7 @@
                     Kids: 0,
                     FromToType: 1,
                     RequestDate : null,
-                    ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
+                    ResultText: ""
                 },
                 FromTo: true
             }
@@ -190,10 +179,11 @@
         computed: {
             ...mapGetters(["getLocations", "getAirports", "getSessionDetail"]),
             visitorText() {
-                return (this.TransferOrder.Adults > 0 ? " Yetişkin: " + this.TransferOrder.Adults : "") + (this.TransferOrder.Kids > 0 ? " Çocuk: " + this.TransferOrder.Kids : "")
+                return (this.TransferOrder.Adults > 0 ? " " + this.$t('Request.label.adult') + " " + this.TransferOrder.Adults : "") + 
+                    (this.TransferOrder.Kids > 0 ? " " + this.$t('Request.label.kid') + " " + this.TransferOrder.Kids : "")
             },
             FromToClass() {
-                return 'formControl formMoving' + (this.FromTo ? ' formMoving-upSide': ' formMoving-downSide')
+                return 'formControl formMoving formControlFE' + (this.FromTo ? ' formMoving-upSide': ' formMoving-downSide')
             }
         },
         methods: {
@@ -219,6 +209,7 @@
                 this.TransferOrder.AirportId = this.selectedAirport
                 this.TransferOrder.FromToType = this.FromTo ? 1 : 2
                 this.TransferOrder.RequestDate = this.requestDate + " " + this.requestTime
+                this.TransferOrder.ResultText = this.$t('Request.text.transferResult')
 
                 this.$store.dispatch("SetTransferOrder", { ...this.TransferOrder })
             }

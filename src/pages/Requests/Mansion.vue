@@ -1,16 +1,16 @@
 <template>
     <div class="request-container">
         <div v-if="!isSearched">
-            <img src="../../assets/requests/konaklama.jpg" alt="konaklama" class="requestImage">
+            <img src="../../../../images/requests/jpg/konaklama.jpg" alt="konaklama" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereye</strong> </label>
+                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
                 <select 
                     class="form-control formElement" 
                     v-model="$v.selectedLocation.$model" 
                     @blur="$v.selectedLocation.$touch()"
                     @change="locationSelected">
-                    <option selected disabled value=-1>İl veya İlçe Seçiniz</option>
+                    <option selected disabled value=-1>{{ $t('Request.placeholder.selectLocation') }}</option>
                     <option 
                         :disabled="location.count == 0"
                         :value="location.IlceId + '_' + location.IlId"
@@ -22,59 +22,69 @@
                 </select>
                 <div v-if="$v.selectedLocation.$dirty">
                     <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
-                        Lütfen Lokasyon Seçiniz
+                        {{ $t('Request.warning.noLocation') }}
                     </small>
                 </div>
             </div>
-            <div class="form-group formControl">
-                <label class="formLabel"> 
-                    <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>Giriş Tarihi</strong> </label>
-                <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="searchData.BeginDate == null || searchData.BeginDate == '' ? 'Tarih Seçiniz' : ''" 
-                    id="dateEnter" 
-                    v-model="searchData.BeginDate"
-                    @blur="$v.searchData.BeginDate.$touch()">
-                <div v-if="$v.searchData.BeginDate.$dirty">
-                    <small v-if="!$v.searchData.BeginDate.required" class="form-text text-danger">
-                        Lütfen Giriş Tarihi Seçiniz
-                    </small>
+            
+            <div :class="FromToClass">
+                <div class="form-group">
+                    <label class="formLabel"> 
+                        <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.beginDate') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="searchData.BeginDate == null || searchData.BeginDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateEnter" 
+                        v-model="searchData.BeginDate"
+                        @blur="$v.searchData.BeginDate.$touch()">
+                    <div v-if="$v.searchData.BeginDate.$dirty">
+                        <small v-if="!$v.searchData.BeginDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noBeginDate') }}
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group formControl">
-                <label class="formLabel"> 
-                    <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>Çıkış Tarihi</strong> </label>
-                <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="searchData.EndDate == null || searchData.EndDate == '' ? 'Tarih Seçiniz' : ''" 
-                    id="dateBack" 
-                    v-model="searchData.EndDate"
-                    @blur="$v.searchData.EndDate.$touch()">
-                <div v-if="$v.searchData.EndDate.$dirty">
-                    <small v-if="!$v.searchData.EndDate.required" class="form-text text-danger">
-                        Lütfen Çıkış Tarihi Seçiniz
-                    </small>
-                </div>
-            </div>
+                <div class="formMoving-Between">
+                    <div class="formMoving-Line">
 
+                    </div>
+                    <b-button class="formMoving-Button" @click="FromTo = !FromTo">
+                        <b-icon icon="arrow-down-up" aria-hidden="true"></b-icon>
+                    </b-button>
+                </div>
+                <div class="form-group">
+                    <label class="formLabel"> 
+                        <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.endDate') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="searchData.EndDate == null || searchData.EndDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateBack" 
+                        v-model="searchData.EndDate"
+                        @blur="$v.searchData.EndDate.$touch()">
+                    <div v-if="$v.searchData.EndDate.$dirty">
+                        <small v-if="!$v.searchData.EndDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noEndDate') }}
+                        </small>
+                    </div>
+                </div>
+            </div>
             <div class="form-group formControl">
                 <label class="formLabel"> 
-                       <i class="fa fa-user-alt faclass fa-lg"></i> <strong>Kişi Sayısı</strong> </label>
-                <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : "Kişi Sayısı Seçiniz" }}</b-button>
+                       <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
+                <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
                 <div v-if="$v.searchData.Adults.$dirty">
                     <small v-if="!$v.searchData.Adults.minValue" class="form-text text-danger">
-                        En Az 1 Yetişkin olmalıdır
+                        {{ $t('Request.warning.adultObliged') }}
                     </small>
                 </div>
 
-                <b-modal id="mdlCustomer" title="Kişi Seçimi" hide-header hide-footer dialog-class="mydialogclass">
-                    <p>Kişi Seçimi</p>
+                <b-modal id="mdlCustomer" hide-header hide-footer dialog-class="mydialogclass">
+                    <p>{{ $t('Request.label.selectPeople') }}</p>
                         <div class="myDiv">
                             <table class="mytable2">
                                 <tr>
-                                    <td colspan="3"><label> <strong>Yetişkin:</strong> </label></td>
+                                    <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
                                     <td><button @click="changeVisitor('adult', -1)">
                                             <i class="fa fa-minus faclass fa-lg"></i></button>
                                         <label > {{ searchData.Adults }} </label>
@@ -92,13 +102,13 @@
                             </table>
                         </div>
                         
-                    <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">Kapat</b-button>
+                    <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">{{ $t('Request.label.close') }}</b-button>
                 </b-modal>
             </div>
 
             <div class="button-container d-flex  flex-column align-items-center buttonControl" @blur="$v.searchData.EndDate.$touch()">
                 <button type="submit" class="btn btn-block mb-2 button-yellow" @click="onSearched" :disabled="$v.$invalid">
-                    Hotel Ara
+                    {{ $t('Request.label.hotelSearch') }}
                 </button>
             </div>
 
@@ -117,9 +127,9 @@
                 </tbody>
             </table>
             <div class="alert alert-warning" v-else>
-                <strong>Henüz Burada Bir Kayıt Bulamadık</strong>
+                <strong>{{ $t('Request.warning.noMansion') }}</strong>
                 <br>
-                <small>Detaylı açıklama burada yer almaktadır wait and see :)
+                <small>{{ $t('Request.warning.noMansionDetail') }}
                 </small>
             </div>
         </div>
@@ -150,8 +160,9 @@
                     EndDate: null,
                     Adults: 0,
                     Kids: 0,
-                    ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
-                }
+                    ResultText: ""
+                },
+                FromTo: true,
             }
         },
         validations: {
@@ -187,8 +198,12 @@
             ...mapGetters(["getLocations"]),
             ...mapGetters(["getMansionsByLocation"]),
             visitorText() {
-                return (this.searchData.Adults > 0 ? " Yetişkin: " + this.searchData.Adults : "") + (this.searchData.Kids > 0 ? " Çocuk: " + this.searchData.Kids : "")
-            }
+                return (this.searchData.Adults > 0 ? " " + this.$t('Request.label.adult') + " " + this.searchData.Adults : "") + 
+                    (this.searchData.Kids > 0 ? " " + this.$t('Request.label.kid') + " " + this.searchData.Kids : "")
+            },
+            FromToClass() {
+                return 'formControl formMoving' + (this.FromTo ? ' formMoving-upSide': ' formMoving-downSide')
+            },
         },
         methods: {
             changeVisitor(type, number) {
@@ -219,8 +234,8 @@
                 this.MansionOrder.EndDate = this.searchData.EndDate
                 this.MansionOrder.Adults = this.searchData.Adults
                 this.MansionOrder.Kids = this.searchData.Kids
-                this.MansionOrder.ResultText = "<b>" + Mansion.Name + "</b>" + " için " + this.searchData.BeginDate + " - " + 
-                    this.searchData.BeginDate + " tarihli konaklama talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
+                this.MansionOrder.ResultText = this.$t('Request.text.mansionResult').replace('#Mansion#', Mansion.Name)
+                    .replace('#BeginDate#', this.searchData.BeginDate).replace('#EndDate#', this.searchData.EndDate)
 
                 this.$store.dispatch("SetMansionOrder", { ...this.MansionOrder })
             }

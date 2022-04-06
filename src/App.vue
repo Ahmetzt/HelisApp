@@ -29,30 +29,31 @@
 
 <style lang="scss">
     body {
-        font-size: xx-large !important;
+        font-size: 40px !important;
         background-color: #f6f6f6;
-        font-family: poppins;
+        font-family: 'SF Pro Display';
+        // font-family: auto;
     }
     
     .button-yellow {
         color: #fff;
         background-color: #D6B761;
         border-color: #D6B761;
-        font-size: xx-large;
+        font-size: 40px;
         height: 100px;
     }
     .button-blue {
         color: #fff;
         background-color: #007bff;
         border-color: #007bff;
-        font-size: xx-large;
+        font-size: 40px;
         height: 100px;
     }
     .button-green {
         color: #fff;
         background-color: #7cd840;
         border-color: #7cd840;
-        font-size: xx-large;
+        font-size: 40px;
         height: 100px;
     }
     .bg-menu {
@@ -73,20 +74,20 @@
     }
 
     .formControl {
-        /* border: 1px solid black; */
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;
         padding: 5px;
-        font-size: xx-large !important;
+        font-size: 40px !important;
         margin-bottom: 20px;
         padding-left: 3%;
         margin-left: 3%;
-        max-width: 94%
+        max-width: 94%;
+        background-color: #fff;
     }
 
     .formControlFE {
-        margin-top: -85px; 
+        margin-top: 40px; 
         position: relative; 
-        background-color: #f6f6f6;
+        background-color: #fff;
     }
 
     .formAssistant {
@@ -120,12 +121,17 @@
     }
 
     .activityText {
-        position: absolute; right: 16px; bottom: 8px; color: white; font-size: xxx-large;
+        position: absolute; 
+        right: 16px; 
+        bottom: 8px; 
+        color: white; 
+        font-size: 50px;
     }
     .requestImage {
         width: 100%; 
         height: 25vh; 
         object-fit: cover;
+        display: none;
     }
 
     .listImage {
@@ -136,11 +142,14 @@
     }
 
     .buttonControl {
-        margin-top: 50px;
+        margin-top: 70px;
         margin-left: 3%;
         max-width: 94%;
-        font-size: xx-large !important;
 
+        & > * {
+            padding: 30px;
+            height: 100%;
+        }
     }
 
     .form-group {
@@ -163,17 +172,29 @@
         margin-top: 20px;
         margin-bottom: 20px;
         margin-left: 10px;
-        font-size: xx-large !important;
+        font-size: 40px !important;
     }
 
     .formElement {
-        width: 90%;
-        font-size: xx-large !important;
+        width: calc(100% - 80px);
+        font-size: 40px !important;
         height: auto;
         margin-bottom: 20px;
         margin-left: 60px;
         padding: 15px;
         border: 1px solid #ced4da;
+    }
+
+    .formTwoCols {
+        display: flex;
+        flex-direction: row;
+        width: 97%;
+        background: none;
+
+        &-inner {
+            width: 47%;
+            background-color: #fff;
+        }
     }
 
     .formDDL {
@@ -330,13 +351,27 @@
         padding: 0;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         background-color: white;
-        height: 47%;
+        height: 22%;
+        aspect-ratio: 1 / 1;
+        justify-content: space-evenly;
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .myimage {
         background-color: white;
         padding: 50px;
         height: 80%;
+    }
+
+    .menuImage {
+        height: 30%;
+    }
+
+    .menuP {
+        font-weight: 700;
     }
 
     .tableRestaurant {
@@ -389,8 +424,7 @@
     .formMoving {
         display: flex;
         gap: 2px;
-        margin-top: -85px;
-        background-color: #f6f6f6;
+        background-color: #fff;
         position: relative;
 
         //Flex Direction
@@ -404,13 +438,22 @@
 
         & > * {
             position: relative;
-            background-color: #f6f6f6;
+            // background-color: #fff;
+            background: none;
         }
 
         &-Between {
             display: flex;
             flex-direction: row;
             margin: 0 20px 0px 60px;
+        }
+
+        &-Dotted {
+                border-left: 8px dotted #000;
+                margin-left: -34px;
+                margin-top: -130px;
+                position: absolute;
+                height: 205px;
         }
 
         &-Line {
@@ -420,7 +463,7 @@
         }
 
         &-Button {
-            background-color: #f6f6f6;
+            background-color: #fff;
             font-size: 30px;
         }
     }

@@ -21,9 +21,12 @@
         </b-navbar-nav>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav>
+        <b-collapse id="nav-collapse" v-model="showCollapse" is-nav>
             <!-- Right aligned nav items -->
             <b-navbar-nav class="nav-main">
+                <b-button class="nav-close" @click="showCollapse = false">
+                    <i class="far fa-times-circle me-2" aria-hidden="true"></i>
+                </b-button>
                 <b-button name="hakkimizda" class="nav-item" variant="dark" >
                     <router-link class="nav-link" to="/about">
                         <i class="fa fa-briefcase me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.about') }}
@@ -78,6 +81,7 @@
                 backPath: "/new",
                 isHome: true,
                 isSubmitted: false,
+                showCollapse: false,
             }
         },
         methods: {
@@ -116,6 +120,7 @@
                 handler(to, from) {
                     console.log(from)
                     // document.title = to.meta.title || 'Some Default Title';
+                    this.showCollapse = false
                     this.isHome = false
                     this.isSubmitted = false
                     if (to.fullPath == '/' || to.fullPath == '/new') {
@@ -146,6 +151,20 @@
     .navbar-nav {
         text-decoration: none;
         font-weight: 600;
+        align-items: start !important;
+    }
+    
+    .navbar-collapse {
+        position: fixed;
+        left: 50%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #1A2A32;
+        z-index: 1;
+        padding: 25px 40px;
+        box-shadow: -5px 0px 10px #0000008e;
+        height: auto !important;
     }
 
     .navbar-text {
@@ -153,7 +172,7 @@
     }
 
     .navbar-toggler, .nav .navbar-nav, .nav-collapse {
-        font-size: xxx-large !important;
+        font-size: 50px !important;
     }
 
     .nav-item {
@@ -161,14 +180,22 @@
         text-align: center;
         color: inherit;
         background-color: #1A2A32;
-        font-size: xx-large !important;
+        font-size: 40px !important;
+        border: none;
+    }
+
+    .nav-close {
+        background-color: #1A2A32;
+        font-size: 60px !important;
+        border: none;
+        align-self: end;
+        margin-bottom: 50px;
     }
 
     .nav-main {
         margin-left: auto; 
         margin-right: 10px; 
         align-items: center; 
-        border-top: azure solid; 
         margin-top: 20px;
     }
 
@@ -177,14 +204,15 @@
         background-color: #1A2A32;
     }
 
-    .router-link-active {
-        border: 1px solid white;
-        border-radius: 30px;
-        background-color: #1a4a8d;
-    }
-
     .nav-link {
         color: white !important;
+    }
+
+    .router-link-active {
+        /* border: 1px solid white;
+        border-radius: 30px;
+        background-color: #1a4a8d; */
+        color: #D9BA63 !important;
     }
 
     .custom-toggler .navbar-toggler-icon {

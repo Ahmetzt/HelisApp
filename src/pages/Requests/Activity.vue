@@ -6,15 +6,15 @@
                     <tr v-for="activity in getActivityType" :key="activity.ActivityTypeId" @click="ActivitySelected(activity)">
                         <td class="activityTD">
                             <img :src="require(`../../../../images/activityType/${activity.ImageUrl}`)" :alt="activity.Name" border=3 class="listImage">
-                            <div class=activityText><strong> {{ activity.Name }} </strong></div>
+                            <div class=activityText><strong> {{ $t(`ActivityType.${activity.LangCode}`) }} </strong></div>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="alert alert-warning" v-else>
-                <strong>Yapılacak Bir Aktivite Bulunmuyor</strong>
+                <strong>{{ $t('Request.warning.noActivity') }}</strong>
                 <br>
-                <small>Detaylı açıklama burada yer almaktadır wait and see :)
+                <small>{{ $t('Request.warning.noActivityDetail') }}
                 </small>
             </div>
 
@@ -23,13 +23,13 @@
             <img :src="require(`../../../../images/activityType/${selectedActivity.ImageUrl}`)" :alt="selectedActivity.Name" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereye</strong> </label>
+                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
                 <select 
                     class="form-control formElement" 
                     v-model="$v.selectedLocation.$model" 
                     @blur="$v.selectedLocation.$touch()"
                     @change="locationSelected">
-                    <option selected disabled value=-1>İl veya İlçe Seçiniz</option>
+                    <option selected disabled value=-1>{{ $t('Request.placeholder.selectLocation') }}</option>
                     <option 
                         :disabled="location.count == 0"
                         :value="location.IlceId + '_' + location.IlId"
@@ -41,58 +41,61 @@
                 </select>
                 <div v-if="$v.selectedLocation.$dirty">       
                     <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
-                        Lütfen Lokasyon Seçiniz
+                        {{ $t('Request.warning.noLocation') }}
                     </small>
                 </div>
             </div>
-            <div class="form-group formControl">
-                <label class="formLabel">       
-                    <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Tarih</strong> </label>
-                <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="requestDate == null || requestDate == '' ? 'Tarih Seçiniz' : ''" 
-                    id="dateEnter" 
-                    v-model="requestDate"
-                    @blur="$v.requestDate.$touch()">
-                <div v-if="$v.requestDate.$dirty">
-                    <small v-if="!$v.requestDate.required" class="form-text text-danger">
-                        Lütfen Saat Seçiniz
-                    </small>
+            
+            <div class="formTwoCols">
+                <div class="form-group formControl formTwoCols-inner">
+                    <label class="formLabel">       
+                        <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.date') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="requestDate == null || requestDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateEnter" 
+                        v-model="requestDate"
+                        @blur="$v.requestDate.$touch()">
+                    <div v-if="$v.requestDate.$dirty">
+                        <small v-if="!$v.requestDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noDate') }}
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group formControl">
-                <label class="formLabel">       
-                    <i class="fa fa-clock faclass fa-lg"></i> <strong>Saat</strong> </label>
-                <input 
-                    type="time" 
-                    class="formElement" 
-                    :placeholder="requestTime == null || requestTime == '' ? 'Saat Seçiniz' : ''" 
-                    id="dateBack" 
-                    v-model="requestTime"
-                    @blur="$v.requestTime.$touch()">
-                <div v-if="$v.requestTime.$dirty">
-                    <small v-if="!$v.requestTime.required" class="form-text text-danger">
-                        Lütfen Saat Seçiniz
-                    </small>
+                <div class="form-group formControl formTwoCols-inner">
+                    <label class="formLabel">       
+                        <i class="fa fa-clock faclass fa-lg"></i> <strong>{{ $t('Request.label.time') }}</strong> </label>
+                    <input 
+                        type="time" 
+                        class="formElement" 
+                        :placeholder="requestTime == null || requestTime == '' ? $t('Request.placeholder.time') : ''" 
+                        id="dateBack" 
+                        v-model="requestTime"
+                        @blur="$v.requestTime.$touch()">
+                    <div v-if="$v.requestTime.$dirty">
+                        <small v-if="!$v.requestTime.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noTime') }}
+                        </small>
+                    </div>
                 </div>
             </div>
             <div class="form-group formControl">
                 <label class="formLabel"> 
-                       <i class="fa fa-user-alt faclass fa-lg"></i> <strong>Kişi Sayısı</strong> </label>
-                <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : "Kişi Sayısı Seçiniz" }}</b-button>
+                       <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
+                <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
                 <div v-if="$v.ActivityOrder.Adults.$dirty">
                     <small v-if="!$v.ActivityOrder.Adults.minValue" class="form-text text-danger">
-                        En Az 1 Yetişkin olmalıdır
+                        {{ $t('Request.warning.adultObliged') }}
                     </small>
                 </div>
 
                 <b-modal id="mdlCustomer" title="BootstrapVue" hide-header hide-footer dialog-class="mydialogclass">
-                    <p>Kişi Seçimi</p>
+                    <p>{{ $t('Request.label.selectPeople') }}</p>
                         <div class="myDiv">
                             <table class="mytable2">
                                 <tr>
-                                    <td colspan="3"><label> <strong>Yetişkin:</strong> </label></td>
+                                    <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
                                     <td><button @click="changeVisitor('adult', -1)">
                                             <i class="fa fa-minus faclass fa-lg"></i></button>
                                         <label > {{ ActivityOrder.Adults }} </label>
@@ -100,7 +103,7 @@
                                             <i class="fa fa-plus faclass fa-lg"></i></button></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"><label> <strong>Çocuk:</strong> </label></td>
+                                    <td colspan="3"><label> <strong>{{ $t('Request.label.kid') }}</strong> </label></td>
                                     <td><button @click="changeVisitor('Kids', -1)">
                                             <i class="fa fa-minus faclass fa-lg"></i></button>
                                         <label> {{ ActivityOrder.Kids }} </label>
@@ -110,12 +113,12 @@
                             </table>
                         </div>
                         
-                    <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">Kapat</b-button>
+                    <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">{{ $t('Request.label.close') }}</b-button>
                 </b-modal>
             </div>
             <div class="button-container d-flex  flex-column align-items-center buttonControl">
                 <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setActivityOrder" :disabled="$v.$invalid">
-                    Talep Oluştur
+                    {{ $t('Request.label.newRequest') }}
                 </button>
             </div>
         </div>
@@ -146,7 +149,7 @@
                     RequestDate : null,
                     Adults: 0,
                     Kids: 0,
-                    ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
+                    ResultText: ""
                 }
             }
         },
@@ -184,7 +187,8 @@
             ...mapGetters(["getLocations"]),
             ...mapGetters(["getActivityType"]),
             visitorText() {
-                return (this.ActivityOrder.Adults > 0 ? " Yetişkin: " + this.ActivityOrder.Adults : "") + (this.ActivityOrder.Kids > 0 ? " Çocuk: " + this.ActivityOrder.Kids : "")
+                return (this.ActivityOrder.Adults > 0 ? " " + this.$t('Request.label.adult') + " " + this.ActivityOrder.Adults : "") + 
+                    (this.ActivityOrder.Kids > 0 ? " " + this.$t('Request.label.kid') + " " + this.ActivityOrder.Kids : "")
             }
         },
         methods: {
@@ -208,7 +212,7 @@
                 this.isSelected = true
                 
                 eventBus.$emit('submitPage')
-                eventBus.$emit('updateHeaderText', activity.Name)
+                eventBus.$emit('updateHeaderText', this.$t(`ActivityType.${activity.LangCode}`))
             },
             locationSelected() {
                 this.ActivityOrder.IlceId = this.selectedLocation.split('_')[0]
@@ -217,6 +221,7 @@
             setActivityOrder() {
                 this.ActivityOrder.ActivityTypeId = this.selectedActivity.ActivityTypeId
                 this.ActivityOrder.RequestDate = this.requestDate + " " + this.requestTime
+                this.ActivityOrder.ResultText = this.$t('Request.text.activityResult')
 
                 this.$store.dispatch("SetActivityOrder", { ...this.ActivityOrder })
             }

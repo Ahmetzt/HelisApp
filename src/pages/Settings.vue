@@ -237,11 +237,11 @@
 
     .form-control, .custom-select {
         height: calc(4.25rem + 2px);
-        font-size: xx-large;
+        font-size: 40px;
         display: flex;
     }
     .btn {
-        font-size: xx-large;
+        font-size: 40px;
         margin: 10px;
     }
 </style>

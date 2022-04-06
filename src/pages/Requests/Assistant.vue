@@ -1,16 +1,19 @@
 <template>
     <div class="request-container">
         <div v-if="!isSelected">
-            <img src="../../assets/requests/assistant.jpg" alt="Asistan" class="requestImage">
+            <img src="../../../../images/requests/jpg/assistant.jpg" alt="Asistan" class="listImage">
                 
             <div class="formControl formAssistant" v-if="getAssistantType.length > 0" >
-                    <button class="formAssistantButton" v-for="assistant in getAssistantType" :key="assistant.AssistantTypeId" @click="AssistanSelected(assistant)">
-                        <img class="formAssistantImage" :src="require(`../../../../images/asistantType/png/${assistant.PNGUrl}`)" :alt="assistant.Description"></button>
+                <button class="mybutton" v-for="assistant in getAssistantType" :key="assistant.AssistantTypeId" @click="AssistanSelected(assistant)">
+                    <img class="menuImage" :src="require(`../../../../images/asistantType/png/${assistant.PNGUrl}`)" :alt="assistant.Description">
+                    <!-- <p class="menuP">{{ $t('pages.transfer') }}</p> -->
+                    <p class="menuP">{{ $t(`AssistantType.${assistant.LangCode}`) }}</p>
+                </button>
             </div>
             <div class="alert alert-warning" v-else>
-                <strong>Bir Asistan Görüntülenemiyor</strong>
+                <strong>{{ $t('Request.warning.noAssistant') }}</strong>
                 <br>
-                <small>Detaylı açıklama burada yer almaktadır wait and see :)
+                <small>{{ $t('Request.warning.noAssistantDetail') }}
                 </small>
             </div>            
         </div>
@@ -18,67 +21,71 @@
             <img :src="require(`../../../../images/asistantType/jpg/${selectedAssistant.ImageUrl}`)" :alt="selectedAssistant.Description" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>Nereye</strong> </label>
+                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
                 <input 
                     type="text" 
                     class="form-control formElement"
                     v-model="getSessionDetail.CurrentLocation"
                     disabled>
             </div>
-            <div class="form-group formControl" v-if="!isSupport">
-                <label class="formLabel">       
-                    <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Tarih</strong> </label>
-                <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="requestDate == null || requestDate == '' ? 'Tarih Seçiniz' : ''" 
-                    id="dateEnter" 
-                    v-model="requestDate"
-                    @blur="$v.requestDate.$touch()">
-                <div v-if="$v.requestDate.$dirty">
-                    <small v-if="!$v.requestDate.required" class="form-text text-danger">
-                        Lütfen Saat Seçiniz
-                    </small>
+            
+            <div class="formTwoCols">
+                <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
+                    <label class="formLabel">
+                        <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.date') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="requestDate == null || requestDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateEnter" 
+                        v-model="requestDate"
+                        @blur="$v.requestDate.$touch()">
+                    <div v-if="$v.requestDate.$dirty">
+                        <small v-if="!$v.requestDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noDate') }}
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
+                    <label class="formLabel">       
+                        <i class="fa fa-clock faclass fa-lg"></i> <strong>{{ $t('Request.label.time') }}</strong> </label>
+                    <input 
+                        type="time" 
+                        class="formElement" 
+                        :placeholder="requestTime == null || requestTime == '' ? $t('Request.placeholder.time') : ''" 
+                        id="dateBack" 
+                        v-model="requestTime"
+                        @blur="$v.requestTime.$touch()">
+                    <div v-if="$v.requestTime.$dirty">
+                        <small v-if="!$v.requestTime.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noTime') }}
+                        </small>
+                    </div>
                 </div>
             </div>
-            <div class="form-group formControl" v-if="!isSupport">
-                <label class="formLabel">       
-                    <i class="fa fa-clock faclass fa-lg"></i> <strong>Saat</strong> </label>
-                <input 
-                    type="time" 
-                    class="formElement" 
-                    :placeholder="requestTime == null || requestTime == '' ? 'Saat Seçiniz' : ''" 
-                    id="dateBack" 
-                    v-model="requestTime"
-                    @blur="$v.requestTime.$touch()">
-                <div v-if="$v.requestTime.$dirty">
-                    <small v-if="!$v.requestTime.required" class="form-text text-danger">
-                        Lütfen Saat Seçiniz
-                    </small>
-                </div>
-            </div>
+
             <div class="form-group formControl">
                 <label class="formLabel">       
-                    <i class="fa fa-info faclass fa-lg"></i> <strong>Mesajınız</strong> </label>
+                    <i class="fa fa-info faclass fa-lg"></i> <strong>{{ $t('Request.label.note') }}</strong> </label>
                 <input 
                     class="formElement" 
                     v-model="AssistantOrder.Note"
-                    placeholder="Mesajınızı Yazınız"
+                    :placeholder="$t('Request.placeholder.note')"
                     @blur="$v.AssistantOrder.Note.$touch()">
                 <div v-if="$v.AssistantOrder.Note.$dirty">
                     <small v-if="!$v.AssistantOrder.Note.required" class="form-text text-danger">
-                        Lütfen Not Giriniz
+                        {{ $t('Request.warning.noNote') }}
                     </small>
                 </div>
             </div>
             <div class="button-container d-flex  flex-column align-items-center buttonControl">
                 <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setAssistantOrder" :disabled="$v.$invalid">
-                    Talep Oluştur
+                    {{ $t('Request.label.newRequest') }}
                 </button>
             </div>
             <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="isSupport">
                 <button type="submit" class="btn btn-block mb-2 button-green">
-                    <i class="fa fa-phone faclass fa-lg"></i> Canlı Desteğe Ulaşın
+                    <i class="fa fa-phone faclass fa-lg"></i> {{ $t('Request.label.liveSupport') }}
                 </button>
             </div>
         </div>
@@ -108,7 +115,7 @@
                     IlceId: null,
                     RequestDate : null,
                     Note: '', 
-                    ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+                    ResultText: "",
                 }
             }
         },
@@ -154,7 +161,7 @@
                 this.CleanSelection();
                 this.isSelected = true
                 eventBus.$emit('submitPage')
-                eventBus.$emit('updateHeaderText', assistant.Description)
+                eventBus.$emit('updateHeaderText', this.$t(`AssistantType.${assistant.LangCode}`))
             },
             CleanSelection() {
 
@@ -171,6 +178,7 @@
             setAssistantOrder() {
                 this.AssistantOrder.AssistantTypeId = this.selectedAssistant.AssistantTypeId
                 this.AssistantOrder.RequestDate = this.requestDate + " " + this.requestTime
+                this.AssistantOrder.ResultText = this.$t('Request.text.assistantResult')
 
                 this.$store.dispatch("SetAssistantOrder", { ...this.AssistantOrder })
             }

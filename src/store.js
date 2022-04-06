@@ -208,7 +208,6 @@ const store = new Vuex.Store({
             }
         },
         login({ dispatch, commit }, authData) {
-
             return axios.get("Session/UserLogin?" + "UserName=" + authData.email + "&Password=" + authData.password)
                 .then(response => {
                 let data = response.data;

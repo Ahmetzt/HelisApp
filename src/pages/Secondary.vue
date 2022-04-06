@@ -373,7 +373,7 @@
         font-weight: 900;
     }
     .editButton {
-        font-size: xx-large;
+        font-size: 40px;
         margin-left: 10px;
         padding: 5px;
         border-radius: 50%;
@@ -381,17 +381,17 @@
         width: 70px;
     }
     .formNew {
-        font-size: xx-large;
+        font-size: 40px;
         width: 90%;
         margin: 20px auto;
     }
     .form-control, .custom-select {
         height: calc(4.25rem + 2px);
-        font-size: xx-large;
+        font-size: 40px;
         display: flex;
     }
     .btn {
-        font-size: xx-large;
+        font-size: 40px;
         margin: 10px;
     }
 </style>

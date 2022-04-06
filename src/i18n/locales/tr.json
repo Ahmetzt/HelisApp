@@ -6,7 +6,7 @@
         "auth": "Giriş",
         "": "Yeni İşlem",
         "new": "Yeni İşlem",
-        "rent": "Rent a car & boat",
+        "rent": "Araç & Bot Kiralama",
         "transfer": "Transfer",
         "about": "Hakkımızda",
         "restaurant": "Restaurant",
@@ -24,7 +24,7 @@
     "OrderTypes": {
         "1": "Konaklama",
         "2": "Transfer",
-        "3": "Rent a Car & Boat",
+        "3": "Araç & Bot Kiralama",
         "4": "Restaurant",
         "5": "Kuru Temizleme",
         "6": "Aktiviteler",
@@ -51,6 +51,22 @@
         "3": "Sözleşme Aşamasında" , 
         "4": "Kabul Edildi" , 
         "5": "Reddedildi"
+    },
+    "AssistantType": {
+        "technical": "Teknik Servis Hizmetleri",
+        "cleaning": "Temizlik Hizmetleri",
+        "secretary": "Sekreterya",
+        "landscape": "Peyzaj",
+        "support": "Destek"
+    },
+    "ActivityType": {
+        "aquatics": "Su Sporları",
+        "paragliding": "Yamaç Paraşütü",
+        "spa": "SPA",
+        "yoga": "YOGA",
+        "atv": "ATV Turu",
+        "yacht": "Yat Gezisi",
+        "adventure": "Macera Turu"
     },
     "NRauthorizedMessage": {
         "mansion": "Yeni Konaklama İsteği Oluşturmaya Yetkiniz Bulunmuyor",
@@ -180,10 +196,95 @@
     },
     "Request": {
         "warning": {
-            
+            "noActivity": "Yapılacak Bir Aktivite Bulunmuyor",
+            "noActivityDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noAssistant": "Yapılacak Bir Asistan Görüntülenemiyor",
+            "noAssistantDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noMansion": "Henüz Burada Bir Kayıt Bulamadık",
+            "noMansionDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noRestaurant": "Henüz Burada Bir Kayıt Bulamadık",
+            "noRestaurantDetail": "Detaylı açıklama burada yer almaktadır wait and see :)",
+            "noLocation": "Lütfen Lokasyon Seçiniz",
+            "noAirport": "Lütfen Havalimanı Seçiniz",
+            "noDate": "Lütfen Tarih Seçiniz",
+            "noBeginDate": "Lütfen Giriş Tarihi Seçiniz",
+            "noEndDate": "Lütfen Çıkış Tarihi Seçiniz",
+            "noTime": "Lütfen Saat Seçiniz",
+            "adultObliged": "En Az 1 Yetişkin olmalıdır",
+            "noNote": "Lütfen Not Giriniz",
+            "noProduct": "Lütfen En Az Bir Ürün Giriniz",
+            "noVehicle": "Lütfen Araç veya Bot Seçiniz"
         },
         "label": {
-
+            "toWhere": "Nereye",
+            "fromWhere": "Nereden",
+            "date": "Tarih",
+            "beginDate": "Giriş Tarihi",
+            "endDate": "Çıkış Tarihi",
+            "rentBeginDate": "Kiralama Başlangıç Tarihi",
+            "rentEndDate": "Kiralama Bitiş Tarihi",
+            "time": "Saat",
+            "reservationDate": "Tarih",
+            "reservationTime": "Saat",
+            "people": "Kişi Sayısı",
+            "adult": "Yetişkin:",
+            "kid": "Çocuk:",
+            "close": "Kapat",
+            "newRequest": "Talep Oluştur",
+            "selectPeople": "Kişi Seçimi",
+            "note": "Mesajınız",
+            "liveSupport": "Canlı Desteğe Ulaşın",
+            "productWM": "Kadın & Erkek",
+            "productHT": "Ev Tekstili",
+            "productCP": "Çocuk Ürünleri",
+            "location": "Lokasyon",
+            "hotelSearch": "Hotel Ara",
+            "vehicle": "Araç",
+            "boat": "Bot",
+            "vehicleType": "Araç Türü"
+        },
+        "placeholder": {
+            "selectLocation": "Lokasyon Seçiniz",
+            "selectAirport": "Hava Limanı Seçiniz",
+            "date": "Tarih Seçiniz",
+            "time": "Saat Seçiniz",
+            "people": "Kişi Sayısı Seçiniz",
+            "note": "Mesajınızı Yazınız",
+            "selectVehicle": "Araç",
+            "selectBoat": "Bot"
+        },
+        "text": {
+            "activityResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+            "assistantResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+            "cleanerResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+            "rentResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+            "restaurantResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+            "transferResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
+            "mansionResult": "<b>#Mansion#</b> için #BeginDate# - #EndDate# tarihleri arasında konaklama talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
+        }
+    },
+    "Property": {
+        "Info": {
+            "Hotel": "Otel",
+            "Block": "Blok",
+            "No": "No",
+            "Info": "Bilgi",
+            "Rentable": "Kiralanabilir"
+        },
+        "Rent": {
+            "NewRentable": "Yeni Kiralama İşlemi",
+            "Add": "Ekle",
+            "NoUsedDays": "Kullanım Dışı Günler",
+            "ApproveRent": "Belirtilen Tarihler Dışında Kiralamayı Onaylıyorum",
+            "Send": "Gönder",
+            "ApproveSent": "Kiralama İzin İşleminiz kayda alınmıştır.",
+            "RequestDate": "Talep Tarihi",
+            "Finishing": "Son İşlem",
+            "NoDates": "Tarihler",
+            "RentHistory": "Kiralama Geçmişi",
+            "Index": "Sıra",
+            "User": "Kullanıcı",
+            "DateSpan": "Tarih"
         }
     }
 }

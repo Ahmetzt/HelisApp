@@ -1,11 +1,11 @@
 <template>
     <div class="request-container">
         <div>
-            <img src="../../assets/requests/cleaner.jpg" alt="kurutemizleme" class="requestImage">
+            <img src="../../../../images/requests/jpg/cleaner.jpg" alt="kurutemizleme" class="requestImage">
             <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
                     <i class="fas fa-user-circle faclass fa-lg"></i>&nbsp; 
-                    <label for="cbWM"><strong>&nbsp;Kadın & Erkek</strong></label> 
+                    <label for="cbWM"><strong>&nbsp;{{ $t('Request.label.productWM') }}</strong></label> 
                 </label>
                 <div class="formOneLine">
                     <button @click="changeProduct('WomanMan', -1)">
@@ -18,14 +18,14 @@
                 </div>
                 <div v-if="$v.productControl.$dirty">
                     <small v-if="!$v.productControl.checked" class="form-text text-danger">
-                        Lütfen En Az Bir Ürün Giriniz
+                        {{ $t('Request.warning.noProduct') }}
                     </small>
                 </div>
             </div>
             <div class="form-group formControl">
                 <label class="formLabel"> 
                     <i class="fas fa-tape faclass fa-lg"></i>&nbsp; 
-                    <label for="cbHM"><strong>&nbsp;Ev Tekstili</strong></label> 
+                    <label for="cbHM"><strong>&nbsp;{{ $t('Request.label.productHT') }}</strong></label> 
                 </label>
                 <div class="formOneLine">
                     <button @click="changeProduct('HomeTextiles', -1)">
@@ -38,14 +38,14 @@
                 </div>
                 <div v-if="$v.productControl.$dirty">
                     <small v-if="!$v.productControl.checked" class="form-text text-danger">
-                        Lütfen En Az Bir Ürün Giriniz
+                        {{ $t('Request.warning.noProduct') }}
                     </small>
                 </div>
             </div>
             <div class="form-group formControl">
                 <label class="formLabel"> 
                     <i class="fas fa-child faclass fa-lg"></i>&nbsp; 
-                    <label for="cbCP"><strong>&nbsp;Çocuk Ürünleri</strong></label> 
+                    <label for="cbCP"><strong>&nbsp;{{ $t('Request.label.productCP') }}</strong></label> 
                 </label>
                 <div class="formOneLine">
                     <button @click="changeProduct('ChildProduct', -1)">
@@ -58,45 +58,49 @@
                 </div>
                 <div v-if="$v.productControl.$dirty">
                     <small v-if="!$v.productControl.checked" class="form-text text-danger">
-                        Lütfen En Az Bir Ürün Giriniz
+                        {{ $t('Request.warning.noProduct') }}
                     </small>
                 </div>
             </div>
-            <div class="form-group formControl">
-                <label class="formLabel">       
-                    <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>Tarih</strong> </label>
-                <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="requestDate == null || requestDate == '' ? 'Tarih Seçiniz' : ''" 
-                    id="dateEnter" 
-                    v-model="requestDate"
-                    @blur="$v.requestDate.$touch()">
-                <div v-if="$v.requestDate.$dirty">
-                    <small v-if="!$v.requestDate.required" class="form-text text-danger">
-                        Lütfen Tarih Seçiniz
-                    </small>
+            
+            <div class="formTwoCols">
+                <div class="form-group formControl formTwoCols-inner">
+                    <label class="formLabel">       
+                        <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.date') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="requestDate == null || requestDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateEnter" 
+                        v-model="requestDate"
+                        @blur="$v.requestDate.$touch()">
+                    <div v-if="$v.requestDate.$dirty">
+                        <small v-if="!$v.requestDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noDate') }}
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group formControl">
-                <label class="formLabel">       
-                    <i class="fa fa-clock faclass fa-lg"></i> <strong>Saat</strong> </label>
-                <input 
-                    type="time" 
-                    class="formElement" 
-                    :placeholder="requestTime == null || requestTime == '' ? 'Saat Seçiniz' : ''" 
-                    id="dateBack" 
-                    v-model="requestTime"
-                    @blur="$v.requestTime.$touch()">
-                <div v-if="$v.requestTime.$dirty">
-                    <small v-if="!$v.requestTime.required" class="form-text text-danger">
-                        Lütfen Saat Seçiniz
-                    </small>
+
+                <div class="form-group formControl formTwoCols-inner">
+                    <label class="formLabel">       
+                        <i class="fa fa-clock faclass fa-lg"></i> <strong>{{ $t('Request.label.time') }}</strong> </label>
+                    <input 
+                        type="time" 
+                        class="formElement" 
+                        :placeholder="requestTime == null || requestTime == '' ? $t('Request.placeholder.time') : ''" 
+                        id="dateBack" 
+                        v-model="requestTime"
+                        @blur="$v.requestTime.$touch()">
+                    <div v-if="$v.requestTime.$dirty">
+                        <small v-if="!$v.requestTime.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noTime') }}
+                        </small>
+                    </div>
                 </div>
             </div>
             <div class="button-container d-flex  flex-column align-items-center buttonControl">
                 <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setCleanerOrder" :disabled="$v.$invalid">
-                    Talep Oluştur
+                    {{ $t('Request.label.newRequest') }}
                 </button>
             </div>
         </div>
@@ -114,7 +118,7 @@
                     HomeTextiles: 0,
                     ChildProduct: 0,
                     RequestDate: null,
-                    ResultText: "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır."
+                    ResultText: ""
                 },
                 WMchecked: false,
                 HTchecked: false,
@@ -142,6 +146,7 @@
         methods: {
             setCleanerOrder() {
                 this.CleanerOrder.RequestDate = this.requestDate + " " + this.requestTime
+                this.CleanerOrder.ResultText = this.$t('Request.text.cleanerResult')
 
                 this.$store.dispatch("SetCleanerOrder", { ...this.CleanerOrder })
             },

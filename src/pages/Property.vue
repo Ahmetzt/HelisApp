@@ -1,20 +1,20 @@
 <template>
     <div class="container">
         <div class="PropertyInfo">
-            <span class="PropertyInfo-Span" v-show="PropertyInfo.Mansion != ''"> <b>Hotel:</b> {{ PropertyInfo.Mansion }} </span>
-            <span class="PropertyInfo-Span" v-show="PropertyInfo.Block != ''"> <b>Blok:</b> {{ PropertyInfo.Block }} </span>
-            <span class="PropertyInfo-Span" v-show="PropertyInfo.No != ''"> <b>No:</b> {{ PropertyInfo.No }} </span>
-            <span class="PropertyInfo-Span" v-show="PropertyInfo.Info != ''"> <b>Bilgi:</b> {{ PropertyInfo.Info }} </span>
+            <span class="PropertyInfo-Span" v-show="PropertyInfo.Mansion != ''"> <b>{{ $t('Property.Info.Hotel') }}:</b> {{ PropertyInfo.Mansion }} </span>
+            <span class="PropertyInfo-Span" v-show="PropertyInfo.Block != ''"> <b>{{ $t('Property.Info.Block') }}:</b> {{ PropertyInfo.Block }} </span>
+            <span class="PropertyInfo-Span" v-show="PropertyInfo.No != ''"> <b>{{ $t('Property.Info.No') }}:</b> {{ PropertyInfo.No }} </span>
+            <span class="PropertyInfo-Span" v-show="PropertyInfo.Info != ''"> <b>{{ $t('Property.Info.Info') }}:</b> {{ PropertyInfo.Info }} </span>
             <div class="PropertyInfo-CB">
                 <input class="PropertyInfo-CB-input" v-model="IsRentable" type="checkbox" name="Rentable" id="cbRentable" @change="SetPossessionType">
-                <label class="PropertyInfo-CB-label" for="cbRentable">Kiralanabilir</label>
+                <label class="PropertyInfo-CB-label" for="cbRentable">{{ $t('Property.Info.Rentable') }}</label>
             </div>
         </div>
 
         <div class="Rentable">
             <div class="Rentable-New" v-if="IsRentable">
                 <button class="Rentable-New-Button btn btn-success" v-if="RentableBegin == 1" @click="RentableBegin = 2">
-                    Yeni Kiralama İşlemi
+                    {{ $t('Property.Rent.NewRentable') }}
                 </button>
                 <div class="Rentable-New-Form" v-else-if="RentableBegin == 2">
                     <div class="Rentable-New-Form-Unused">
@@ -30,10 +30,10 @@
                                 text
                                 color="primary"
                                 @click="AddDates"
-                            >Ekle</v-btn>
+                            >{{ $t('Property.Rent.Add') }}</v-btn>
                         </v-date-picker>
                         <div class="Rentable-New-Form-Unused-List">
-                            <span class="Rentable-New-Form-Unused-List-Header">Kullanım Dışı Günler</span>
+                            <span class="Rentable-New-Form-Unused-List-Header">{{ $t('Property.Rent.NoUsedDays') }}</span>
                             <div class="Rentable-New-Form-Unused-List-Content">
                                 <span v-for="date in NotPermittedDates" :key="date.id">
                                     {{ date.BeginDate | formatDate }} - {{ date.EndDate | formatDate }}
@@ -44,15 +44,15 @@
                             
                     <div class="Rentable-New-Form-Approve">
                         <input class="Rentable-New-Form-Approve-input" v-model="IsApproved" type="checkbox" name="Approved" id="cbApproved">
-                        <label class="Rentable-New-Form-Approve-label" for="cbApproved">Belirtilen Tarihler Dışında Kiralamayı Onaylıyorum</label>
+                        <label class="Rentable-New-Form-Approve-label" for="cbApproved">{{ $t('Property.Rent.ApproveRent') }}</label>
                     </div>
                     
                     <button class="Rentable-New-Form-Button btn btn-success" :disabled="!IsApproved" @click="ApproveRentable">
-                        Gönder
+                        {{ $t('Property.Rent.Send') }}
                     </button>
                 </div>
                 <div class="Rentable-New-Result" v-else>
-                    Kiralama İzin İşleminiz kayda alınmıştır.
+                    {{ $t('Property.Rent.ApproveSent') }}
                 </div>
             </div>
             <div class="Rentable-Status" v-else>
@@ -60,14 +60,15 @@
                     {{ getRentableStatus }}
                 </span>
                 <div class="Rentable-Status-RequestTime">
-                    Talep Tarihi: {{ RentableInfo.RequestTime | formatDate }}
+                    {{ $t('Property.Rent.RequestDate') }}: {{ RentableInfo.RequestTime | formatDate }}
                 </div>
                 <div class="Rentable-Status-LastUpdate">
-                    Son İşlem: {{ RentableInfo.LastUpdate | formatDateTime }}
+                    {{ $t('Property.Rent.Finishing') }}: {{ RentableInfo.LastUpdate | formatDateTime }}
                 </div>
                 <div class="Rentable-Status-TimeList" v-show="RentableInfo.TimeList">
+                    <hr>
                     <span class="Rentable-Status-TimeList-Header">
-                        Tarihler
+                        {{ $t('Property.Rent.NoDates') }}
                     </span>
                     <span v-for="date in RentableInfo.TimeList" :key="date.id">
                         {{ date.BeginDate | formatDate }} - {{ date.EndDate | formatDate }}
@@ -78,10 +79,15 @@
 
         <div class="BookingHistory" v-show="BookingHistory.length > 0">
             <span class="BookingHistory-header">
-                Kiralama Geçmişi
+                {{ $t('Property.Rent.RentHistory') }}
             </span>
             
-            <b-table striped hover :items="BookingHistory" :fields="BookingFields">
+            <b-table class="BookingHistory-table" striped hover :items="BookingHistory" :fields="BookingFields">
+                <template #head()="scope">
+                    <div class="text-nowrap">
+                        {{ $t(`Property.Rent.${scope.label}`) }} 
+                    </div>
+                </template>
                 <template #cell(index)="data">
                     {{ data.index + 1 }}
                 </template>
@@ -100,9 +106,16 @@
                 RentableInfo: [],
                 BookingHistory: [],
                 BookingFields: [ 
-                    'index',
-                    { key: 'User', label: 'Kullanıcı' },
-                    { key: 'Date', label: 'Tarih' }, 
+                    { key: 'index', label: 'Index' },
+                    { key: 'User', label: 'User' },
+                    { key: 'DateSpan', label: 'DateSpan', 
+                        formatter: (value, key, item) => {
+                            var bd = new Date(item.BeginDate)
+                            var ed = new Date(item.EndDate)
+
+                            return bd.toLocaleDateString() + ' - ' + ed.toLocaleDateString()
+                        } 
+                    }, 
                 ],
                 IsRentable: false,
                 RentableBegin: 1,
@@ -212,10 +225,12 @@
         width: 80%;
     }
     .PropertyInfo {
-        margin: 20px auto;
+        margin-top: 40px;
+        padding: 30px 50px;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        background-color: white;
+        gap: 20px;
 
         &-CB {
             display: flex;
@@ -244,25 +259,33 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        padding: 30px 0px 0px;
+        background-color: white;
 
         &-header {
             font-weight: 900;
             font-size: 40px;
         }
+
+        &-table {
+            margin: 0;
+        }
     }
 
     .Rentable {
-        justify-content: center;
+        padding: 30px 50px;
         display: flex;
+        flex-direction: column;
+        background-color: white;
 
         &-New {
-            font-size: xx-large;
+            font-size: 40px;
             width: 100%;
             display: flex;
             justify-content: center;
 
             & > * {
-                font-size: xx-large;
+                font-size: 40px;
             }
             &-Button {
                 border-radius: 10px;
@@ -276,7 +299,7 @@
                 gap: 50px;
 
                 & > * {
-                    font-size: xx-large !important;
+                    font-size: 40px !important;
                 }
 
                 &-Unused {
@@ -327,11 +350,10 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 20px;
             
             & > * {
-                font-size: xx-large;
+                font-size: 40px;
             }
             &-Info {
                 font-weight: 900;
@@ -346,7 +368,6 @@
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
                 gap: 10px;
 
                 &-Header {
@@ -357,10 +378,10 @@
     }
 
     .v-picker {
-        font-size: xx-large !important;
+        font-size: 40px !important;
 
         th, &__title__btn {
-            font-size: xx-large !important;
+            font-size: 40px !important;
         }
 
         &__body {
@@ -369,12 +390,12 @@
     }
 
     .v-date-picker {
-            font-size: xx-large;
+            font-size: 40px;
 
         &-table {
             height: 400px !important;
             .v-btn {
-                font-size: xx-large !important;
+                font-size: 40px !important;
                 height: 50px !important;
                 min-width: 50px !important;
             }
@@ -391,7 +412,7 @@
         width: 100%;
 
         &__content {
-            font-size: xx-large;
+            font-size: 40px;
         }
     }
 

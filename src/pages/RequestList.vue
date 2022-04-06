@@ -17,7 +17,7 @@
                             
                         </b-table>
                         <b-col><b>Talep Tarihi:</b> {{ row.item.OrderDate | formatDate }}</b-col>
-                        <b-col class="smallCloseButton"><b-button size="sm" @click="row.toggleDetails">Kapat</b-button></b-col>
+                        <b-col class="smallCloseButton"><b-button size="sm" @click="row.toggleDetails">{{ $t('Request.label.close') }}</b-button></b-col>
                         
                     </b-row>
                 </b-card>

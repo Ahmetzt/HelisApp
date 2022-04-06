@@ -1,56 +1,49 @@
 <template>
     <div class="container">
         <div class="row  mt-5">
-            <div class="col-md-12 card card-primary "
-                 :class="{'border-primary' : IsUser, 'border-success' : !IsUser }">
-                <!-- <h3
-                        :class="{'text-primary' : IsUser, 'text-success' : !IsUser }"
-                        class="text-center mb-3 mt-3">Helis Giriş</h3>
-
-                <img class="img-fluid" alt="logo" src="../../assets/helisLogo.png"/> -->
+            <div class="col-md-12 ">
                 <hr>
                 
                 <div class="loginLang">
-                    <input 
-                        type="radio" 
-                        id="rd_en" 
-                        name="Lang" 
-                        v-model="Lang" 
-                        class="loginLang-cb" 
-                        value="tr" 
-                        @change="setLanguage">
-                    <label for="rd_en"><flag iso="tr" /></label>
                     <input 
                         type="radio" 
                         id="rd_tr" 
                         name="Lang" 
                         v-model="Lang" 
                         class="loginLang-cb" 
+                        value="tr" 
+                        @change="setLanguage">
+                    <label for="rd_tr"><flag iso="tr" /></label>
+                    <input 
+                        type="radio" 
+                        id="rd_en" 
+                        name="Lang" 
+                        v-model="Lang" 
+                        class="loginLang-cb" 
                         value="en" 
                         @change="setLanguage">
-                    <label for="rd_tr"><flag iso="gb" /></label>
+                    <label for="rd_en"><flag iso="gb" /></label>
                     
                 </div>
                 <hr>
-                <div v-if="!IsNew">
-                    <form @submit.prevent="onSubmit">
-                        <div class="form-group">
+                <div v-if="!IsNew" >
+                    <form @submit.prevent="onSubmit" class="loginForm">
+                        <div class="loginForm-group">
                             <label> {{ $t('Auth.Lmail.title') }} </label>
                             <input 
                                 v-model="User.email" 
                                 class="form-control"
-                                :placeholder="$t('Auth.Lmail.placeholder')">
+                                >
                         </div>
-                        <div class="form-group" :style="{visibility: !IsForgotten ? 'visible' : 'hidden'}">
+                        <div class="loginForm-group" :style="{visibility: !IsForgotten ? 'visible' : 'hidden'}">
                             <label> {{ $t('Auth.Lpassword.title') }} </label>
                             <input 
                                 v-model="User.password" 
                                 type="password" 
                                 class="form-control" 
-                                :placeholder="$t('Auth.Lpassword.placeholder')"
                                 >
                         </div>
-                        <div class="button-container d-flex  flex-column align-items-center">
+                        <div class="button-container align-items-center">
                             <button type="submit" :class="{'button-submit' : !IsForgotten, 'button-forget' : IsForgotten }"
                                     class="btn btn-block">
                                 {{ !IsForgotten ? $t('Auth.submitSignUp') : $t('Auth.submitReset') }}
@@ -78,7 +71,6 @@
                             <b-form-input
                                 id="input-1"
                                 v-model.lazy="Form.UserName"
-                                :placeholder="$t('Auth.UserName.placeholder')"
                                 :state="$v.Form.UserName.$dirty ? !$v.Form.UserName.$anyError : null"
                                 @blur="$v.Form.UserName.$touch()"
                             ></b-form-input>
@@ -102,7 +94,6 @@
                                 id="input-11"
                                 v-model.lazy="Form.Mail"
                                 type="email"
-                                :placeholder="$t('Auth.Mail.placeholder')"
                                 :state="$v.Form.Mail.$dirty ? !$v.Form.Mail.$anyError : null"
                                 @blur="$v.Form.Mail.$touch()"
                             ></b-form-input>
@@ -126,7 +117,6 @@
                                 id="input-21"
                                 type="password"
                                 v-model="Form.Password"
-                                :placeholder="$t('Auth.Password.placeholder')"
                                 :state="$v.Form.Password.$dirty ? !$v.Form.Password.$anyError : null"
                                 @blur="$v.Form.Password.$touch()"
                             ></b-form-input>
@@ -147,7 +137,6 @@
                                 id="input-22"
                                 type="password"
                                 v-model="Form.RePassword"
-                                :placeholder="$t('Auth.RePassword.placeholder')"
                                 :state="$v.Form.RePassword.$dirty ? !$v.Form.RePassword.$anyError : null"
                                 @blur="$v.Form.RePassword.$touch()"
                             ></b-form-input>
@@ -170,7 +159,6 @@
                             <b-form-input
                                 id="input-2"
                                 v-model="Form.FirstName"
-                                :placeholder="$t('Auth.FirstName.placeholder')"
                                 :state="$v.Form.FirstName.$dirty ? !$v.Form.FirstName.$anyError : null"
                                 @blur="$v.Form.FirstName.$touch()"
                             ></b-form-input>
@@ -187,7 +175,6 @@
                             <b-form-input
                                 id="input-3"
                                 v-model="Form.LastName"
-                                :placeholder="$t('Auth.LastName.placeholder')"
                                 :state="$v.Form.LastName.$dirty ? !$v.Form.LastName.$anyError : null"
                                 @blur="$v.Form.LastName.$touch()"
                             ></b-form-input>
@@ -205,7 +192,6 @@
                                 id="input-31"
                                 type="text"
                                 v-model="Form.PhoneNumber"
-                                :placeholder="$t('Auth.PhoneNumber.placeholder')"
                                 @change="formatPhone"
                             ></b-form-input>
                         </b-form-group>
@@ -595,24 +581,24 @@
             background-color: #D6B761;
             border-color: #D6B761;
             color: #fff !important;
-            font-size: xx-large;
+            font-size: 40px;
             height: 100px;
         }
         &-forget {
             background-color: #007bff;
             border-color: #007bff;
             color: #fff !important;
-            font-size: xx-large;
+            font-size: 40px;
             height: 100px;
         }
         & > * {
             color: #fff !important;
-            font-size: xx-large;
+            font-size: 40px;
             height: 100px;
         }
         
         color: #fff !important;
-        font-size: xx-large;
+        font-size: 40px;
         height: 100px;
     }
     .container {
@@ -622,12 +608,12 @@
 
     .form-control, .custom-select {
         height: calc(4.25rem + 2px);
-        font-size: xx-large;
+        font-size: 40px;
         display: flex;
     }
 
     .btn {
-        font-size: xx-large;
+        font-size: 40px;
         margin: 10px;
     }
 
@@ -637,13 +623,14 @@
 
     .loginErSpan {
         color: red;
-        font-size: xx-large;
+        font-size: 40px;
         text-align: center;
     }
 
     .loginLang {
         display: inline-flex;
         height: 120px;
+        width: 100%;
 
         &-cb
          {
@@ -667,5 +654,23 @@
             border: 2px solid lightgrey;
             transition: all 0.3s ease;
         }
+    }
+
+    .loginForm {
+        margin-top: 200px;
+
+        &-group {
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+
+    .button-container {
+        
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
     }
 </style>

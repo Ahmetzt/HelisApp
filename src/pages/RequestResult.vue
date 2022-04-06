@@ -30,9 +30,11 @@
     .background {
         background-color: #1A2A32 !important;
         color: white !important;
-        height: 97vh;
         padding: 300px 100px;
         text-align: center;
         vertical-align: middle;
+        position: fixed;
+        top: 0;
+        bottom: 0;
     }
 </style>
