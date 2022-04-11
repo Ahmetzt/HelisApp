@@ -42,6 +42,9 @@
                         <small v-if="!$v.searchData.BeginDate.required" class="form-text text-danger">
                             {{ $t('Request.warning.noBeginDate') }}
                         </small>
+                        <small v-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
+                            {{ $t('Request.warning.dateMax') }}
+                        </small>
                     </div>
                 </div>
                 <div class="formMoving-Between">
@@ -66,13 +69,16 @@
                         <small v-if="!$v.searchData.EndDate.required" class="form-text text-danger">
                             {{ $t('Request.warning.noEndDate') }}
                         </small>
+                        <small v-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
+                            {{ $t('Request.warning.dateMin') }}
+                        </small>
                     </div>
                 </div>
             </div>
             <div class="form-group formControl">
                 <label class="formLabel"> 
-                       <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
-                <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
+                    <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
+                <b-button v-b-modal.mdlCustomer class="formElement formButton">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
                 <div v-if="$v.searchData.Adults.$dirty">
                     <small v-if="!$v.searchData.Adults.minValue" class="form-text text-danger">
                         {{ $t('Request.warning.adultObliged') }}
@@ -165,6 +171,12 @@
                 FromTo: true,
             }
         },
+        filters: {
+            formatDate: function (value){
+                let d = new Date(value)
+                return d.toLocaleDateString()
+            },
+        },
         validations: {
             selectedLocation: {
                 required,
@@ -175,10 +187,16 @@
             },
             searchData: {
                 BeginDate: {
-                    required
+                    required,
+                    dateMax(val, { EndDate }) {
+                        return EndDate != null && val > EndDate ? false : true
+                    },
                 },
                 EndDate: {
-                    required
+                    required,
+                    dateMin(val, { BeginDate }) {
+                        return BeginDate != null && val < BeginDate ? false : true
+                    },
                 },
                 Adults: {
                     required,
@@ -235,7 +253,8 @@
                 this.MansionOrder.Adults = this.searchData.Adults
                 this.MansionOrder.Kids = this.searchData.Kids
                 this.MansionOrder.ResultText = this.$t('Request.text.mansionResult').replace('#Mansion#', Mansion.Name)
-                    .replace('#BeginDate#', this.searchData.BeginDate).replace('#EndDate#', this.searchData.EndDate)
+                    .replace('#BeginDate#', this.$options.filters.formatDate(this.searchData.BeginDate))
+                    .replace('#EndDate#', this.$options.filters.formatDate(this.searchData.EndDate))
 
                 this.$store.dispatch("SetMansionOrder", { ...this.MansionOrder })
             }

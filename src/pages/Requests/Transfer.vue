@@ -82,13 +82,12 @@
                     </small>
                 </div>
             </div>
-
         </div>
 
         <div class="form-group formControl">
             <label class="formLabel"> 
                 <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
-            <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
+            <b-button v-b-modal.mdlCustomer class="formElement formButton">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
             <div v-if="$v.TransferOrder.Adults.$dirty">
                 <small v-if="!$v.TransferOrder.Adults.minValue" class="form-text text-danger">
                     {{ $t('Request.warning.adultObliged') }}
@@ -96,26 +95,26 @@
             </div>
             <b-modal id="mdlCustomer" title="BootstrapVue" hide-header hide-footer dialog-class="mydialogclass">
                 <p>{{ $t('Request.label.selectPeople') }}</p>
-                    <div class="myDiv">
-                        <table class="mytable2">
-                            <tr>
-                                <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
-                                <td><button @click="changeVisitor('adult', -1)">
-                                        <i class="fa fa-minus faclass fa-lg"></i></button>
-                                    <label > {{ TransferOrder.Adults }} </label>
-                                    <button @click="changeVisitor('adult', +1)">
-                                        <i class="fa fa-plus faclass fa-lg"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><label> <strong>{{ $t('Request.label.kid') }}</strong> </label></td>
-                                <td><button @click="changeVisitor('Kids', -1)">
-                                        <i class="fa fa-minus faclass fa-lg"></i></button>
-                                    <label> {{ TransferOrder.Kids }} </label>
-                                    <button @click="changeVisitor('Kids', +1)">
-                                        <i class="fa fa-plus faclass fa-lg"></i></button></td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="myDiv">
+                    <table class="mytable2">
+                        <tr>
+                            <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
+                            <td><button @click="changeVisitor('adult', -1)">
+                                    <i class="fa fa-minus faclass fa-lg"></i></button>
+                                <label > {{ TransferOrder.Adults }} </label>
+                                <button @click="changeVisitor('adult', +1)">
+                                    <i class="fa fa-plus faclass fa-lg"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><label> <strong>{{ $t('Request.label.kid') }}</strong> </label></td>
+                            <td><button @click="changeVisitor('Kids', -1)">
+                                    <i class="fa fa-minus faclass fa-lg"></i></button>
+                                <label> {{ TransferOrder.Kids }} </label>
+                                <button @click="changeVisitor('Kids', +1)">
+                                    <i class="fa fa-plus faclass fa-lg"></i></button></td>
+                        </tr>
+                    </table>
+                </div>
                     
                 <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">{{ $t('Request.label.close') }}</b-button>
             </b-modal>

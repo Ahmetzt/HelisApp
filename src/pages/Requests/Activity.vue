@@ -82,8 +82,8 @@
             </div>
             <div class="form-group formControl">
                 <label class="formLabel"> 
-                       <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
-                <b-button v-b-modal.mdlCustomer class="formElement">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
+                    <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
+                <b-button v-b-modal.mdlCustomer class="formElement formButton">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
                 <div v-if="$v.ActivityOrder.Adults.$dirty">
                     <small v-if="!$v.ActivityOrder.Adults.minValue" class="form-text text-danger">
                         {{ $t('Request.warning.adultObliged') }}
@@ -175,6 +175,8 @@
             }
         },
         created() {
+            this.$store.dispatch("getActivityTypeList")
+            
             eventBus.$on('returnBack', () => {
                 this.isSelected = false
                 eventBus.$emit('updateHeaderText', this.$t('pages.activity'))

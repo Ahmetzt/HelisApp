@@ -36,21 +36,21 @@
     }
     
     .button-yellow {
-        color: #fff;
+        color: #FFFFFF;
         background-color: #D6B761;
         border-color: #D6B761;
         font-size: 40px;
         height: 100px;
     }
     .button-blue {
-        color: #fff;
+        color: #FFFFFF;
         background-color: #007bff;
         border-color: #007bff;
         font-size: 40px;
         height: 100px;
     }
     .button-green {
-        color: #fff;
+        color: #FFFFFF;
         background-color: #7cd840;
         border-color: #7cd840;
         font-size: 40px;
@@ -81,13 +81,13 @@
         padding-left: 3%;
         margin-left: 3%;
         max-width: 94%;
-        background-color: #fff;
+        background-color: #FFFFFF;
     }
 
     .formControlFE {
         margin-top: 40px; 
         position: relative; 
-        background-color: #fff;
+        background-color: #FFFFFF;
     }
 
     .formAssistant {
@@ -99,6 +99,7 @@
         flex-wrap: wrap;
         justify-content: space-between;
         padding: 0;
+        row-gap: 20px;
     }
 
     .formAssistantImage {
@@ -185,6 +186,11 @@
         border: 1px solid #ced4da;
     }
 
+    .formButton {
+        background-color: white;
+        color: black;
+    }
+
     .formTwoCols {
         display: flex;
         flex-direction: row;
@@ -193,7 +199,7 @@
 
         &-inner {
             width: 47%;
-            background-color: #fff;
+            background-color: #FFFFFF;
         }
     }
 
@@ -345,8 +351,8 @@
 
     .mybutton {
         background-size: cover;
-        width: 47%;
-        margin: 1%;
+        width: 49%;
+        // margin: 1%;
         border: none;
         padding: 0;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -358,6 +364,16 @@
         display: inline-flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    .mybuttonGroup {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        justify-content: space-between;
+        row-gap: 20px;
     }
 
     .myimage {
@@ -387,7 +403,7 @@
     }
 
     input[type=date], input[type=datetime-local], input[type=month], input[type=time] {
-        background-color: #fff;
+        background-color: #FFFFFF;
         border: 1px solid #ced4da;
     }
 
@@ -398,7 +414,7 @@
         padding: .75rem;
         position: relative;
         width: 100%;
-        background-color: #fff;
+        background-color: #FFFFFF;
         border: 1px solid #ced4da;
     }
 
@@ -424,7 +440,7 @@
     .formMoving {
         display: flex;
         gap: 2px;
-        background-color: #fff;
+        background-color: #FFFFFF;
         position: relative;
 
         //Flex Direction
@@ -438,7 +454,7 @@
 
         & > * {
             position: relative;
-            // background-color: #fff;
+            // background-color: #FFFFFF;
             background: none;
         }
 
@@ -463,8 +479,17 @@
         }
 
         &-Button {
-            background-color: #fff;
+            background-color: #FFFFFF;
             font-size: 30px;
+        }
+    }
+    
+    .footerAuth {
+        text-align: center;
+        margin: 50px 0;
+
+        & > img {
+            width: 50%;
         }
     }
 </style>

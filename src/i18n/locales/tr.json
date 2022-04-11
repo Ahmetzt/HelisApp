@@ -190,6 +190,10 @@
             "dateMin": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
             "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
         },
+        "IsApproved": {
+            "title": "Şartları ve koşulları kabul ediyorum",
+            "checked": "Lütfen Şartları ve Koşulları Onaylayınız"
+        },
         "submit": "Gönder",
         "reset": "Temizle",
         "cancel": "İptal"
@@ -209,6 +213,8 @@
             "noDate": "Lütfen Tarih Seçiniz",
             "noBeginDate": "Lütfen Giriş Tarihi Seçiniz",
             "noEndDate": "Lütfen Çıkış Tarihi Seçiniz",
+            "dateMax": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
+            "dateMin": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
             "noTime": "Lütfen Saat Seçiniz",
             "adultObliged": "En Az 1 Yetişkin olmalıdır",
             "noNote": "Lütfen Not Giriniz",

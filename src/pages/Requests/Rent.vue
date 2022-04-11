@@ -35,7 +35,7 @@
                 <option 
                     :disabled="vehicle.count == 0"
                     :value="vehicle.VehicleId"
-                    v-for="vehicle in getVehiclesByType(VehicleType == 1 ? $t('Request.label.vehicle') : VehicleType == 2 ? $t('Request.label.boat') : '')"
+                    v-for="vehicle in getVehiclesByType(VehicleType == 1 ? 'Araç' : VehicleType == 2 ? 'Tekne' : '')"
                     :key="vehicle.VehicleId">
                     {{ vehicle.Model }}</option>
             </select>
@@ -60,6 +60,9 @@
                     <small v-if="!$v.RentOrder.BeginDate.required" class="form-text text-danger">
                         {{ $t('Request.warning.noBeginDate') }}
                     </small>
+                    <small v-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
+                        {{ $t('Request.warning.dateMax') }}
+                    </small>
                 </div>
             </div>
             <div class="formMoving-Between">
@@ -83,6 +86,9 @@
                 <div v-if="$v.RentOrder.EndDate.$dirty">
                     <small v-if="!$v.RentOrder.EndDate.required" class="form-text text-danger">
                         {{ $t('Request.warning.noEndDate') }}
+                    </small>
+                    <small v-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
+                        {{ $t('Request.warning.dateMin') }}
                     </small>
                 </div>
             </div>
@@ -128,10 +134,16 @@
             },
             RentOrder: {
                 BeginDate: {
-                    required
+                    required,
+                    dateMax(val, { EndDate }) {
+                        return EndDate != null && val > EndDate ? false : true
+                    },
                 },
                 EndDate: {
-                    required
+                    required,
+                    dateMin(val, { BeginDate }) {
+                        return BeginDate != null && val < BeginDate ? false : true
+                    },
                 },
             }
         },

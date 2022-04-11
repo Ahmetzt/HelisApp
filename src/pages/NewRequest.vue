@@ -1,7 +1,7 @@
 <template>
     <div class="container container-fluid">
         <div class="row mt-5">
-            <div>
+            <div class="mybuttonGroup">
                 <button class="mybutton" @click="openRequest('mansion')">
                     <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/konaklama.png"> -->
                     <img class="menuImage" alt="logo" src="../../../images/requests/svg/mansion.svg">

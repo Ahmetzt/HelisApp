@@ -1,8 +1,6 @@
 <template>
     <div class="background" @click="closePage">
-        <p>
-            {{getResultText}}
-        </p>
+        <div v-html="getResultText"></div>
     </div>
 </template>
 
