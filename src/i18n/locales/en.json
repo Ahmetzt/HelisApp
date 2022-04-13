@@ -132,7 +132,7 @@
             "minLength": "Password should be at least 6 character"
         },
         "RePassword": {
-            "title": "Password:",
+            "title": "Re-password:",
             "placeholder": "Enter Password",
             "required": "Please Enter Password",
             "minLength": "Password should be at least 6 character",
@@ -273,9 +273,8 @@
         }
     },
     "Property": {
-
         "Info": {
-            "Hotel": "HOtel",
+            "Hotel": "Hotel",
             "Block": "Block",
             "No": "No",
             "Info": "Info",
@@ -295,6 +294,46 @@
             "Index": "Index",
             "User": "User",
             "DateSpan": "Dates"
+        }
+    },
+    "RequestList": {
+        "label": {
+            "OrderId": "Request ID",
+            "OrderType": "Request Type",
+            "OrderStatus": "Status",
+            "Details": "Details",
+            "Detail": "Detail",
+            "Show": "Show",
+            "Hide": "Hide",
+            "RequestDate": "Request Date"
+        },
+        "details": {
+            "Hotel": "Hotel",
+            "HotelDefinition": "Hotel Definition",
+            "HotelDescription": "Hotel Features",
+            "BeginDate": "Begin Date",
+            "EndDate": "End Date",
+            "Adult": "Adult",
+            "Kid": "Kid",
+            "TransferDate": "Transfer Date",
+            "FromToType": "Transfer Direction",
+            "FromPlane": "From Plane to Hotel",
+            "FromHotel": "From Hotel to Plane",
+            "AirportName": "Airport Name",
+            "Type": "Type",
+            "Model": "Model",
+            "Province": "Province",
+            "District": "District",
+            "Restaurant": "Restaurant",
+            "RezervationDate": "Rezervation Date",
+            "ManWoman": "Woman & Man",
+            "HomeTextile": "Home Textile",
+            "ChildProduct": "Child Product",
+            "RequestDate": "Request Date",
+            "Activity": "Activity",
+            "ActivityDescription": "Activity Description",
+            "AssistantService": "Assistant Service",
+            "Note": "Note"
         }
     }
 }

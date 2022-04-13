@@ -158,13 +158,23 @@ const store = new Vuex.Store({
         initAuth({ commit, dispatch, state }) {
             let SessionKey = localStorage.getItem("Session")
             if(SessionKey != null) {
-                axios.get("Session/SessionControl?" + "SessionKey=" + SessionKey)
+                axios.get("Session/RenewSession?" + "SessionKey=" + SessionKey)
                     .then(response => {
                         state.isResult = false
 
                         if(response.data) {
                             let SessionData = {}
+                            let data = response.data
                             
+                            localStorage.setItem("RoleId", data.RoleId)
+                            localStorage.setItem("Session", data.Session)
+                            localStorage.setItem("UserId", data.UserId)
+                            localStorage.setItem("BookingId", data.BookingId)
+                            localStorage.setItem("PossessionId", data.PossessionId)
+                            localStorage.setItem("CurrentPossession", parseInt(data.BookingId) || parseInt(data.PossessionId))
+                            localStorage.setItem("CurrentLocation", data.CurrentLocation)
+                            localStorage.setItem("Lang", data.Lang)
+
                             SessionData.RoleId =            localStorage.getItem("RoleId")
                             SessionData.Session =           localStorage.getItem("Session")
                             SessionData.UserId =            localStorage.getItem("UserId")
@@ -186,9 +196,10 @@ const store = new Vuex.Store({
                             
                             dispatch("SetLocale", localStorage.getItem("Lang"))
 
-                            if (window.location.pathname != "/") {
-                                router.push("/")
-                            }
+                            // if (window.location.pathname != "/" || window.location.hash.includes('auth')) {
+                            //     router.push("/")
+                            // }
+                            router.push("/")
                         } else {
                             router.push("/auth")
                             commit("removeLocalStorage");
@@ -512,13 +523,19 @@ const store = new Vuex.Store({
             })
         },
         
-        Register(registerData ) {
+        Register({ dispatch }, registerData ) {
             return axios.post("Session/Register?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 
                 "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + 
                 "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
                 "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId + 
                 "&BeginDate=" + registerData.BeginDate +"&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info + 
                 "&IsApproved=" + registerData.IsApproved)
+                .then((response) => {
+                    return response.data
+                })
+                .catch((error) => {
+                    dispatch("SetError", error)
+                })
         },
         RegisterSecondary({ dispatch, state }, registerData ) {
             return axios.post("User/RegisterSecondary?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 

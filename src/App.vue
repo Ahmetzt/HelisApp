@@ -374,6 +374,7 @@
         height: 100%;
         justify-content: space-between;
         row-gap: 20px;
+        margin-bottom: 10px;
     }
 
     .myimage {
@@ -491,5 +492,13 @@
         & > img {
             width: 50%;
         }
+    }
+
+    .headerMain {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: calc(100vh - 200px);
+        justify-content: space-between;
     }
 </style>

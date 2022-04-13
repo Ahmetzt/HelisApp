@@ -129,7 +129,7 @@
             "minLength": "Parolanız en az 6 karakterden oluşmalıdır"
         },
         "RePassword": {
-            "title": "Parola:",
+            "title": "Parola Tekrar:",
             "placeholder": "Parola Giriniz",
             "required": "Lütfen Parola Adı Giriniz",
             "minLength": "Parolanız en az 6 karakterden oluşmalıdır",
@@ -291,6 +291,46 @@
             "Index": "Sıra",
             "User": "Kullanıcı",
             "DateSpan": "Tarih"
+        }
+    },
+    "RequestList": {
+        "label": {
+            "OrderId": "Talep ID",
+            "OrderType": "Talep Türü",
+            "OrderStatus": "Talep Durumu",
+            "Details": "Detaylar",
+            "Detail": "Detay",
+            "Show": "Göster",
+            "Hide": "Gizle",
+            "RequestDate": "Talep Tarihi"
+        },
+        "details": {
+            "Hotel": "Otel",
+            "HotelDefinition": "Hotel Tanımı",
+            "HotelDescription": "Hotel Özellikleri",
+            "BeginDate": "Başlangıç Tarihi",
+            "EndDate": "Bitiş Tarihi",
+            "Adult": "Yetişkin",
+            "Kid": "Çocuk",
+            "TransferDate": "Transfer Tarihi",
+            "FromToType": "Transfer Yönü",
+            "FromPlane": "Uçaktan Otele",
+            "FromHotel": "Otelden Uçağa",
+            "AirportName": "Hava Alanı",
+            "Type": "Tür",
+            "Model": "Araç",
+            "Province": "İl",
+            "District": "İlçe",
+            "Restaurant": "Restauran",
+            "RezervationDate": "Rezarvasyon Tarihi",
+            "ManWoman": "Kadın & Erkek",
+            "HomeTextile": "Ev Tekstili",
+            "ChildProduct": "Çocuk Ürünleri",
+            "RequestDate": "Talep Tarihi",
+            "Activity": "Activite",
+            "ActivityDescription": "Activite Özellikleri",
+            "AssistantService": "Asistan Hizmeti",
+            "Note": "Not"
         }
     }
 }

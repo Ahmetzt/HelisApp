@@ -1,13 +1,16 @@
 <template>
     <div class="container">
         <b-table striped hover :items="getOrders" :fields="fields">
-            
-            <template #cell(Details)="row">
-                <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-                    Detay {{ row.detailsShowing ? 'Gizle' : 'Göster'}} 
-                </b-button>
+            <template #head()="scope">
+                <div class="text-nowrap">
+                    {{ $t(`RequestList.label.${scope.label}`) }} 
+                </div>
+            </template>
 
-                <!-- <b-button variant="warning" size="sm" class="mr-2" @click="updateRow(row.item, row.index, $event.target)">Düzenle</b-button> -->
+            <template #cell(Details)="row">
+                <b-button size="lg" @click="row.toggleDetails" class="mr-2">
+                    {{ $t('RequestList.label.Detail') + " " + (row.detailsShowing ? $t('RequestList.label.Hide') : $t('RequestList.label.Show')) }} 
+                </b-button>
             </template>
 
             <template #row-details="row">
@@ -15,9 +18,13 @@
                     <b-row class="mb-2">
                         <b-table striped hover :items="row.item.OrderInfo" thead-tr-class="d-none" table-class="requestTable">
                             
+                            <template #cell(Column)="row">
+                                <!-- {{ data.index + 1 }} -->
+                                {{ $t(`RequestList.details.${row.value}`) }} 
+                            </template>
                         </b-table>
-                        <b-col><b>Talep Tarihi:</b> {{ row.item.OrderDate | formatDate }}</b-col>
-                        <b-col class="smallCloseButton"><b-button size="sm" @click="row.toggleDetails">{{ $t('Request.label.close') }}</b-button></b-col>
+                        <b-col><b>{{ $t(`RequestList.label.RequestDate`) }} :</b> {{ row.item.OrderDate | formatDate }}</b-col>
+                        <b-col class="smallCloseButton"><b-button size="lg" @click="row.toggleDetails">{{ $t('Request.label.close') }}</b-button></b-col>
                         
                     </b-row>
                 </b-card>
@@ -45,18 +52,14 @@
                     OrderType: null,
                 },
                 fields: [ 
-                    { key: 'OrderId', label: 'Talep ID', sortable: true, }, 
-                    { key: 'OrderType', label: 'Talep Türü', sortable: true, formatter: (value) => { 
+                    { key: 'OrderId', label: 'OrderId', sortable: true, }, 
+                    { key: 'OrderType', label: 'OrderType', sortable: true, formatter: (value) => { 
                         return this.getOrderTypesById(value).OrderName
                     } }, 
-                    // { key: 'OrderDate', label: 'Talep Tarihi', formatter: (value) => {
-                    //     let d = new Date(value)
-                    //     return d.toLocaleString()
-                    // } },
-                    { key: 'OrderStatus', label: 'Talep Durumu', formatter: (value) => { 
+                    { key: 'OrderStatus', label: 'OrderStatus', formatter: (value) => { 
                         return this.getOrderStatusById(value).StatusName
                     } }, 
-                    { key: 'Details', label: 'Detaylar', }, 
+                    { key: 'Details', label: 'Details', }, 
                 ],
             }
         },

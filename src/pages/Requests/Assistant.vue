@@ -17,77 +17,82 @@
                 </small>
             </div>            
         </div>
-        <div v-else>
-            <img :src="require(`../../../../images/asistantType/jpg/${selectedAssistant.ImageUrl}`)" :alt="selectedAssistant.Description" class="requestImage">
-            <div class="form-group formControl formControlFE">
-                <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
-                <input 
-                    type="text" 
-                    class="form-control formElement"
-                    v-model="getSessionDetail.CurrentLocation"
-                    disabled>
-            </div>
-            
-            <div class="formTwoCols">
-                <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
-                    <label class="formLabel">
-                        <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.date') }}</strong> </label>
+        <div v-else class="headerMain">
+            <div>
+                <img :src="require(`../../../../images/asistantType/jpg/${selectedAssistant.ImageUrl}`)" :alt="selectedAssistant.Description" class="requestImage">
+                <div class="form-group formControl formControlFE">
+                    <label class="formLabel"> 
+                        <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
                     <input 
-                        type="date" 
-                        class="formElement" 
-                        :placeholder="requestDate == null || requestDate == '' ? $t('Request.placeholder.date') : ''" 
-                        id="dateEnter" 
-                        v-model="requestDate"
-                        @blur="$v.requestDate.$touch()">
-                    <div v-if="$v.requestDate.$dirty">
-                        <small v-if="!$v.requestDate.required" class="form-text text-danger">
-                            {{ $t('Request.warning.noDate') }}
-                        </small>
+                        type="text" 
+                        class="form-control formElement"
+                        v-model="getSessionDetail.CurrentLocation"
+                        disabled>
+                </div>
+                
+                <div class="formTwoCols">
+                    <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
+                        <label class="formLabel">
+                            <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.date') }}</strong> </label>
+                        <input 
+                            type="date" 
+                            class="formElement" 
+                            :placeholder="requestDate == null || requestDate == '' ? $t('Request.placeholder.date') : ''" 
+                            id="dateEnter" 
+                            v-model="requestDate"
+                            @blur="$v.requestDate.$touch()">
+                        <div v-if="$v.requestDate.$dirty">
+                            <small v-if="!$v.requestDate.required" class="form-text text-danger">
+                                {{ $t('Request.warning.noDate') }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
+                        <label class="formLabel">       
+                            <i class="fa fa-clock faclass fa-lg"></i> <strong>{{ $t('Request.label.time') }}</strong> </label>
+                        <input 
+                            type="time" 
+                            class="formElement" 
+                            :placeholder="requestTime == null || requestTime == '' ? $t('Request.placeholder.time') : ''" 
+                            id="dateBack" 
+                            v-model="requestTime"
+                            @blur="$v.requestTime.$touch()">
+                        <div v-if="$v.requestTime.$dirty">
+                            <small v-if="!$v.requestTime.required" class="form-text text-danger">
+                                {{ $t('Request.warning.noTime') }}
+                            </small>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
-                    <label class="formLabel">       
-                        <i class="fa fa-clock faclass fa-lg"></i> <strong>{{ $t('Request.label.time') }}</strong> </label>
-                    <input 
-                        type="time" 
-                        class="formElement" 
-                        :placeholder="requestTime == null || requestTime == '' ? $t('Request.placeholder.time') : ''" 
-                        id="dateBack" 
-                        v-model="requestTime"
-                        @blur="$v.requestTime.$touch()">
-                    <div v-if="$v.requestTime.$dirty">
-                        <small v-if="!$v.requestTime.required" class="form-text text-danger">
-                            {{ $t('Request.warning.noTime') }}
-                        </small>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group formControl">
-                <label class="formLabel">       
-                    <i class="fa fa-info faclass fa-lg"></i> <strong>{{ $t('Request.label.note') }}</strong> </label>
-                <input 
-                    class="formElement" 
-                    v-model="AssistantOrder.Note"
-                    :placeholder="$t('Request.placeholder.note')"
-                    @blur="$v.AssistantOrder.Note.$touch()">
-                <div v-if="$v.AssistantOrder.Note.$dirty">
-                    <small v-if="!$v.AssistantOrder.Note.required" class="form-text text-danger">
-                        {{ $t('Request.warning.noNote') }}
-                    </small>
+                <div class="form-group formControl">
+                    <label class="formLabel">       
+                        <i class="fa fa-info faclass fa-lg"></i> <strong>{{ $t('Request.label.note') }}</strong> </label>
+                    <input 
+                        class="formElement" 
+                        v-model="AssistantOrder.Note"
+                        :placeholder="$t('Request.placeholder.note')"
+                        @blur="$v.AssistantOrder.Note.$touch()">
+                    <div v-if="$v.AssistantOrder.Note.$dirty">
+                        <small v-if="!$v.AssistantOrder.Note.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noNote') }}
+                        </small>
+                    </div>
+                </div>
+
+                <div class="button-container d-flex  flex-column align-items-center buttonControl">
+                    <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setAssistantOrder" :disabled="$v.$invalid">
+                        {{ $t('Request.label.newRequest') }}
+                    </button>
+                </div>
+
+                <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="isSupport">
+                    <button type="submit" class="btn btn-block mb-2 button-green">
+                        <i class="fa fa-phone faclass fa-lg"></i> {{ $t('Request.label.liveSupport') }}
+                    </button>
                 </div>
             </div>
-            <div class="button-container d-flex  flex-column align-items-center buttonControl">
-                <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setAssistantOrder" :disabled="$v.$invalid">
-                    {{ $t('Request.label.newRequest') }}
-                </button>
-            </div>
-            <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="isSupport">
-                <button type="submit" class="btn btn-block mb-2 button-green">
-                    <i class="fa fa-phone faclass fa-lg"></i> {{ $t('Request.label.liveSupport') }}
-                </button>
-            </div>
+            <Footer/>
         </div>
     </div>
 </template>
@@ -96,8 +101,12 @@
     import { mapGetters } from "vuex";
     import { requiredIf } from "vuelidate/lib/validators"
     import { eventBus } from "../../main"
+    import Footer from "../../components/Footer.vue"
 
     export default {
+        components: {
+            Footer
+        },
         data() {
             return {
                 selectedAssistant: {

@@ -13,7 +13,6 @@
         </b-navbar-nav>
         <b-navbar-brand class="mx-auto" v-else>
             <router-link class="navbar-brand nav-brand me-5" to="/new">
-                <!-- <img class="img-fluid fullWidth" alt="logo" src="../assets/helisLogoWhite.png"/> -->
                 <img class="img-fluid fullWidth" alt="logo" src="../../../images/logo/logoWhite.png"/>
             </router-link>
         </b-navbar-brand>
@@ -191,6 +190,7 @@
         border: none;
         align-self: end;
         margin-bottom: 50px;
+        margin-left: auto;
     }
 
     .nav-main {

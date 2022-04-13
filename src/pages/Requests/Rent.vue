@@ -1,103 +1,106 @@
 <template>
-    <div class="request-container">
-        <img src="../../../../images/requests/jpg/rent.jpg" alt="boat" class="requestImage">
-        <div class="form-group formControl formControlFE">
-            <label class="formLabel"> 
-                <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.location') }}</strong> </label>
-            <input 
-                type="text" 
-                class="form-control formElement"
-                v-model="getSessionDetail.CurrentLocation"
-                disabled
-            >
-        </div>
-        <div class="form-group formControl">
-            <label class="formLabel"> 
-                <i class="fa fa-random faclass fa-lg"></i> <strong>{{ $t('Request.label.vehicleType') }}</strong> </label>
-            <label class="formRadio">
-                <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="1"/>
-                <i class="fa fa-car faclass fa-lg"></i> {{ $t('Request.label.vehicle') }}
-            </label>    
-            <label class="formRadio">
-                <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="2"/>
-                <i class="fa fa-ship faclass fa-lg"></i> {{ $t('Request.label.boat') }}
-            </label>
-        </div>
-        <div class="form-group formControl">
-            <label class="formLabel"> 
-                <span v-show="VehicleType == 2" ><i class="fa fa-ship faclass fa-lg"></i> <strong>{{ $t('Request.label.boat') }}</strong></span> 
-                <span v-show="VehicleType == 1" ><i class="fa fa-car faclass fa-lg"></i> <strong>{{ $t('Request.label.vehicle') }}</strong></span>  </label>
-            <select 
-                class="form-control formElement" 
-                v-model="$v.selectedVehicle.$model" 
-                @blur="$v.selectedVehicle.$touch()">
-                <option selected disabled value=-1>{{ VehicleType == 1 ? $t('Request.placeholder.selectVehicle')  : VehicleType == 2 ? $t('Request.placeholder.selectBoat')  : '' }}</option>
-                <option 
-                    :disabled="vehicle.count == 0"
-                    :value="vehicle.VehicleId"
-                    v-for="vehicle in getVehiclesByType(VehicleType == 1 ? 'Araç' : VehicleType == 2 ? 'Tekne' : '')"
-                    :key="vehicle.VehicleId">
-                    {{ vehicle.Model }}</option>
-            </select>
-            <div v-if="$v.selectedVehicle.$dirty">
-                <small v-if="!$v.selectedVehicle.checked" class="form-text text-danger">
-                    {{ $t('Request.warning.noVehicle') }}
-                </small>
-            </div>
-        </div>
-        <div :class="FromToClass">
-            <div class="form-group">
+    <div class="request-container headerMain">
+        <div>
+            <img src="../../../../images/requests/jpg/rent.jpg" alt="boat" class="requestImage">
+            <div class="form-group formControl formControlFE">
                 <label class="formLabel"> 
-                    <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.rentBeginDate') }}</strong> </label>
+                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.location') }}</strong> </label>
                 <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="RentOrder.BeginDate == null || RentOrder.BeginDate == '' ? $t('Request.placeholder.date') : ''" 
-                    id="dateEnter" 
-                    v-model="RentOrder.BeginDate"
-                    @blur="$v.RentOrder.BeginDate.$touch()">
-                <div v-if="$v.RentOrder.BeginDate.$dirty">
-                    <small v-if="!$v.RentOrder.BeginDate.required" class="form-text text-danger">
-                        {{ $t('Request.warning.noBeginDate') }}
-                    </small>
-                    <small v-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
-                        {{ $t('Request.warning.dateMax') }}
+                    type="text" 
+                    class="form-control formElement"
+                    v-model="getSessionDetail.CurrentLocation"
+                    disabled
+                >
+            </div>
+            <div class="form-group formControl">
+                <label class="formLabel"> 
+                    <i class="fa fa-random faclass fa-lg"></i> <strong>{{ $t('Request.label.vehicleType') }}</strong> </label>
+                <label class="formRadio">
+                    <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="1"/>
+                    <i class="fa fa-car faclass fa-lg"></i> {{ $t('Request.label.vehicle') }}
+                </label>    
+                <label class="formRadio">
+                    <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="2"/>
+                    <i class="fa fa-ship faclass fa-lg"></i> {{ $t('Request.label.boat') }}
+                </label>
+            </div>
+            <div class="form-group formControl">
+                <label class="formLabel"> 
+                    <span v-show="VehicleType == 2" ><i class="fa fa-ship faclass fa-lg"></i> <strong>{{ $t('Request.label.boat') }}</strong></span> 
+                    <span v-show="VehicleType == 1" ><i class="fa fa-car faclass fa-lg"></i> <strong>{{ $t('Request.label.vehicle') }}</strong></span>  </label>
+                <select 
+                    class="form-control formElement" 
+                    v-model="$v.selectedVehicle.$model" 
+                    @blur="$v.selectedVehicle.$touch()">
+                    <option selected disabled value=-1>{{ VehicleType == 1 ? $t('Request.placeholder.selectVehicle')  : VehicleType == 2 ? $t('Request.placeholder.selectBoat')  : '' }}</option>
+                    <option 
+                        :disabled="vehicle.count == 0"
+                        :value="vehicle.VehicleId"
+                        v-for="vehicle in getVehiclesByType(VehicleType == 1 ? 'Araç' : VehicleType == 2 ? 'Tekne' : '')"
+                        :key="vehicle.VehicleId">
+                        {{ vehicle.Model }}</option>
+                </select>
+                <div v-if="$v.selectedVehicle.$dirty">
+                    <small v-if="!$v.selectedVehicle.checked" class="form-text text-danger">
+                        {{ $t('Request.warning.noVehicle') }}
                     </small>
                 </div>
             </div>
-            <div class="formMoving-Between">
-                <div class="formMoving-Line">
+            <div :class="FromToClass">
+                <div class="form-group">
+                    <label class="formLabel"> 
+                        <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.rentBeginDate') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="RentOrder.BeginDate == null || RentOrder.BeginDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateEnter" 
+                        v-model="RentOrder.BeginDate"
+                        @blur="$v.RentOrder.BeginDate.$touch()">
+                    <div v-if="$v.RentOrder.BeginDate.$dirty">
+                        <small v-if="!$v.RentOrder.BeginDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noBeginDate') }}
+                        </small>
+                        <small v-if="!$v.RentOrder.BeginDate.dateMax" class="form-text text-danger">
+                            {{ $t('Request.warning.dateMax') }}
+                        </small>
+                    </div>
+                </div>
+                <div class="formMoving-Between">
+                    <div class="formMoving-Line">
 
+                    </div>
+                    <b-button class="formMoving-Button" @click="FromTo = !FromTo">
+                        <b-icon icon="arrow-down-up" aria-hidden="true"></b-icon>
+                    </b-button>
                 </div>
-                <b-button class="formMoving-Button" @click="FromTo = !FromTo">
-                    <b-icon icon="arrow-down-up" aria-hidden="true"></b-icon>
-                </b-button>
+                <div class="form-group">
+                    <label class="formLabel"> 
+                        <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.rentEndDate') }}</strong> </label>
+                    <input 
+                        type="date" 
+                        class="formElement" 
+                        :placeholder="RentOrder.EndDate == null || RentOrder.EndDate == '' ? $t('Request.placeholder.date') : ''" 
+                        id="dateBack" 
+                        v-model="RentOrder.EndDate"
+                        @blur="$v.RentOrder.EndDate.$touch()">
+                    <div v-if="$v.RentOrder.EndDate.$dirty">
+                        <small v-if="!$v.RentOrder.EndDate.required" class="form-text text-danger">
+                            {{ $t('Request.warning.noEndDate') }}
+                        </small>
+                        <small v-if="!$v.RentOrder.EndDate.dateMin" class="form-text text-danger">
+                            {{ $t('Request.warning.dateMin') }}
+                        </small>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="formLabel"> 
-                    <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.rentEndDate') }}</strong> </label>
-                <input 
-                    type="date" 
-                    class="formElement" 
-                    :placeholder="RentOrder.EndDate == null || RentOrder.EndDate == '' ? $t('Request.placeholder.date') : ''" 
-                    id="dateBack" 
-                    v-model="RentOrder.EndDate"
-                    @blur="$v.RentOrder.EndDate.$touch()">
-                <div v-if="$v.RentOrder.EndDate.$dirty">
-                    <small v-if="!$v.RentOrder.EndDate.required" class="form-text text-danger">
-                        {{ $t('Request.warning.noEndDate') }}
-                    </small>
-                    <small v-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
-                        {{ $t('Request.warning.dateMin') }}
-                    </small>
-                </div>
+            <div class="button-container d-flex  flex-column align-items-center buttonControl">
+                <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setRentOrder" :disabled="$v.$invalid">
+                    {{ $t('Request.label.newRequest') }}
+                </button>
             </div>
         </div>
-        <div class="button-container d-flex  flex-column align-items-center buttonControl">
-            <button type="submit" class="btn btn-block mb-2 button-yellow" @click="setRentOrder" :disabled="$v.$invalid">
-                {{ $t('Request.label.newRequest') }}
-            </button>
-        </div>
+        <Footer/>
     </div>
 </template>
 
@@ -105,8 +108,12 @@
 
     import {mapGetters} from "vuex";
     import {required} from "vuelidate/lib/validators"
+    import Footer from "../../components/Footer.vue";
 
     export default {
+        components: {
+            Footer
+        },
         data() {
             return {
                 visitorText: "",

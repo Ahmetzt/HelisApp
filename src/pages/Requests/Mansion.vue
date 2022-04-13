@@ -1,123 +1,125 @@
 <template>
     <div class="request-container">
-        <div v-if="!isSearched">
-            <img src="../../../../images/requests/jpg/konaklama.jpg" alt="konaklama" class="requestImage">
-            <div class="form-group formControl formControlFE">
-                <label class="formLabel"> 
-                    <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
-                <select 
-                    class="form-control formElement" 
-                    v-model="$v.selectedLocation.$model" 
-                    @blur="$v.selectedLocation.$touch()"
-                    @change="locationSelected">
-                    <option selected disabled value=-1>{{ $t('Request.placeholder.selectLocation') }}</option>
-                    <option 
-                        :disabled="location.count == 0"
-                        :value="location.IlceId + '_' + location.IlId"
-                        :IlId="location.IlId"
-                        :IlceId="location.IlceId"
-                        v-for="location in getLocations"
-                        :key="location.RowId">
-                        {{ location.Ilce.length > 0 ? location.Ilce + ", " : "" }} {{ location.Il }}</option>
-                </select>
-                <div v-if="$v.selectedLocation.$dirty">
-                    <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
-                        {{ $t('Request.warning.noLocation') }}
-                    </small>
-                </div>
-            </div>
-            
-            <div :class="FromToClass">
-                <div class="form-group">
+        <div v-if="!isSearched" class="headerMain">
+            <div>
+                <img src="../../../../images/requests/jpg/konaklama.jpg" alt="konaklama" class="requestImage">
+                <div class="form-group formControl formControlFE">
                     <label class="formLabel"> 
-                        <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.beginDate') }}</strong> </label>
-                    <input 
-                        type="date" 
-                        class="formElement" 
-                        :placeholder="searchData.BeginDate == null || searchData.BeginDate == '' ? $t('Request.placeholder.date') : ''" 
-                        id="dateEnter" 
-                        v-model="searchData.BeginDate"
-                        @blur="$v.searchData.BeginDate.$touch()">
-                    <div v-if="$v.searchData.BeginDate.$dirty">
-                        <small v-if="!$v.searchData.BeginDate.required" class="form-text text-danger">
-                            {{ $t('Request.warning.noBeginDate') }}
-                        </small>
-                        <small v-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
-                            {{ $t('Request.warning.dateMax') }}
-                        </small>
-                    </div>
-                </div>
-                <div class="formMoving-Between">
-                    <div class="formMoving-Line">
-
-                    </div>
-                    <b-button class="formMoving-Button" @click="FromTo = !FromTo">
-                        <b-icon icon="arrow-down-up" aria-hidden="true"></b-icon>
-                    </b-button>
-                </div>
-                <div class="form-group">
-                    <label class="formLabel"> 
-                        <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.endDate') }}</strong> </label>
-                    <input 
-                        type="date" 
-                        class="formElement" 
-                        :placeholder="searchData.EndDate == null || searchData.EndDate == '' ? $t('Request.placeholder.date') : ''" 
-                        id="dateBack" 
-                        v-model="searchData.EndDate"
-                        @blur="$v.searchData.EndDate.$touch()">
-                    <div v-if="$v.searchData.EndDate.$dirty">
-                        <small v-if="!$v.searchData.EndDate.required" class="form-text text-danger">
-                            {{ $t('Request.warning.noEndDate') }}
-                        </small>
-                        <small v-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
-                            {{ $t('Request.warning.dateMin') }}
+                        <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
+                    <select 
+                        class="form-control formElement" 
+                        v-model="$v.selectedLocation.$model" 
+                        @blur="$v.selectedLocation.$touch()"
+                        @change="locationSelected">
+                        <option selected disabled value=-1>{{ $t('Request.placeholder.selectLocation') }}</option>
+                        <option 
+                            :disabled="location.count == 0"
+                            :value="location.IlceId + '_' + location.IlId"
+                            :IlId="location.IlId"
+                            :IlceId="location.IlceId"
+                            v-for="location in getLocations"
+                            :key="location.RowId">
+                            {{ location.Ilce.length > 0 ? location.Ilce + ", " : "" }} {{ location.Il }}</option>
+                    </select>
+                    <div v-if="$v.selectedLocation.$dirty">
+                        <small v-if="!$v.selectedLocation.checked" class="form-text text-danger">
+                            {{ $t('Request.warning.noLocation') }}
                         </small>
                     </div>
                 </div>
-            </div>
-            <div class="form-group formControl">
-                <label class="formLabel"> 
-                    <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
-                <b-button v-b-modal.mdlCustomer class="formElement formButton">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
-                <div v-if="$v.searchData.Adults.$dirty">
-                    <small v-if="!$v.searchData.Adults.minValue" class="form-text text-danger">
-                        {{ $t('Request.warning.adultObliged') }}
-                    </small>
-                </div>
-
-                <b-modal id="mdlCustomer" hide-header hide-footer dialog-class="mydialogclass">
-                    <p>{{ $t('Request.label.selectPeople') }}</p>
-                        <div class="myDiv">
-                            <table class="mytable2">
-                                <tr>
-                                    <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
-                                    <td><button @click="changeVisitor('adult', -1)">
-                                            <i class="fa fa-minus faclass fa-lg"></i></button>
-                                        <label > {{ searchData.Adults }} </label>
-                                        <button @click="changeVisitor('adult', +1)">
-                                            <i class="fa fa-plus faclass fa-lg"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><label> <strong>Çocuk:</strong> </label></td>
-                                    <td><button @click="changeVisitor('Kids', -1)">
-                                            <i class="fa fa-minus faclass fa-lg"></i></button>
-                                        <label> {{ searchData.Kids }} </label>
-                                        <button @click="changeVisitor('Kids', +1)">
-                                            <i class="fa fa-plus faclass fa-lg"></i></button></td>
-                                </tr>
-                            </table>
+                
+                <div :class="FromToClass">
+                    <div class="form-group">
+                        <label class="formLabel"> 
+                            <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.beginDate') }}</strong> </label>
+                        <input 
+                            type="date" 
+                            class="formElement" 
+                            :placeholder="searchData.BeginDate == null || searchData.BeginDate == '' ? $t('Request.placeholder.date') : ''" 
+                            id="dateEnter" 
+                            v-model="searchData.BeginDate"
+                            @blur="$v.searchData.BeginDate.$touch()">
+                        <div v-if="$v.searchData.BeginDate.$dirty">
+                            <small v-if="!$v.searchData.BeginDate.required" class="form-text text-danger">
+                                {{ $t('Request.warning.noBeginDate') }}
+                            </small>
+                            <small v-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
+                                {{ $t('Request.warning.dateMax') }}
+                            </small>
                         </div>
-                        
-                    <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">{{ $t('Request.label.close') }}</b-button>
-                </b-modal>
-            </div>
+                    </div>
+                    <div class="formMoving-Between">
+                        <div class="formMoving-Line">
 
-            <div class="button-container d-flex  flex-column align-items-center buttonControl" @blur="$v.searchData.EndDate.$touch()">
-                <button type="submit" class="btn btn-block mb-2 button-yellow" @click="onSearched" :disabled="$v.$invalid">
-                    {{ $t('Request.label.hotelSearch') }}
-                </button>
-            </div>
+                        </div>
+                        <b-button class="formMoving-Button" @click="FromTo = !FromTo">
+                            <b-icon icon="arrow-down-up" aria-hidden="true"></b-icon>
+                        </b-button>
+                    </div>
+                    <div class="form-group">
+                        <label class="formLabel"> 
+                            <i class="fa fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.endDate') }}</strong> </label>
+                        <input 
+                            type="date" 
+                            class="formElement" 
+                            :placeholder="searchData.EndDate == null || searchData.EndDate == '' ? $t('Request.placeholder.date') : ''" 
+                            id="dateBack" 
+                            v-model="searchData.EndDate"
+                            @blur="$v.searchData.EndDate.$touch()">
+                        <div v-if="$v.searchData.EndDate.$dirty">
+                            <small v-if="!$v.searchData.EndDate.required" class="form-text text-danger">
+                                {{ $t('Request.warning.noEndDate') }}
+                            </small>
+                            <small v-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
+                                {{ $t('Request.warning.dateMin') }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group formControl">
+                    <label class="formLabel"> 
+                        <i class="fa fa-user-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.people') }}</strong> </label>
+                    <b-button v-b-modal.mdlCustomer class="formElement formButton">{{ visitorText != "" ? visitorText : $t('Request.placeholder.people') }}</b-button>
+                    <div v-if="$v.searchData.Adults.$dirty">
+                        <small v-if="!$v.searchData.Adults.minValue" class="form-text text-danger">
+                            {{ $t('Request.warning.adultObliged') }}
+                        </small>
+                    </div>
 
+                    <b-modal id="mdlCustomer" hide-header hide-footer dialog-class="mydialogclass">
+                        <p>{{ $t('Request.label.selectPeople') }}</p>
+                            <div class="myDiv">
+                                <table class="mytable2">
+                                    <tr>
+                                        <td colspan="3"><label> <strong>{{ $t('Request.label.adult') }}</strong> </label></td>
+                                        <td><button @click="changeVisitor('adult', -1)">
+                                                <i class="fa fa-minus faclass fa-lg"></i></button>
+                                            <label > {{ searchData.Adults }} </label>
+                                            <button @click="changeVisitor('adult', +1)">
+                                                <i class="fa fa-plus faclass fa-lg"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><label> <strong>Çocuk:</strong> </label></td>
+                                        <td><button @click="changeVisitor('Kids', -1)">
+                                                <i class="fa fa-minus faclass fa-lg"></i></button>
+                                            <label> {{ searchData.Kids }} </label>
+                                            <button @click="changeVisitor('Kids', +1)">
+                                                <i class="fa fa-plus faclass fa-lg"></i></button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                        <b-button class="mt-3" block @click="$bvModal.hide('mdlCustomer')">{{ $t('Request.label.close') }}</b-button>
+                    </b-modal>
+                </div>
+
+                <div class="button-container d-flex  flex-column align-items-center buttonControl" @blur="$v.searchData.EndDate.$touch()">
+                    <button type="submit" class="btn btn-block mb-2 button-yellow" @click="onSearched" :disabled="$v.$invalid">
+                        {{ $t('Request.label.hotelSearch') }}
+                    </button>
+                </div>
+            </div>
+            <Footer/>
         </div>
         <div v-else>
             <table class="table table-hover table-striped table-bordered" v-if="getMansionsByLocation.length > 0">
@@ -146,8 +148,12 @@
     import {mapGetters} from "vuex";
     import {required, minValue} from "vuelidate/lib/validators"
     import {eventBus} from "../../main"
+    import Footer from "../../components/Footer.vue";
 
     export default {
+        components: {
+            Footer
+        },
         data() {
             return {
                 searchData: {

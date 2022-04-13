@@ -1,5 +1,5 @@
 <template>
-    <div class="request-container">
+    <div class="request-container headerMain">
         <div>
             <img src="../../../../images/requests/jpg/cleaner.jpg" alt="kurutemizleme" class="requestImage">
             <div class="form-group formControl formControlFE">
@@ -104,13 +104,18 @@
                 </button>
             </div>
         </div>
+        <Footer/>
     </div>
 </template>
 
 <script>
     import {required} from "vuelidate/lib/validators"
+    import Footer from "../../components/Footer.vue"
 
     export default {
+        components: {
+            Footer
+        },
         data() {
             return {
                 CleanerOrder: {

@@ -325,17 +325,22 @@
                 </b-form>
             </div>
         </div>
-        <div class="footerAuth">
+        <!-- <div class="footerAuth">
             <img src="../../../../images/logo/logoBlack.png" alt="Helis">
-        </div>
+        </div> -->
+        <Footer/>
     </div>
 </template>
 <script>
     import { mapGetters} from "vuex";
     import { required, email, minLength, sameAs, minValue, requiredIf } from "vuelidate/lib/validators"
     import axios from "axios"
+    import Footer from "../../components/Footer.vue";
 
     export default {
+        components: {
+            Footer
+        },
         data() {
             return {
                 User: {
@@ -617,6 +622,7 @@
         margin: auto;
         max-width: 90%;
         min-height: calc(100vh - 100px);
+        justify-content: space-between;
     }
 
     .form-control, .custom-select {
