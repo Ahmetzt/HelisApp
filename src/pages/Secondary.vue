@@ -2,7 +2,7 @@
     <div class="container">
             <div v-if="isNew || isEdit">
                 <b-form @submit.prevent="onSubmit" @reset="onReset" class="formNew">
-                    <b-form-group label="Dil:">
+                    <b-form-group :label="$t('Auth.Language.title')">
                         <b-form-radio-group v-model="Form.Language" buttons button-variant="outline-info" size="lg" @input="setLanguage">
                             <b-form-radio size="xl" name="Lang" value="tr"><flag iso="tr" /></b-form-radio>
                             <b-form-radio size="xl" name="Lang" value="en"><flag iso="gb" /></b-form-radio>
@@ -11,151 +11,154 @@
 
                     <b-form-group
                         id="input-group-1"
-                        label="Kullanıcı Adı:"
+                        :label="$t('Auth.UserName.title')"
                         label-for="input-1">
                         <b-form-input
                             id="input-1"
                             v-model.lazy="Form.UserName"
-                            placeholder="Kullanıcı Adı Giriniz"
+                            :placeholder="$t('Auth.UserName.placeholder')"
                             :disabled="!isNew"
                             :state="$v.Form.UserName.$dirty ? !$v.Form.UserName.$anyError : null"
                             @blur="$v.Form.UserName.$touch()"
                         ></b-form-input>
                         <div v-if="$v.Form.UserName.$dirty">
                             <b-form-invalid-feedback v-if="!$v.Form.UserName.required" :state="$v.Form.UserName.required">
-                                Lütfen Kullanıcı Adı Giriniz
+                                {{ $t('Auth.UserName.required') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.UserName.minLength" :state="$v.Form.UserName.minLength">
-                                Kullanıcı Adı en az 6 karakterden oluşmaktadır
+                                {{ $t('Auth.UserName.minLength') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.UserName.isUnique" :state="$v.Form.UserName.isUnique">
-                                Kullanıcı Adı Kullanılmaktadır
+                                {{ $t('Auth.UserName.isUnique') }}
                             </b-form-invalid-feedback>
                         </div>
                     </b-form-group>
 
                     <b-form-group
                         id="input-group-11"
-                        label="Mail:"
+                        :label="$t('Auth.Mail.title')"
                         label-for="input-11">
                         <b-form-input
                             id="input-11"
                             v-model.lazy="Form.Mail"
                             type="email"
-                            placeholder="Mail Giriniz"
+                            :placeholder="$t('Auth.Mail.placeholder')"
                             :disabled="!isNew"
                             :state="$v.Form.Mail.$dirty ? !$v.Form.Mail.$anyError : null"
                             @blur="$v.Form.Mail.$touch()"
                         ></b-form-input>
                         <div v-if="$v.Form.Mail.$dirty">
                             <b-form-invalid-feedback v-if="!$v.Form.Mail.required" :state="$v.Form.Mail.required">
-                                Lütfen Mail Adresi Giriniz
+                                {{ $t('Auth.Mail.required') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.Mail.email" :state="$v.Form.Mail.email">
-                                Lütfen Mail Adresini Doğru Formatta Giriniz
+                                {{ $t('Auth.Mail.email') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.Mail.isUnique" :state="$v.Form.Mail.isUnique">
-                                Mail Adresi Kullanılmaktadır
+                                {{ $t('Auth.Mail.isUnique') }}
                             </b-form-invalid-feedback>
                         </div>
                     </b-form-group>
 
                     <b-form-group 
                         id="input-group-21" 
-                        label="Parola:" 
+                        :label="$t('Auth.Password.title')"
                         label-for="input-21">
                         <b-form-input
                             id="input-21"
                             type="password"
                             v-model="Form.Password"
-                            placeholder="Parola Giriniz"
+                            :placeholder="$t('Auth.Password.placeholder')"
                             :state="$v.Form.Password.$dirty ? !$v.Form.Password.$anyError : null"
                             @blur="$v.Form.Password.$touch()"
                         ></b-form-input>
                         <div v-if="$v.Form.Password.$dirty">
                             <b-form-invalid-feedback v-if="!$v.Form.Password.required" :state="$v.Form.Password.required">
-                                Lütfen Parola Giriniz
+                                {{ $t('Auth.Password.required') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.Password.minLength" :state="$v.Form.Password.minLength">
-                                Parolanız en az 6 karakterden oluşmalıdır
+                                {{ $t('Auth.Password.minLength') }}
                             </b-form-invalid-feedback>
                         </div>
                     </b-form-group>
 
                     <b-form-group 
                         id="input-group-22" 
-                        label="Parola:" 
+                        :label="$t('Auth.RePassword.title')"
                         label-for="input-22">
                         <b-form-input
                             id="input-22"
                             type="password"
                             v-model="Form.RePassword"
-                            placeholder="Parola Giriniz"
+                            :placeholder="$t('Auth.RePassword.placeholder')"
                             :state="$v.Form.RePassword.$dirty ? !$v.Form.RePassword.$anyError : null"
                             @blur="$v.Form.RePassword.$touch()"
                         ></b-form-input>
                         <div v-if="$v.Form.RePassword.$dirty">
                             <b-form-invalid-feedback v-if="!$v.Form.RePassword.required" :state="$v.Form.RePassword.required">
-                                Lütfen Parola Giriniz
+                                {{ $t('Auth.RePassword.required') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.minLength" :state="$v.Form.RePassword.minLength">
-                                Parolanız en az 6 karakterden oluşmalıdır
+                                {{ $t('Auth.RePassword.minLength') }}
                             </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.RePassword.sameAs" :state="$v.Form.RePassword.sameAs">
-                                Parolalar birbiriyle uyuşmuyor
+                                {{ $t('Auth.RePassword.sameAs') }}
                             </b-form-invalid-feedback>
                         </div>
                     </b-form-group>
                     
                     <b-form-group 
                         id="input-group-2" 
-                        label="Ad:" 
+                        :label="$t('Auth.FirstName.title')"
                         label-for="input-2">
                         <b-form-input
                             id="input-2"
                             v-model="Form.FirstName"
-                            placeholder="Ad Giriniz"
+                            :placeholder="$t('Auth.FirstName.placeholder')"
                             :state="$v.Form.FirstName.$dirty ? !$v.Form.FirstName.$anyError : null"
                             @blur="$v.Form.FirstName.$touch()"
                         ></b-form-input>
                         <div v-if="$v.Form.FirstName.$dirty">
                             <b-form-invalid-feedback :state="$v.Form.FirstName.required">
-                                Lütfen Ad Giriniz
+                                {{ $t('Auth.FirstName.required') }}
                             </b-form-invalid-feedback>
                         </div>
                     </b-form-group>
 
                     <b-form-group 
                         id="input-group-3" 
-                        label="Soyad:" 
+                        :label="$t('Auth.LastName.title')"
                         label-for="input-3">
                         <b-form-input
                             id="input-3"
                             v-model="Form.LastName"
-                            placeholder="Soyad Giriniz"
+                            :placeholder="$t('Auth.LastName.placeholder')"
                             :state="$v.Form.LastName.$dirty ? !$v.Form.LastName.$anyError : null"
                             @blur="$v.Form.LastName.$touch()"
                         ></b-form-input>
                         <div v-if="$v.Form.LastName.$dirty">
                             <b-form-invalid-feedback :state="$v.Form.LastName.required">
-                                Lütfen Soyad Giriniz
+                                {{ $t('Auth.LastName.required') }}
                             </b-form-invalid-feedback>
                         </div>
                     </b-form-group>
 
-                    <b-form-group id="input-group-31" label="Telefon:" label-for="input-31">
+                    <b-form-group 
+                        id="input-group-31" 
+                        :label="$t('Auth.PhoneNumber.title')"
+                        label-for="input-31">
                         <b-form-input
                             id="input-31"
                             type="text"
                             v-model="Form.PhoneNumber"
                             @change="formatPhone"
-                            placeholder="Telefon Giriniz"
+                            :placeholder="$t('Auth.PhoneNumber.placeholder')"
                         ></b-form-input>
                     </b-form-group>
                     
-                    <b-button type="submit" variant="primary" class="rightFloat">Gönder</b-button>
-                    <b-button type="reset" variant="warning" class="rightFloat" v-if="isNew">Temizle</b-button>
-                    <b-button variant="danger" class="rightFloat" @click="onCancel">İptal</b-button>
+                    <b-button type="submit" variant="primary" class="rightFloat"> {{ $t('Auth.submit') }} </b-button>
+                    <b-button type="reset" variant="warning" class="rightFloat" v-if="isNew"> {{ $t('Auth.reset') }} </b-button>
+                    <b-button variant="danger" class="rightFloat" @click="onCancel"> {{ $t('Auth.cancel') }} </b-button>
                 </b-form>
             </div>
             <div v-else>
@@ -165,7 +168,7 @@
                         <b-button 
                             class="editButton mr-2" 
                             variant="success"
-                            title="Yeni Kullanıcı Ekle"
+                            :title="$t('Auth.newUser')"
                             @click="newUser()">
                             <i class="fa fa-user-plus"></i>
                         </b-button>
@@ -183,7 +186,7 @@
 
                     <template #empty="">
                         <div class="emptyRecords">
-                            Kayıt Bulunamadı
+                            {{ $t('Auth.noRecords') }}
                         </div>
                     </template>
                 </b-table>
@@ -338,6 +341,8 @@
                 this.onReset()
                 this.isNew = false
                 this.isEdit = false
+                eventBus.$emit('updateHeaderText', this.$t('pages.secondary'))
+                eventBus.$emit('unsubmitPage')
             },
             newUser() {
                 this.onReset()

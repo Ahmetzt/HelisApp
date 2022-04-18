@@ -78,6 +78,9 @@
                         <small v-if="!$v.requestDate.required" class="form-text text-danger">
                             {{ $t('Request.warning.noDate') }}
                         </small>
+                        <small v-else-if="!$v.requestDate.noPast" class="form-text text-danger">
+                            {{ $t('Request.warning.noPast') }}
+                        </small>
                     </div>
                 </div>
 
@@ -135,7 +138,10 @@
         },
         validations: {
             requestDate: {
-                required
+                required,
+                noPast(val) {
+                    return (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
+                },
             },
             requestTime: {
                 required

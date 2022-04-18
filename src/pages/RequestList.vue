@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <b-table striped hover :items="getOrders" :fields="fields">
+        <b-table striped hover :items="getOrders" :fields="fields" :tbody-tr-class="rowClass">
             <template #head()="scope">
                 <div class="text-nowrap">
                     {{ $t(`RequestList.label.${scope.label}`) }} 
@@ -8,7 +8,7 @@
             </template>
 
             <template #cell(Details)="row">
-                <b-button size="lg" @click="row.toggleDetails" class="mr-2">
+                <b-button size="lg" @click="row.toggleDetails" class="mr-2" variant="outline-primary">
                     {{ $t('RequestList.label.Detail') + " " + (row.detailsShowing ? $t('RequestList.label.Hide') : $t('RequestList.label.Show')) }} 
                 </b-button>
             </template>
@@ -24,7 +24,9 @@
                             </template>
                         </b-table>
                         <b-col><b>{{ $t(`RequestList.label.RequestDate`) }} :</b> {{ row.item.OrderDate | formatDate }}</b-col>
-                        <b-col class="smallCloseButton"><b-button size="lg" @click="row.toggleDetails">{{ $t('Request.label.close') }}</b-button></b-col>
+                        <b-col class="smallCloseButton">
+                            <b-button size="lg" @click="row.toggleDetails" variant="outline-primary">{{ $t('Request.label.close') }}</b-button>
+                        </b-col>
                         
                     </b-row>
                 </b-card>
@@ -91,11 +93,31 @@
             getOrderTypesById(id) {
                 return this.$store.getters.getOrderTypesById(id);
             },
+            rowClass(item, type) {
+                if (!item || type !== 'row') return
+                return  'OrderStatus-' + item.OrderStatus
+            }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    .OrderStatus {
+        &-1 {
+            background-color: #00fffa !important
+        }
+        &-2 {
+            background-color: #ffed07 !important
+        }
+        &-3 {
+            background-color: #ff7b00ec !important
+        }
+        &-4 {
+            background-color: #24c868 !important
+        }
+        &-5 {
+            background-color: #fe0019 !important
+        }
+    }
 </style>
 

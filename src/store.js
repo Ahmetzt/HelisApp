@@ -248,7 +248,7 @@ const store = new Vuex.Store({
             })
         },
         logout({ commit, dispatch, state }) {
-            axios.get("Session/Logout?SessionKey=" + state.SessionKey)
+            axios.post("Session/Logout?SessionKey=" + state.SessionKey)
             commit("clearSession")
             commit("removeLocalStorage");
             dispatch("ListMansionsNS")

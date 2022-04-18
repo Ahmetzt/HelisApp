@@ -42,7 +42,7 @@
                         <i class="fa fa-plane me-2" aria-hidden="true"></i>&nbsp;Admin
                     </router-link>
                 </b-button> 
-                <b-button name="property" class="nav-item" variant="dark" v-if="$store.state.PossessionId > 0">
+                <b-button name="property" class="nav-item" variant="dark" v-if="$store.state.PossessionId != 0">
                     <router-link class="nav-link" to="/property">
                         <i class="fas fa-house-user me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.property') }}
                     </router-link>
@@ -52,7 +52,7 @@
                         <i class="fa fa-history me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.requests') }}
                     </router-link>
                 </b-button>
-                <b-button name="secondary" class="nav-item" variant="dark" v-if="$store.state.PossessionId > 0">
+                <b-button name="secondary" class="nav-item" variant="dark" v-if="$store.state.PossessionId != 0">
                     <router-link class="nav-link" to="/secondary">
                         <i class="fa fa-users me-2" aria-hidden="true"></i>&nbsp; {{ $t('pages.secondary') }}
                     </router-link>
@@ -109,6 +109,9 @@
         mounted() {
             eventBus.$on('submitPage', () => {
                 this.isSubmitted = true
+            }),
+            eventBus.$on('unsubmitPage', () => {
+                this.isSubmitted = false
             }),
             eventBus.$on('updateHeaderText', (text) => {
                 this.urlText = text

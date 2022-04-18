@@ -181,6 +181,7 @@
             "placeholder": "Giriş Tarihi Seçiniz",
             "required": "Lütfen Giriş Tarihi Seçiniz",
             "dateMax": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
+            "noPast": "Geçmiş Tarih Seçimi Yapılamaz",
             "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
         },
         "EndDate": {
@@ -194,9 +195,15 @@
             "title": "Şartları ve koşulları kabul ediyorum",
             "checked": "Lütfen Şartları ve Koşulları Onaylayınız"
         },
+        "Language": {
+            "title": "Dil:"
+        },
         "submit": "Gönder",
         "reset": "Temizle",
-        "cancel": "İptal"
+        "cancel": "İptal",
+        "save": "Kaydet",
+        "newUser": "Yeni Kullanıcı",
+        "noRecords": "Kayıt Bulunamadı"
     },
     "Request": {
         "warning": {
@@ -215,6 +222,7 @@
             "noEndDate": "Lütfen Çıkış Tarihi Seçiniz",
             "dateMax": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
             "dateMin": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
+            "noPast": "Geçmiş Tarih Seçimi Yapılamaz",
             "noTime": "Lütfen Saat Seçiniz",
             "adultObliged": "En Az 1 Yetişkin olmalıdır",
             "noNote": "Lütfen Not Giriniz",

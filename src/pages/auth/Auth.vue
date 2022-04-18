@@ -277,6 +277,9 @@
                             <b-form-invalid-feedback v-else-if="!$v.Form.BeginDate.dateMax" :state="$v.Form.BeginDate.dateMax">
                                 {{ $t('Auth.BeginDate.dateMax') }}
                             </b-form-invalid-feedback>
+                            <b-form-invalid-feedback v-else-if="!$v.Form.BeginDate.noPast" :state="$v.Form.BeginDate.noPast">
+                                {{ $t('Auth.BeginDate.noPast') }}
+                            </b-form-invalid-feedback>
                             <b-form-invalid-feedback v-else-if="!$v.Form.BeginDate.isBusy" :state="$v.Form.BeginDate.isBusy">
                                 {{ $t('Auth.BeginDate.busyRoom') }}
                             </b-form-invalid-feedback>
@@ -441,6 +444,9 @@
                         }),
                         dateMax(val, { EndDate }) {
                             return EndDate != null && val > EndDate ? false : true
+                        },
+                        noPast(val) {
+                            return this.isSupport ? true : (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
                         },
                         isBusy(PossessionId, BeginDate, EndDate) {
                             return PossessionId > 0 && BeginDate != null && EndDate != null ?

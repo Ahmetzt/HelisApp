@@ -184,6 +184,7 @@
             "placeholder": "Set Begin Date",
             "required": "Please Set Begin Date",
             "dateMax": "Begindate should be before enddate",
+            "noPast": "Past dates can not be chosen",
             "busyRoom": "Room is not available between selected dates"
         },
         "EndDate": {
@@ -197,9 +198,15 @@
             "title": "I accept terms and conditions",
             "checked": "Please confirm terms and conditions"
         },
+        "Language": {
+            "title": "Language:"
+        },
         "submit": "Send",
         "reset": "Clear",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "save": "Save",
+        "newUser": "New User",
+        "noRecords": "No Records"
     },
     "Request": {
         "warning": {
@@ -218,6 +225,7 @@
             "noEndDate": "Please set end date",
             "dateMax": "Begindate should be before enddate",
             "dateMin": "Begindate should be before enddate",
+            "noPast": "Past dates can not be chosen",
             "noTime": "Please set time",
             "adultObliged": "At least 1 adult required",
             "noNote": "Please enter comment",

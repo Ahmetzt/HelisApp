@@ -1,43 +1,41 @@
 <template>
-    <div class="container container-fluid">
-        <div class="row mt-5">
-            <div class="mybuttonGroup">
-                <button class="mybutton" @click="openRequest('mansion')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/konaklama.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/mansion.svg">
-                    <p class="menuP">{{ $t('pages.mansion') }}</p>
-                </button>
-                <button class="mybutton" @click="openRequest('transfer')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/Transfer.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/transfer.svg">
-                    <p class="menuP">{{ $t('pages.transfer') }}</p>
-                </button>
-                <button class="mybutton" @click="openRequest('rent')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/rent.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/rent.svg">
-                    <p class="menuP">{{ $t('pages.rent') }}</p>
-                </button>
-                <button class="mybutton" @click="openRequest('restaurant')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/restaurant.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/restaurant.svg">
-                    <p class="menuP">{{ $t('pages.restaurant') }}</p>
-                </button>
-                <button class="mybutton" @click="openRequest('cleaner')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/kuru.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/cleaner.svg">
-                    <p class="menuP">{{ $t('pages.cleaner') }}</p>
-                </button>
-                <button class="mybutton" @click="openRequest('activity')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/aktiviteler.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/activity.svg">
-                    <p class="menuP">{{ $t('pages.activity') }}</p>
-                </button>
-                <button class="mybutton" @click="openRequest('assistant')">
-                    <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/asistan.png"> -->
-                    <img class="menuImage" alt="logo" src="../../../images/requests/svg/assistant.svg">
-                    <p class="menuP">{{ $t('pages.assistant') }}</p>
-                </button>
-            </div>
+    <div class="requestContainer">
+        <div class="mybuttonGroup">
+            <button class="mybutton" @click="openRequest('mansion')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/konaklama.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/mansion.svg">
+                <p class="menuP">{{ $t('pages.mansion') }}</p>
+            </button>
+            <button class="mybutton" @click="openRequest('transfer')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/Transfer.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/transfer.svg">
+                <p class="menuP">{{ $t('pages.transfer') }}</p>
+            </button>
+            <button class="mybutton" @click="openRequest('rent')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/rent.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/rent.svg">
+                <p class="menuP">{{ $t('pages.rent') }}</p>
+            </button>
+            <button class="mybutton" @click="openRequest('restaurant')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/restaurant.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/restaurant.svg">
+                <p class="menuP">{{ $t('pages.restaurant') }}</p>
+            </button>
+            <button class="mybutton" @click="openRequest('cleaner')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/kuru.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/cleaner.svg">
+                <p class="menuP">{{ $t('pages.cleaner') }}</p>
+            </button>
+            <button class="mybutton" @click="openRequest('activity')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/aktiviteler.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/activity.svg">
+                <p class="menuP">{{ $t('pages.activity') }}</p>
+            </button>
+            <button class="mybutton" @click="openRequest('assistant')">
+                <!-- <img class="myimage" alt="logo" src="../../../images/requests/png/asistan.png"> -->
+                <img class="menuImage" alt="logo" src="../../../images/requests/svg/assistant.svg">
+                <p class="menuP">{{ $t('pages.assistant') }}</p>
+            </button>
         </div>
         
         <b-modal 
@@ -135,9 +133,9 @@
 </script>
 
 <style  lang="scss">
-    .container {
-        margin-left: 10%; 
-        width: 90%
+    .requestContainer {
+        max-width: 94%;
+        margin: 3rem auto;
     }
 
     .NRmodal {  

@@ -61,7 +61,10 @@
                         <small v-if="!$v.RentOrder.BeginDate.required" class="form-text text-danger">
                             {{ $t('Request.warning.noBeginDate') }}
                         </small>
-                        <small v-if="!$v.RentOrder.BeginDate.dateMax" class="form-text text-danger">
+                        <small v-else-if="!$v.RentOrder.BeginDate.noPast" class="form-text text-danger">
+                            {{ $t('Request.warning.noPast') }}
+                        </small>
+                        <small v-else-if="!$v.RentOrder.BeginDate.dateMax" class="form-text text-danger">
                             {{ $t('Request.warning.dateMax') }}
                         </small>
                     </div>
@@ -88,7 +91,7 @@
                         <small v-if="!$v.RentOrder.EndDate.required" class="form-text text-danger">
                             {{ $t('Request.warning.noEndDate') }}
                         </small>
-                        <small v-if="!$v.RentOrder.EndDate.dateMin" class="form-text text-danger">
+                        <small v-else-if="!$v.RentOrder.EndDate.dateMin" class="form-text text-danger">
                             {{ $t('Request.warning.dateMin') }}
                         </small>
                     </div>
@@ -144,6 +147,9 @@
                     required,
                     dateMax(val, { EndDate }) {
                         return EndDate != null && val > EndDate ? false : true
+                    },
+                    noPast(val) {
+                        return (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
                     },
                 },
                 EndDate: {

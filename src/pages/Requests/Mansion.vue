@@ -43,7 +43,10 @@
                             <small v-if="!$v.searchData.BeginDate.required" class="form-text text-danger">
                                 {{ $t('Request.warning.noBeginDate') }}
                             </small>
-                            <small v-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
+                            <small v-else-if="!$v.searchData.BeginDate.noPast" class="form-text text-danger">
+                                {{ $t('Request.warning.noPast') }}
+                            </small>
+                            <small v-else-if="!$v.searchData.BeginDate.dateMax" class="form-text text-danger">
                                 {{ $t('Request.warning.dateMax') }}
                             </small>
                         </div>
@@ -70,7 +73,7 @@
                             <small v-if="!$v.searchData.EndDate.required" class="form-text text-danger">
                                 {{ $t('Request.warning.noEndDate') }}
                             </small>
-                            <small v-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
+                            <small v-else-if="!$v.searchData.EndDate.dateMin" class="form-text text-danger">
                                 {{ $t('Request.warning.dateMin') }}
                             </small>
                         </div>
@@ -196,6 +199,9 @@
                     required,
                     dateMax(val, { EndDate }) {
                         return EndDate != null && val > EndDate ? false : true
+                    },
+                    noPast(val) {
+                        return (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
                     },
                 },
                 EndDate: {

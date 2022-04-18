@@ -374,7 +374,6 @@
         height: 100%;
         justify-content: space-between;
         row-gap: 20px;
-        margin-bottom: 10px;
     }
 
     .myimage {

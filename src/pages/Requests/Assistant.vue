@@ -45,6 +45,9 @@
                             <small v-if="!$v.requestDate.required" class="form-text text-danger">
                                 {{ $t('Request.warning.noDate') }}
                             </small>
+                            <small v-else-if="!$v.requestDate.noPast" class="form-text text-danger">
+                                {{ $t('Request.warning.noPast') }}
+                            </small>
                         </div>
                     </div>
                     <div class="form-group formControl formTwoCols-inner" v-if="!isSupport">
@@ -87,9 +90,9 @@
                 </div>
 
                 <div class="button-container d-flex  flex-column align-items-center buttonControl" v-if="isSupport">
-                    <button type="submit" class="btn btn-block mb-2 button-green">
+                    <a type="submit" class="btn btn-block mb-2 button-green" href="tel:8665562570">
                         <i class="fa fa-phone faclass fa-lg"></i> {{ $t('Request.label.liveSupport') }}
-                    </button>
+                    </a>
                 </div>
             </div>
             <Footer/>
@@ -133,6 +136,9 @@
                 required: requiredIf(function() {
                     return !this.isSupport;
                 }),
+                noPast(val) {
+                    return this.isSupport ? true : (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
+                }
             },
             requestTime: {
                 required: requiredIf(function() {
