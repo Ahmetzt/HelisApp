@@ -446,7 +446,7 @@
                             return EndDate != null && val > EndDate ? false : true
                         },
                         noPast(val) {
-                            return this.isSupport ? true : (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
+                            return !this.IsDated ? true : (new Date(val)).toLocaleDateString() >= (new Date()).toLocaleDateString()
                         },
                         isBusy(PossessionId, BeginDate, EndDate) {
                             return PossessionId > 0 && BeginDate != null && EndDate != null ?
