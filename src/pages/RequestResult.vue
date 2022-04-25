@@ -19,6 +19,11 @@
         methods: {
             closePage() {
                 this.$store.dispatch("initAuth")
+                    .then(response => {
+                        if (response) {
+                            this.$router.push({path: '/new'});
+                        }
+                    })
             }
         }
     };

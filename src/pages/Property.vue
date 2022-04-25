@@ -30,18 +30,31 @@
                                 text
                                 color="primary"
                                 @click="AddDates"
+                                :disabled="IsContinue"
                             >{{ $t('Property.Rent.Add') }}</v-btn>
                         </v-date-picker>
-                        <div class="Rentable-New-Form-Unused-List">
+
+                        <div class="Rentable-New-Form-Unused-List" v-show="NotPermittedDates.length > 0">
                             <span class="Rentable-New-Form-Unused-List-Header">{{ $t('Property.Rent.NoUsedDays') }}</span>
                             <div class="Rentable-New-Form-Unused-List-Content">
-                                <span v-for="date in NotPermittedDates" :key="date.id">
-                                    {{ date.BeginDate | formatDate }} - {{ date.EndDate | formatDate }}
-                                </span>
+                                <div class="Rentable-New-Form-Unused-List-Content-Row" v-for="(date, index) in NotPermittedDates" :key="date.id">
+                                    <span> {{ date.BeginDate | formatDate }} - {{ date.EndDate | formatDate }} </span>
+                                    <button class="Rentable-New-Form-Unused-List-Content-Row-Button" @click="RemoveDates(index)"> <i class="fas fa-times"></i> </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                             
+                    <div class="Rentable-New-Form-Approve">
+                        <input class="Rentable-New-Form-Approve-input" v-model="IsContinue" type="checkbox" name="WholeYear" id="cbWholeYear" @change="ClearDates">
+                        <label class="Rentable-New-Form-Approve-label" for="cbWholeYear">{{ $t('Property.Rent.RentWholeYear') }}</label>
+                    </div>
+                    
+                    <button class="Rentable-New-Form-Button btn btn-success" :disabled="!IsContinue && NotPermittedDates.length == 0" @click="RentableBegin = 3">
+                        {{ $t('Property.Rent.Continue') }}
+                    </button>
+                </div>
+                <div class="Rentable-New-Form" v-else-if="RentableBegin == 3">
                     <div class="Rentable-New-Form-Approve">
                         <input class="Rentable-New-Form-Approve-input" v-model="IsApproved" type="checkbox" name="Approved" id="cbApproved">
                         <label class="Rentable-New-Form-Approve-label" for="cbApproved">{{ $t('Property.Rent.ApproveRent') }}</label>
@@ -122,6 +135,7 @@
                 SelectedDates: [],
                 NotPermittedDates: [],
                 IsApproved: false,
+                IsContinue: false,
                 NewRentable: {
                     Year: 2022,
                     Info: '',
@@ -202,6 +216,12 @@
                 }
                 this.SelectedDates = []
             },
+            RemoveDates(n) {
+                this.NotPermittedDates.splice(n, 1)
+            },
+            ClearDates() {
+                this.NotPermittedDates = []
+            },
             ApproveRentable() {
                 this.RentableBegin = 3
                 this.$store.dispatch("SetRentable", { ...this.NewRentable } )
@@ -224,6 +244,7 @@
         gap: 50px;
         width: 80%;
     }
+
     .PropertyInfo {
         margin-top: 40px;
         padding: 30px 50px;
@@ -242,10 +263,10 @@
             display: none;
 
             &-input {
-                
                 width: 25px;
                 height: 25px;
             }
+
             &-label {
                 margin: 0;
             }
@@ -304,8 +325,9 @@
 
                 &-Unused {
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     justify-content: space-between;
+                    gap: 20px;
 
                     &-List {
                         display: flex;
@@ -320,20 +342,32 @@
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
+
+                            &-Row {
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                margin: 0 20px;
+
+                                &-Button {
+                                    color: #ff0000;
+                                }
+                            }
                         }
                     }
                 }
 
                 &-Approve {
                     align-self: center;
+                    display: flex;
            
                     &-label {
-                        margin-left: 10px;
+                        margin: -15px 0 0 10px;
                     }
 
                     &-input {
-                        width: 25px;
-                        height: 25px;
+                        width: 45px;
+                        height: 45px;
                     }
                 }
 
@@ -385,7 +419,7 @@
         }
 
         &__body {
-            width: 450px !important;
+            width: 100% !important;
         }
     }
 
@@ -393,17 +427,25 @@
             font-size: 40px;
 
         &-table {
-            height: 400px !important;
+            height: 100% !important;
             .v-btn {
                 font-size: 40px !important;
-                height: 50px !important;
-                min-width: 50px !important;
             }
             tbody {
                 tr {
-                    height: 54px;
+                    height: 90px;
                 }
             }
+        }
+        &-header {
+            & > * {
+                font-size: 60px !important;
+            }
+            
+            padding: 4px 40px !important;
+        }
+        &-header__value {
+            font-size: 60px !important;
         }
     }
 
@@ -412,8 +454,22 @@
         width: 100%;
 
         &__content {
-            font-size: 40px;
+            font-size: 45px;
         }
+
+        &--rounded {
+            height: 80px !important;
+            width: 80px !important;
+            border-radius: 40px !important;
+        }
+    }
+    
+    .v-card__actions>.v-btn.v-btn {
+        padding: 30px 8px !important;
+    }
+
+    .v-icon {
+        font-size: 70px !important;
     }
 
 </style>

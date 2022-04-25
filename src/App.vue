@@ -6,16 +6,18 @@
 </template>
 <script>
     import Header from "./components/Header";
-    import { SidebarMenu } from 'vue-sidebar-menu'
 
     export default {
         components: {
             Header,
-            // eslint-disable-next-line vue/no-unused-components
-            SidebarMenu
         },
         created(){
             this.$store.dispatch("initAuth")
+                .then(response => {
+                    if (response) {
+                        this.$router.push({path: '/new'});
+                    }
+                })
         },
         computed: {
             logoutClass() {

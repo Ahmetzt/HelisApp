@@ -372,6 +372,7 @@
                     EndDate : null,
                     Info: '',
                     IsApproved: false,
+                    RegisterIP: '',
                 },
                 IsBlocky: false,
                 IsRoom: false,
@@ -379,6 +380,7 @@
                 IsError: false,
                 IsDated: false,
                 Lang: 'tr',
+                CurrentIP: '',
             }
         },
         created () {
@@ -388,6 +390,12 @@
                 this.Form.Language = this.Lang
                 this.$store.dispatch("SetLocale", this.Lang)
             }
+            fetch('https://api.ipify.org?format=json')
+                .then(x => x.json())
+                .then(({ ip }) => {
+                    this.Form.RegisterIP = ip
+                    this.CurrentIP = ip
+                });
         },
         validations() {
             return {
@@ -545,6 +553,7 @@
                     EndDate : null,
                     Info: '',
                     IsApproved: false,
+                    RegisterIP: this.CurrentIP
                 }
                 this.User = {
                     email: null,
@@ -576,8 +585,12 @@
                     this.$store.dispatch("login", { ...this.User, IsUser : this.IsUser, IsForgotten : this.IsForgotten })
                         .then(data => {
                             if (data.UserId > 0) {
-                                
                                 this.$store.dispatch("initAuth")
+                                    .then(response => {
+                                        if (response) {
+                                            this.$router.push({path: '/new'});
+                                        }
+                                    })
                             } else {
                                 this.IsError = true
                                 this.LoginError = this.$t(`ErrorMsg.${data.ErrorCode}`)

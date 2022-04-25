@@ -22,9 +22,31 @@
             </div>
 
             <div v-else>
-                <img :src="require(`../../../../images/restaurants/${selectedRestaurant.ImageUrl}`)" :alt="selectedRestaurant.Name" class="requestImage">
+                <!-- <img :src="require(`../../../../images/restaurants/${selectedRestaurant.ImageUrl}`)" :alt="selectedRestaurant.Name" class="requestImage"> -->
 
-                <div class="formControlFE formTwoCols">
+                <div class="form-group formControl formControlFE">
+                    <label class="formLabel"> 
+                        <i class="fas fa-hotel faclass fa-lg"></i> <strong>{{ $t('Request.label.restaurant') }}</strong> </label>
+                    <select 
+                        class="form-control formElement"
+                        v-model="$v.RestaurantOrder.RestaurantId.$model" 
+                        @blur="$v.RestaurantOrder.RestaurantId.$touch()">
+                        <option selected disabled value=-1>{{ $t('Request.placeholder.selectRestaurant') }}</option>
+                        <option 
+                            :disabled="restaurant.count == 0"
+                            :value="restaurant.RestaurantId"
+                            v-for="restaurant in getRestaurants"
+                            :key="restaurant.RestaurantId">
+                            {{ restaurant.Name }}</option>
+                    </select>
+                    <div v-if="$v.RestaurantOrder.RestaurantId.$dirty">
+                        <small v-if="!$v.RestaurantOrder.RestaurantId.checked" class="form-text text-danger">
+                            {{ $t('Request.warning.noRestaurantSelected') }}
+                        </small>
+                    </div>
+                </div>
+
+                <div class="formTwoCols">
                     <div class="form-group formControl formTwoCols-inner">
                         <label class="formLabel">       
                             <i class="far fa-calendar-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.reservationDate') }}</strong> </label>
@@ -122,11 +144,11 @@
         data() {
             return {
                 selectedRestaurant: {},
-                isSelected: false,
+                isSelected: true,
                 requestDate: null,
                 requestTime: null,
                 RestaurantOrder: {
-                    RestaurantId: null,
+                    RestaurantId: -1,
                     RequestDate : null,
                     Adults: 0,
                     Kids: 0,
@@ -145,6 +167,11 @@
                 required
             },
             RestaurantOrder: {
+                RestaurantId: {
+                    checked(val) {
+                        return val == -1 ? false : true
+                    }
+                },
                 Adults: {
                     required,
                     minValue: minValue(1)
@@ -182,14 +209,13 @@
                 this.RestaurantOrder.Kids = this.RestaurantOrder.Kids < 0 ? 0 : this.RestaurantOrder.Kids
             },
             restaurantSelected(Restaurant) {
-                // this.selectedRestaurant = Restaurant.RestaurantId
                 this.selectedRestaurant = Object.assign(Restaurant)
                 this.isSelected = true
                 eventBus.$emit('submitPage')
                 eventBus.$emit('updateHeaderText', Restaurant.Name)
             },
             setRestaurantOrder() {
-                this.RestaurantOrder.RestaurantId = this.selectedRestaurant.RestaurantId
+                // this.RestaurantOrder.RestaurantId = this.selectedRestaurant.RestaurantId
                 this.RestaurantOrder.RequestDate = this.requestDate + " " + this.requestTime
                 this.RestaurantOrder.ResultText = this.$t('Request.text.restaurantResult')
 

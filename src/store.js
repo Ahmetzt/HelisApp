@@ -158,7 +158,7 @@ const store = new Vuex.Store({
         initAuth({ commit, dispatch, state }) {
             let SessionKey = localStorage.getItem("Session")
             if(SessionKey != null) {
-                axios.get("Session/RenewSession?" + "SessionKey=" + SessionKey)
+                return axios.get("Session/RenewSession?" + "SessionKey=" + SessionKey)
                     .then(response => {
                         state.isResult = false
 
@@ -188,6 +188,7 @@ const store = new Vuex.Store({
                             commit("setSession", SessionData)
 
                             dispatch("getLocationList")
+                            dispatch("getMansionList")
                             dispatch("getAirportList")
                             dispatch("getVehiclesList")
                             dispatch("getRestaurantsList")
@@ -196,10 +197,8 @@ const store = new Vuex.Store({
                             
                             dispatch("SetLocale", localStorage.getItem("Lang"))
 
-                            // if (window.location.pathname != "/" || window.location.hash.includes('auth')) {
-                            //     router.push("/")
-                            // }
-                            router.push("/")
+                            // router.push("/")
+                            return true
                         } else {
                             router.push("/auth")
                             commit("removeLocalStorage");
@@ -274,6 +273,21 @@ const store = new Vuex.Store({
                 for (let key in data) {
                     data[key].key = key;
                     commit("updateLocationList", data[key]);
+                }
+            })
+            .catch((error) => {
+                dispatch("SetError", error)
+            })
+        },
+        getMansionList({ dispatch, commit, state }) {
+            //Proje Verilerini yükle
+            axios.get("Get/ListMansion")
+            .then(response => {
+                state.MansionList = []
+                let data = response.data;
+                for (let key in data) {
+                    data[key].key = key;
+                    commit("updateMansionList", data[key]);
                 }
             })
             .catch((error) => {
@@ -394,7 +408,7 @@ const store = new Vuex.Store({
                     
                     state.selectedLocation.IlId = searchData.IlId
                     state.selectedLocation.IlceId = searchData.IlceId
-                    return getters.getMansionsByLocation
+                    return getters.getMansionsList
             })
             .catch((error) => {
                 dispatch("SetError", error)
@@ -529,7 +543,7 @@ const store = new Vuex.Store({
                 "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
                 "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId + 
                 "&BeginDate=" + registerData.BeginDate +"&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info + 
-                "&IsApproved=" + registerData.IsApproved)
+                "&IsApproved=" + registerData.IsApproved + "&RegisterIP=" + registerData.RegisterIP)
                 .then((response) => {
                     return response.data
                 })
@@ -734,7 +748,7 @@ const store = new Vuex.Store({
                 return element.key == key;
             })
         },
-        getMansionsByLocation(state) {
+        getMansionsList(state) {
             return state.MansionList
         },
         getResultText(state) {

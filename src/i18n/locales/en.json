@@ -15,7 +15,7 @@
         "mansion": "Mansion",
         "assistant": "Assistant",
         "requests": "Requests",
-        "property": "Property",
+        "property": "Property Management",
         "secondary": "Secondary User",
         "settings": "Settings",
         "newUser": "New User",
@@ -230,7 +230,9 @@
             "adultObliged": "At least 1 adult required",
             "noNote": "Please enter comment",
             "noProduct": "Please add minimum 1 product",
-            "noVehicle": "Please choose boat or vehicle"
+            "noVehicle": "Please choose boat or vehicle",
+            "noProject": "Please choose a project",
+            "noRestaurantSelected": "Please choose a restaurant"
         },
         "label": {
             "toWhere": "To",
@@ -258,7 +260,9 @@
             "hotelSearch": "Search room",
             "vehicle": "Vehicle",
             "boat": "Boat",
-            "vehicleType": "Vehicle type"
+            "vehicleType": "Vehicle type",
+            "mansion": "Project",
+            "restaurant": "Restaurant"
         },
         "placeholder": {
             "selectLocation": "Select location",
@@ -268,7 +272,9 @@
             "people": "Select passenger",
             "note": "Write your comment",
             "selectVehicle": "Vehicle",
-            "selectBoat": "Boat"
+            "selectBoat": "Boat",
+            "selectProject": "Select Project",
+            "selectRestaurant": "Select Restaurant"
         },
         "text": {
             "activityResult": "Your request has been successfully created. Our assistants will contact you soon.",
@@ -293,6 +299,8 @@
             "Add": "Add",
             "NoUsedDays": "No Used Days",
             "ApproveRent": "I Confirm the Rental Outside the Specified Dates",
+            "RentWholeYear": "I Wouldn't use for whole year",
+            "Continue": "Continue",
             "Send": "Send",
             "ApproveSent": "Your Rental Permit Transaction has been recorded.",
             "RequestDate": "Request Date",

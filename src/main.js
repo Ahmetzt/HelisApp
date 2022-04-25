@@ -34,7 +34,7 @@ export const eventBus = new Vue();
 
 new Vue({
     el: '#app',
-    // vuetify: new Vuetify(),
+    vuetify: new Vuetify(),
     router,
     store,
     i18n,

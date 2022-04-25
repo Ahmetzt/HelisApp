@@ -3,7 +3,8 @@
         <div v-if="!isSearched" class="headerMain">
             <div>
                 <img src="../../../../images/requests/jpg/konaklama.jpg" alt="konaklama" class="requestImage">
-                <div class="form-group formControl formControlFE">
+
+                <!-- <div class="form-group formControl formControlFE">
                     <label class="formLabel"> 
                         <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
                     <select 
@@ -26,8 +27,30 @@
                             {{ $t('Request.warning.noLocation') }}
                         </small>
                     </div>
-                </div>
+                </div> -->
                 
+                <div class="form-group formControl formControlFE">
+                    <label class="formLabel"> 
+                        <i class="fas fa-hotel faclass fa-lg"></i> <strong>{{ $t('Request.label.mansion') }}</strong> </label>
+                    <select 
+                        class="form-control formElement" 
+                        v-model="$v.searchData.MansionId.$model" 
+                        @blur="$v.searchData.MansionId.$touch()">
+                        <option selected disabled value=-1>{{ $t('Request.placeholder.selectProject') }}</option>
+                        <option 
+                            :disabled="mansion.count == 0"
+                            :value="mansion.MansionId"
+                            v-for="mansion in getMansionsList"
+                            :key="mansion.MansionId">
+                            {{ mansion.Name }}</option>
+                    </select>
+                    <div v-if="$v.searchData.MansionId.$dirty">
+                        <small v-if="!$v.searchData.MansionId.checked" class="form-text text-danger">
+                            {{ $t('Request.warning.noProject') }}
+                        </small>
+                    </div>
+                </div>
+
                 <div :class="FromToClass">
                     <div class="form-group">
                         <label class="formLabel"> 
@@ -125,9 +148,9 @@
             <Footer/>
         </div>
         <div v-else>
-            <table class="table table-hover table-striped table-bordered" v-if="getMansionsByLocation.length > 0">
+            <table class="table table-hover table-striped table-bordered" v-if="getMansionsList.length > 0">
                 <tbody>
-                    <tr v-for="Mansion in getMansionsByLocation" :key="Mansion.MansionId" @click="setMansionOrder(Mansion)">
+                    <tr v-for="Mansion in getMansionsList" :key="Mansion.MansionId" @click="setMansionOrder(Mansion)">
                         <td class="align-middle text-center" height=220 width=220><img :src="require(`../../../../images/hotels/${Mansion.ImageUrl}`)" alt="" border=3 height=200 width=200></td>
                         <td colspan="2"  class="align-middle text-left">
                             <strong> {{ Mansion.Name }} </strong>
@@ -160,6 +183,7 @@
         data() {
             return {
                 searchData: {
+                    MansionId: -1,
                     IlId: null,
                     IlceId: null,
                     Kids: 0,
@@ -170,7 +194,7 @@
                 selectedLocation: -1,
                 isSearched: false,
                 MansionOrder: {
-                    MansionId: null,
+                    MansionId: -1,
                     BeginDate : null,
                     EndDate: null,
                     Adults: 0,
@@ -187,13 +211,13 @@
             },
         },
         validations: {
-            selectedLocation: {
-                required,
-                minValue: 0,
-                checked(val, vm) {
-                    return vm.selectedLocation === -1 ? false : true
-                }
-            },
+            // selectedLocation: {
+            //     required,
+            //     minValue: 0,
+            //     checked(val, vm) {
+            //         return vm.selectedLocation === -1 ? false : true
+            //     }
+            // },
             searchData: {
                 BeginDate: {
                     required,
@@ -214,6 +238,11 @@
                     required,
                     minValue: minValue(1)
                 },
+                MansionId: {
+                    checked(val) {
+                        return val == -1 ? false : true
+                    }
+                }
             }
         },
         created() {
@@ -226,7 +255,7 @@
         },
         computed: {
             ...mapGetters(["getLocations"]),
-            ...mapGetters(["getMansionsByLocation"]),
+            ...mapGetters(["getMansionsList"]),
             visitorText() {
                 return (this.searchData.Adults > 0 ? " " + this.$t('Request.label.adult') + " " + this.searchData.Adults : "") + 
                     (this.searchData.Kids > 0 ? " " + this.$t('Request.label.kid') + " " + this.searchData.Kids : "")
@@ -254,9 +283,11 @@
                 this.searchData.IlId = this.selectedLocation.split('_')[1]
             },
             onSearched() {
-                this.$store.dispatch("setMansionSearch", { ...this.searchData })
-                eventBus.$emit('submitPage')
-                this.isSearched = true
+                // this.$store.dispatch("setMansionSearch", { ...this.searchData })
+                // eventBus.$emit('submitPage')
+                // this.isSearched = true
+
+                this.setMansionOrder(this.$store.getters.getMansionsList.find(x => x.MansionId == this.searchData.MansionId))
             },
             setMansionOrder(Mansion) {
                 this.MansionOrder.MansionId = Mansion.MansionId

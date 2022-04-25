@@ -15,7 +15,7 @@
         "mansion": "Konaklama",
         "assistant": "Asistan",
         "requests": "İşlemler",
-        "property": "Mülk",
+        "property": "Mülk Yönetimi",
         "secondary": "İkincil Kullanıcı",
         "settings": "Ayarlar",
         "newUser": "Yeni Kullanıcı",
@@ -227,7 +227,9 @@
             "adultObliged": "En Az 1 Yetişkin olmalıdır",
             "noNote": "Lütfen Not Giriniz",
             "noProduct": "Lütfen En Az Bir Ürün Giriniz",
-            "noVehicle": "Lütfen Araç veya Bot Seçiniz"
+            "noVehicle": "Lütfen Araç veya Bot Seçiniz",
+            "noProject": "Lütfen Proje Seçiniz",
+            "noRestaurantSelected": "Lütfen Restaurant Seçiniz"
         },
         "label": {
             "toWhere": "Nereye",
@@ -255,7 +257,9 @@
             "hotelSearch": "Hotel Ara",
             "vehicle": "Araç",
             "boat": "Bot",
-            "vehicleType": "Araç Türü"
+            "vehicleType": "Araç Türü",
+            "mansion": "Proje",
+            "restaurant": "Restaurant"
         },
         "placeholder": {
             "selectLocation": "Lokasyon Seçiniz",
@@ -265,7 +269,9 @@
             "people": "Kişi Sayısı Seçiniz",
             "note": "Mesajınızı Yazınız",
             "selectVehicle": "Araç",
-            "selectBoat": "Bot"
+            "selectBoat": "Bot",
+            "selectProject": "Proje Seçiniz",
+            "selectRestaurant": "Restaurant Seçiniz"
         },
         "text": {
             "activityResult": "Talebiniz başarı ile elimize ulaştı. En kısa sürede asistanlarımız size ulaşacaktır.",
@@ -290,6 +296,8 @@
             "Add": "Ekle",
             "NoUsedDays": "Kullanım Dışı Günler",
             "ApproveRent": "Belirtilen Tarihler Dışında Kiralamayı Onaylıyorum",
+            "RentWholeYear": "Bütün Yıl Boyunca Kullanmayacağımı Belirtirim",
+            "Continue": "Devam",
             "Send": "Gönder",
             "ApproveSent": "Kiralama İzin İşleminiz kayda alınmıştır.",
             "RequestDate": "Talep Tarihi",
