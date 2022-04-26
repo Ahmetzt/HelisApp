@@ -135,7 +135,7 @@
 <style  lang="scss">
     .requestContainer {
         max-width: 94%;
-        margin: 3rem auto;
+        margin: 30px auto;
     }
 
     .NRmodal {  

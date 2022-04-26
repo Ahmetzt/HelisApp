@@ -1,7 +1,7 @@
 <template>
     <div class="request-container">
         <div v-if="!isSelected">
-            <img src="../../../../images/requests/jpg/assistant.jpg" alt="Asistan" class="listImage">
+            <img src="../../../../images/requests/jpg/assistant.jpg" alt="Asistan" class="requestImage">
                 
             <div class="formControl formAssistant" v-if="getAssistantType.length > 0" >
                 <button class="mybutton" v-for="assistant in getAssistantType" :key="assistant.AssistantTypeId" @click="AssistanSelected(assistant)">

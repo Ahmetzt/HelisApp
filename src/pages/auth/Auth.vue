@@ -1,8 +1,6 @@
 <template>
     <div class="container mt-5">
         <div class="authMain">
-            <hr>
-            
             <div class="loginLang">
                 <input 
                     type="radio" 
@@ -24,7 +22,6 @@
                 <label for="rd_en"><flag iso="gb" /></label>
                 
             </div>
-            <hr>
             <div v-if="!IsNew" >
                 <form @submit.prevent="onSubmit" class="loginForm">
                     <div class="loginForm-group">

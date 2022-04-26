@@ -188,7 +188,6 @@
                     })
             },
             SetPossessionType() {
-                // this.IsRentable = !this.IsRentable
                 this.$store.dispatch("SetPossessionType", (this.IsRentable ? 1 : 2))
                     .then(() => {
                         this.GetPropertyInfo()
@@ -223,7 +222,7 @@
                 this.NotPermittedDates = []
             },
             ApproveRentable() {
-                this.RentableBegin = 3
+                this.RentableBegin = 4
                 this.$store.dispatch("SetRentable", { ...this.NewRentable } )
                     .then(() => {
                         this.GetPropertyInfo()

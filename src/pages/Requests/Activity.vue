@@ -25,6 +25,16 @@
                 <div class="form-group formControl formControlFE">
                     <label class="formLabel"> 
                         <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
+                    <input 
+                        type="text" 
+                        class="form-control formElement"
+                        v-model="getSessionDetail.CurrentLocation"
+                        disabled>
+                </div>
+                
+                <!--<div class="form-group formControl formControlFE">
+                    <label class="formLabel"> 
+                        <i class="fa fa-map-marker-alt faclass fa-lg"></i> <strong>{{ $t('Request.label.toWhere') }}</strong> </label>
                     <select 
                         class="form-control formElement" 
                         v-model="$v.selectedLocation.$model" 
@@ -45,7 +55,7 @@
                             {{ $t('Request.warning.noLocation') }}
                         </small>
                     </div>
-                </div>
+                </div> -->
                 
                 <div class="formTwoCols">
                     <div class="form-group formControl formTwoCols-inner">
@@ -166,13 +176,13 @@
             }
         },
         validations: {
-            selectedLocation: {
-                required,
-                minValue: 0,
-                checked(val, vm) {
-                    return vm.selectedLocation === -1 ? false : true
-                }
-            },
+            // selectedLocation: {
+            //     required,
+            //     minValue: 0,
+            //     checked(val, vm) {
+            //         return vm.selectedLocation === -1 ? false : true
+            //     }
+            // },
             requestDate: {
                 required,
                 noPast(val) {
@@ -201,8 +211,7 @@
             eventBus.$off('returnBack');
         },
         computed: {
-            ...mapGetters(["getLocations"]),
-            ...mapGetters(["getActivityType"]),
+            ...mapGetters(["getLocations", "getActivityType", "getSessionDetail"]),
             visitorText() {
                 return (this.ActivityOrder.Adults > 0 ? " " + this.$t('Request.label.adult') + " " + this.ActivityOrder.Adults : "") + 
                     (this.ActivityOrder.Kids > 0 ? " " + this.$t('Request.label.kid') + " " + this.ActivityOrder.Kids : "")

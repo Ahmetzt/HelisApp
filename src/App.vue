@@ -68,6 +68,7 @@
     
     .rightFloat {
         float: right;
+        color: #fff !important;
     }
     
     .leftFloat {
@@ -96,7 +97,7 @@
         background: none;
         box-shadow: none;
         max-width: 94%;
-        margin: -85px auto 5px !important;
+        margin: 50px auto 5px !important;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -354,13 +355,12 @@
     .mybutton {
         background-size: cover;
         width: 49%;
-        // margin: 1%;
         border: none;
         padding: 0;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         background-color: white;
-        height: 22%;
-        aspect-ratio: 1 / 1;
+        // aspect-ratio: 1 / 1;
+        height: calc((100vh - 300px) / 4);
         justify-content: space-evenly;
         position: relative;
         display: inline-flex;
@@ -491,7 +491,7 @@
         margin: 50px 0;
 
         & > img {
-            width: 50%;
+            width: 30%;
         }
     }
 
