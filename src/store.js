@@ -155,73 +155,131 @@ const store = new Vuex.Store({
             i18n.locale =        locale
             commit("SetLanguage", locale)
         },
-        initAuth({ commit, dispatch, state }) {
-            let SessionKey = localStorage.getItem("Session")
-            if(SessionKey != null) {
-                return axios.get("Session/RenewSession?" + "SessionKey=" + SessionKey)
-                    .then(response => {
-                        state.isResult = false
+        async initAuth({ commit, dispatch, state }) {
+            try {
+                let SessionKey = localStorage.getItem("Session")
+                if(SessionKey != null) {
+                    const response = await axios.get("Session/RenewSession?" + "SessionKey=" + SessionKey)
+                    state.isResult = false
 
-                        if(response.data) {
-                            let SessionData = {}
-                            let data = response.data
-                            
-                            localStorage.setItem("RoleId", data.RoleId)
-                            localStorage.setItem("Session", data.Session)
-                            localStorage.setItem("UserId", data.UserId)
-                            localStorage.setItem("BookingId", data.BookingId)
-                            localStorage.setItem("PossessionId", data.PossessionId)
-                            localStorage.setItem("CurrentPossession", parseInt(data.BookingId) || parseInt(data.PossessionId))
-                            localStorage.setItem("CurrentLocation", data.CurrentLocation)
-                            localStorage.setItem("Lang", data.Lang)
+                    if(response.data) {
+                        let SessionData = {}
+                        let data = response.data
+                        
+                        localStorage.setItem("RoleId", data.RoleId)
+                        localStorage.setItem("Session", data.Session)
+                        localStorage.setItem("UserId", data.UserId)
+                        localStorage.setItem("BookingId", data.BookingId)
+                        localStorage.setItem("PossessionId", data.PossessionId)
+                        localStorage.setItem("CurrentPossession", parseInt(data.BookingId) || parseInt(data.PossessionId))
+                        localStorage.setItem("CurrentLocation", data.CurrentLocation)
+                        localStorage.setItem("Lang", data.Lang)
 
-                            SessionData.RoleId =            localStorage.getItem("RoleId")
-                            SessionData.Session =           localStorage.getItem("Session")
-                            SessionData.UserId =            localStorage.getItem("UserId")
-                            SessionData.BookingId =         localStorage.getItem("BookingId")
-                            SessionData.PossessionId =      localStorage.getItem("PossessionId")
-                            SessionData.CurrentPossession = parseInt(localStorage.getItem("BookingId")) || parseInt(localStorage.getItem("PossessionId"))
-                            SessionData.CurrentLocation =   localStorage.getItem("CurrentLocation")
-                            SessionData.Lang =              localStorage.getItem("Lang")
-                            i18n.locale =                   localStorage.getItem("Lang")
-                            
-                            commit("setSession", SessionData)
+                        SessionData.RoleId =            localStorage.getItem("RoleId")
+                        SessionData.Session =           localStorage.getItem("Session")
+                        SessionData.UserId =            localStorage.getItem("UserId")
+                        SessionData.BookingId =         localStorage.getItem("BookingId")
+                        SessionData.PossessionId =      localStorage.getItem("PossessionId")
+                        SessionData.CurrentPossession = parseInt(localStorage.getItem("BookingId")) || parseInt(localStorage.getItem("PossessionId"))
+                        SessionData.CurrentLocation =   localStorage.getItem("CurrentLocation")
+                        SessionData.Lang =              localStorage.getItem("Lang")
+                        i18n.locale =                   localStorage.getItem("Lang")
+                        
+                        commit("setSession", SessionData)
 
-                            dispatch("getLocationList")
-                            dispatch("getMansionList")
-                            dispatch("getAirportList")
-                            dispatch("getVehiclesList")
-                            dispatch("getRestaurantsList")
-                            dispatch("getActivityTypeList")
-                            dispatch("getAssistantTypeList")
-                            
-                            dispatch("SetLocale", localStorage.getItem("Lang"))
+                        dispatch("getLocationList")
+                        dispatch("getMansionList")
+                        dispatch("getAirportList")
+                        dispatch("getVehiclesList")
+                        dispatch("getRestaurantsList")
+                        dispatch("getActivityTypeList")
+                        dispatch("getAssistantTypeList")
+                        
+                        dispatch("SetLocale", localStorage.getItem("Lang"))
 
-                            // router.push("/")
-                            return true
-                        } else {
-                            router.push("/auth")
-                            commit("removeLocalStorage");
-                            dispatch("ListMansionsNS")
-                            return false
-                        }
+                        return true
+                    } else {
+                        router.push("/auth")
+                        commit("removeLocalStorage");
+                        dispatch("ListMansionsNS")
+                        return false
                     }
-                )
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
-            } else {
-                if (router.currentRoute.fullPath != "/auth") {
-                    router.push("/auth")
+                } else {
+                    if (router.currentRoute.fullPath != "/auth") {
+                        router.push("/auth")
+                    }
+                    dispatch("ListMansionsNS")
                 }
-                dispatch("ListMansionsNS")
+            } catch (error) {
+                dispatch("SetError", error)
             }
+
+            // let SessionKey = localStorage.getItem("Session")
+            // if(SessionKey != null) {
+            //     return axios.get("Session/RenewSession?" + "SessionKey=" + SessionKey)
+            //         .then(response => {
+            //             state.isResult = false
+
+            //             if(response.data) {
+            //                 let SessionData = {}
+            //                 let data = response.data
+                            
+            //                 localStorage.setItem("RoleId", data.RoleId)
+            //                 localStorage.setItem("Session", data.Session)
+            //                 localStorage.setItem("UserId", data.UserId)
+            //                 localStorage.setItem("BookingId", data.BookingId)
+            //                 localStorage.setItem("PossessionId", data.PossessionId)
+            //                 localStorage.setItem("CurrentPossession", parseInt(data.BookingId) || parseInt(data.PossessionId))
+            //                 localStorage.setItem("CurrentLocation", data.CurrentLocation)
+            //                 localStorage.setItem("Lang", data.Lang)
+
+            //                 SessionData.RoleId =            localStorage.getItem("RoleId")
+            //                 SessionData.Session =           localStorage.getItem("Session")
+            //                 SessionData.UserId =            localStorage.getItem("UserId")
+            //                 SessionData.BookingId =         localStorage.getItem("BookingId")
+            //                 SessionData.PossessionId =      localStorage.getItem("PossessionId")
+            //                 SessionData.CurrentPossession = parseInt(localStorage.getItem("BookingId")) || parseInt(localStorage.getItem("PossessionId"))
+            //                 SessionData.CurrentLocation =   localStorage.getItem("CurrentLocation")
+            //                 SessionData.Lang =              localStorage.getItem("Lang")
+            //                 i18n.locale =                   localStorage.getItem("Lang")
+                            
+            //                 commit("setSession", SessionData)
+
+            //                 dispatch("getLocationList")
+            //                 dispatch("getMansionList")
+            //                 dispatch("getAirportList")
+            //                 dispatch("getVehiclesList")
+            //                 dispatch("getRestaurantsList")
+            //                 dispatch("getActivityTypeList")
+            //                 dispatch("getAssistantTypeList")
+                            
+            //                 dispatch("SetLocale", localStorage.getItem("Lang"))
+
+            //                 // router.push("/")
+            //                 return true
+            //             } else {
+            //                 router.push("/auth")
+            //                 commit("removeLocalStorage");
+            //                 dispatch("ListMansionsNS")
+            //                 return false
+            //             }
+            //         }
+            //     )
+            //     .catch((error) => {
+            //         dispatch("SetError", error)
+            //     })
+            // } else {
+            //     if (router.currentRoute.fullPath != "/auth") {
+            //         router.push("/auth")
+            //     }
+            //     dispatch("ListMansionsNS")
+            // }
         },
-        login({ dispatch, commit }, authData) {
-            return axios.get("Session/UserLogin?" + "UserName=" + authData.email + "&Password=" + authData.password)
-                .then(response => {
-                let data = response.data;
-                
+        async login({ dispatch, commit }, authData) {
+            try {
+                const response = await axios.get("Session/UserLogin?" + "UserName=" + authData.email + "&Password=" + authData.password)
+                let data = response.data
+
                 if (data.UserId > 0) {
                     localStorage.setItem("RoleId", data.RoleId)
                     localStorage.setItem("Session", data.Session)
@@ -234,17 +292,16 @@ const store = new Vuex.Store({
                     commit("setSession", data)
                     router.push("/")
                 } else {
-                    commit("removeLocalStorage");
+                    commit("removeLocalStorage")
                 }
                 return response.data
-            })
-            .catch((error) => {
+            } catch (error) {
                 if (error.ErrorCode > -900) {
                     return error
                 } else {
                     dispatch("SetError", error)
                 }
-            })
+            }
         },
         logout({ commit, dispatch, state }) {
             axios.post("Session/Logout?SessionKey=" + state.SessionKey)
@@ -253,138 +310,127 @@ const store = new Vuex.Store({
             dispatch("ListMansionsNS")
             router.replace("/auth")
         },
-        sessionControl({ state, dispatch }) {
-            axios.get("Session/SessionUser?" + "SessionKey=" + state.SessionKey)
-                .then(response => {
-                    if(response.data) {
-                        return true
-                    } else {
-                        dispatch("logout")
-                    }
-                }
-            )
+        async sessionControl({ state, dispatch }) {
+            const response = await axios.get("Session/SessionUser?" + "SessionKey=" + state.SessionKey)
+            if (response.data) {
+                return true
+            } else {
+                dispatch("logout")
+            }
         },
-        getLocationList({ dispatch, commit, state }) {
+        async getLocationList({ dispatch, commit, state }) {
             //Lokasyon Verilerini yükle
-            axios.get("HelisData/ListLocations")
-            .then(response => {
+            try {
+                const response = await axios.get("HelisData/ListLocations")
                 state.locations = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateLocationList", data[key]);
+                    data[key].key = key
+                    commit("updateLocationList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getMansionList({ dispatch, commit, state }) {
+        async getMansionList({ dispatch, commit, state }) {
             //Proje Verilerini yükle
-            axios.get("Get/ListMansion")
-            .then(response => {
+            try {
+                const response = await axios.get("Get/ListMansion")
                 state.MansionList = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateMansionList", data[key]);
+                    data[key].key = key
+                    commit("updateMansionList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getAirportList({ dispatch, commit, state }) {
+        async getAirportList({ dispatch, commit, state }) {
             //Hava Alanı Verilerini yükle
-            axios.get("Get/ListAirports")
-            .then(response => {
+            try {
+                const response = await axios.get("Get/ListAirports")
                 state.airports = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateAirportList", data[key]);
+                    data[key].key = key
+                    commit("updateAirportList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getVehiclesList({ dispatch, commit, state }) {
-            axios.get("Module/ListVehicle")
-            .then(response => {
+        async getVehiclesList({ dispatch, commit, state }) {
+            try {
+                const response = await axios.get("Module/ListVehicle")
                 state.vehicles = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateVehiclesList", data[key]);
+                    data[key].key = key
+                    commit("updateVehiclesList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getRestaurantsList({ dispatch, commit, state }) {
-            axios.get("Module/ListRestaurant")
-            .then(response => {
+        async getRestaurantsList({ dispatch, commit, state }) {
+            try {
+                const response = await axios.get("Module/ListRestaurant")
                 state.restaurants = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateRestaurantsList", data[key]);
+                    data[key].key = key
+                    commit("updateRestaurantsList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getActivityTypeList({ dispatch, commit, state }) {
-            axios.get("Get/ListActivityType")
-            .then(response => {
+        async getActivityTypeList({ dispatch, commit, state }) {
+            try {
+                const response = await axios.get("Get/ListActivityType")
                 state.ActivityType = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateActivityTypeList", data[key]);
+                    data[key].key = key
+                    commit("updateActivityTypeList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getAssistantTypeList({ dispatch, commit, state }) {
-            axios.get("Get/ListAssistantType")
-            .then(response => {
+        async getAssistantTypeList({ dispatch, commit, state }) {
+            try {
+                const response = await axios.get("Get/ListAssistantType")
                 state.AssistantType = []
-                let data = response.data;
+                let data = response.data
                 for (let key in data) {
-                    data[key].key = key;
-                    commit("updateAssistantTypeList", data[key]);
+                    data[key].key = key
+                    commit("updateAssistantTypeList", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        getOrdersHistory({ commit, state, dispatch }, searchData) {
+        async getOrdersHistory({ commit, state, dispatch }, searchData) {
             //Talep Verilerini yükle
-            axios.get("Get/ListOrders?" + "OrderType=" + searchData.OrderType + "&BeginDate=" + searchData.BeginDate + 
-                "&EndDate=" + searchData.EndDate + "&OrderStatus=" + searchData.OrderStatus + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
+            try {
+                const response = await axios.get("Get/ListOrders?" + "OrderType=" + searchData.OrderType + "&BeginDate=" + searchData.BeginDate +
+                    "&EndDate=" + searchData.EndDate + "&OrderStatus=" + searchData.OrderStatus + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
                 state.Orders = []
-                let data = response.data;
-                
-                if(data.length > 0) {
+                let data = response.data
+
+                if (data.length > 0) {
                     for (let key in data) {
-                        data[key].key = key;
-                        commit("updateOrderList", data[key]);
+                        data[key].key = key
+                        commit("updateOrderList", data[key])
                     }
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
         setTimeoutTimer({dispatch}, expiresIn) {
             setTimeout(() => {
@@ -395,298 +441,273 @@ const store = new Vuex.Store({
             commit("updateResultText", text);
             router.replace("/result")
         },
-        setMansionSearch({ dispatch, commit, state, getters}, searchData) {
+        async setMansionSearch({ dispatch, commit, state, getters}, searchData) {
             //Hotel Verilerini çağır
             state.MansionList = []
-            axios.get("Set/ListMansions?" + "BeginDate=" + searchData.BeginDate + "&EndDate=" + searchData.EndDate + "&Adults=" + searchData.Adults + 
-                "&Kids=" + searchData.Kids + "&IlId=" + searchData.IlId + "&IlceId=" + searchData.IlceId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                    let data = response.data;
-                    for (let key in data) {
-                        commit("updateMansionList", data[key]);
-                    }
-                    
-                    state.selectedLocation.IlId = searchData.IlId
-                    state.selectedLocation.IlceId = searchData.IlceId
-                    return getters.getMansionsList
-            })
-            .catch((error) => {
+            try {
+                const response = await axios.get("Set/ListMansions?" + "BeginDate=" + searchData.BeginDate + "&EndDate=" + searchData.EndDate + "&Adults=" + searchData.Adults +
+                    "&Kids=" + searchData.Kids + "&IlId=" + searchData.IlId + "&IlceId=" + searchData.IlceId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+                for (let key in data) {
+                    commit("updateMansionList", data[key])
+                }
+
+                state.selectedLocation.IlId = searchData.IlId
+                state.selectedLocation.IlceId = searchData.IlceId
+                return getters.getMansionsList
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetMansionOrder({ state, dispatch }, MansionOrder) {
+        async SetMansionOrder({ state, dispatch }, MansionOrder) {
             //Hotel Seçili İsteği gönder
-            axios.post("Set/AddMansionOrder?" + "MansionId=" + MansionOrder.MansionId + "&BeginDate=" + MansionOrder.BeginDate + "&EndDate=" + MansionOrder.EndDate + 
-                "&Adults=" + MansionOrder.Adults + "&Kids=" + MansionOrder.Kids + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
-                
-                if(data > 0) {
+            try {
+                const response = await axios.post("Set/AddMansionOrder?" + "MansionId=" + MansionOrder.MansionId + "&BeginDate=" + MansionOrder.BeginDate + "&EndDate=" + MansionOrder.EndDate +
+                    "&Adults=" + MansionOrder.Adults + "&Kids=" + MansionOrder.Kids + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", MansionOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetTransferOrder({ state, dispatch }, TransferOrder) {
-            axios.post("Set/AddTransferOrder?" + "Description=" + TransferOrder.Description + "&AirportId=" + TransferOrder.AirportId + "&Adults=" + TransferOrder.Adults + 
-                "&Kids=" + TransferOrder.Kids + "&FromToType=" + TransferOrder.FromToType + "&RequestDate=" + TransferOrder.RequestDate + 
-                "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
+        async SetTransferOrder({ state, dispatch }, TransferOrder) {
+            try {
+                const response = await axios.post("Set/AddTransferOrder?" + "Description=" + TransferOrder.Description + "&AirportId=" + TransferOrder.AirportId + "&Adults=" + TransferOrder.Adults +
+                    "&Kids=" + TransferOrder.Kids + "&FromToType=" + TransferOrder.FromToType + "&RequestDate=" + TransferOrder.RequestDate +
+                    "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
 
-                if(data > 0) {
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", TransferOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetRentOrder({ state, dispatch }, RentOrder) {
-            axios.post("Set/AddRentOrder?" + "VehicleId=" + RentOrder.VehicleId + "&BeginDate=" + RentOrder.BeginDate + "&EndDate=" + RentOrder.EndDate + 
-                "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
-                
-                if(data > 0) {
+        async SetRentOrder({ state, dispatch }, RentOrder) {
+            try {
+                const response = await axios.post("Set/AddRentOrder?" + "VehicleId=" + RentOrder.VehicleId + "&BeginDate=" + RentOrder.BeginDate + "&EndDate=" + RentOrder.EndDate +
+                    "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", RentOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetRestaurantOrder({ state, dispatch }, RestaurantOrder) {
-            axios.post("Set/AddRestaurantOrder?" + "RestaurantId=" + RestaurantOrder.RestaurantId + "&RequestDate=" + RestaurantOrder.RequestDate + 
-                "&Adults=" + RestaurantOrder.Adults + "&Kids=" + RestaurantOrder.Kids + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
-                
-                if(data > 0) {
+        async SetRestaurantOrder({ state, dispatch }, RestaurantOrder) {
+            try {
+                const response = await axios.post("Set/AddRestaurantOrder?" + "RestaurantId=" + RestaurantOrder.RestaurantId + "&RequestDate=" + RestaurantOrder.RequestDate +
+                    "&Adults=" + RestaurantOrder.Adults + "&Kids=" + RestaurantOrder.Kids + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", RestaurantOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetActivityOrder({ state, dispatch }, ActivityOrder) {
-            axios.post("Set/AddActivityOrder?" + "ActivityTypeId=" + ActivityOrder.ActivityTypeId + "&IlId=" + ActivityOrder.IlId + "&IlceId=" + ActivityOrder.IlceId + 
-                "&RequestDate=" + ActivityOrder.RequestDate + "&Adults=" + ActivityOrder.Adults + "&Kids=" + ActivityOrder.Kids + "&PossessionId=" + state.CurrentPossession + 
-                "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
-                
-                if(data > 0) {
+        async SetActivityOrder({ state, dispatch }, ActivityOrder) {
+            try {
+                const response = await axios.post("Set/AddActivityOrder?" + "ActivityTypeId=" + ActivityOrder.ActivityTypeId + "&IlId=" + ActivityOrder.IlId + "&IlceId=" + ActivityOrder.IlceId +
+                    "&RequestDate=" + ActivityOrder.RequestDate + "&Adults=" + ActivityOrder.Adults + "&Kids=" + ActivityOrder.Kids + "&PossessionId=" + state.CurrentPossession +
+                    "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", ActivityOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetAssistantOrder({ state, dispatch }, AssistantOrder) {
-            axios.post("Set/AddAssistantOrder?" + "AssistantTypeId=" + AssistantOrder.AssistantTypeId + "&RequestDate=" + AssistantOrder.RequestDate + 
-                "&PossessionId=" + state.CurrentPossession + "&Note=" + AssistantOrder.Note + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
-                
-                if(data > 0) {
+        async SetAssistantOrder({ state, dispatch }, AssistantOrder) {
+            try {
+                const response = await axios.post("Set/AddAssistantOrder?" + "AssistantTypeId=" + AssistantOrder.AssistantTypeId + "&RequestDate=" + AssistantOrder.RequestDate +
+                    "&PossessionId=" + state.CurrentPossession + "&Note=" + AssistantOrder.Note + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", AssistantOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        SetCleanerOrder({ state, dispatch }, CleanerOrder) {
-            axios.post("Set/AddCleanerOrder?" + "WomanMan=" + CleanerOrder.WomanMan + "&HomeTextiles=" + CleanerOrder.HomeTextiles + "&ChildProduct=" + CleanerOrder.ChildProduct + 
-                "&RequestDate=" + CleanerOrder.RequestDate + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
-                let data = response.data;
-                
-                if(data > 0) {
+        async SetCleanerOrder({ state, dispatch }, CleanerOrder) {
+            try {
+                const response = await axios.post("Set/AddCleanerOrder?" + "WomanMan=" + CleanerOrder.WomanMan + "&HomeTextiles=" + CleanerOrder.HomeTextiles + "&ChildProduct=" + CleanerOrder.ChildProduct +
+                    "&RequestDate=" + CleanerOrder.RequestDate + "&PossessionId=" + state.CurrentPossession + "&UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
+                let data = response.data
+
+                if (data > 0) {
                     // return data
                     dispatch("resultRoute", CleanerOrder.ResultText)
                 } else {
-                    dispatch("sessionControl");
+                    dispatch("sessionControl")
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
         
-        Register({ dispatch }, registerData ) {
-            return axios.post("Session/Register?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 
-                "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + 
-                "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
-                "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId + 
-                "&BeginDate=" + registerData.BeginDate +"&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info + 
-                "&IsApproved=" + registerData.IsApproved + "&RegisterIP=" + registerData.RegisterIP)
-                .then((response) => {
-                    return response.data
-                })
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
-        },
-        RegisterSecondary({ dispatch, state }, registerData ) {
-            return axios.post("User/RegisterSecondary?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password + 
-                "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + 
-                "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
-                "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&SessionKey=" + state.SessionKey)
-            .then((response) => {
+        async Register({ dispatch }, registerData ) {
+            try {
+                const response = await axios.post("Session/Register?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password +
+                    "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName +
+                    "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address +
+                    "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&PossessionId=" + registerData.PossessionId +
+                    "&BeginDate=" + registerData.BeginDate + "&EndDate=" + registerData.EndDate + "&Info=" + registerData.Info +
+                    "&IsApproved=" + registerData.IsApproved + "&RegisterIP=" + registerData.RegisterIP)
                 return response.data
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        UpdateSecondary({ dispatch, state }, registerData ) {
-            return axios.post("User/UpdateSecondary?" + "&UserId=" + registerData.UserId + "&Password=" + registerData.Password + 
-                "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + "&Language=" + registerData.Language +
-                "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
-                "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&SessionKey=" + state.SessionKey)
-            .then((response) => {
+        async RegisterSecondary({ dispatch, state }, registerData ) {
+            try {
+                const response = await axios.post("User/RegisterSecondary?" + "UserName=" + registerData.UserName + "&Password=" + registerData.Password +
+                    "&Mail=" + registerData.Mail + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName +
+                    "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address +
+                    "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&SessionKey=" + state.SessionKey)
                 return response.data
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        ListSecondary({ dispatch, commit, state }) {
+        async UpdateSecondary({ dispatch, state }, registerData ) {
+            try {
+                const response = await axios.post("User/UpdateSecondary?" + "&UserId=" + registerData.UserId + "&Password=" + registerData.Password +
+                    "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + "&Language=" + registerData.Language +
+                    "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address +
+                    "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&SessionKey=" + state.SessionKey)
+                return response.data
+            } catch (error) {
+                dispatch("SetError", error)
+            }
+        },
+        async ListSecondary({ dispatch, commit, state }) {
             state.SecondaryList = []
-            axios.get("User/ListSecondary?" + "UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
-            .then(response => {
+            try {
+                const response = await axios.get("User/ListSecondary?" + "UserId=" + state.loginUserId + "&SessionKey=" + state.SessionKey)
                 let data = response.data
                 for (let key in data) {
-                    commit("updateSecondary", data[key]);
+                    commit("updateSecondary", data[key])
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        GetSelfInfo({ dispatch, state }) {
-            return axios.get("User/GetSelfInfo?" + "SessionKey=" + state.SessionKey)
-            .then((response) => {
+        async GetSelfInfo({ dispatch, state }) {
+            try {
+                const response = await axios.get("User/GetSelfInfo?" + "SessionKey=" + state.SessionKey)
                 return response.data
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
-        UpdateSelf({ dispatch, state }, registerData ) {
-            return axios.post("User/UpdateSelf?" + "Password=" + registerData.Password + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName + 
-                "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address + 
-                "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&SessionKey=" + state.SessionKey)
-            .then((response) => {
+        async UpdateSelf({ dispatch, state }, registerData ) {
+            try {
+                const response = await axios.post("User/UpdateSelf?" + "Password=" + registerData.Password + "&FirstName=" + registerData.FirstName + "&LastName=" + registerData.LastName +
+                    "&Language=" + registerData.Language + "&DateOfBirth=" + registerData.DateOfBirth + "&Address=" + registerData.Address +
+                    "&PhoneNumber=" + registerData.PhoneNumber + "&RoleId=" + registerData.RoleId + "&SessionKey=" + state.SessionKey)
                 return response.data
-            })
-            .catch((error) => {
+            } catch (error) {
                 dispatch("SetError", error)
-            })
+            }
         },
         
         //Mülk Sayfası
-        GetPropertyInfo({ dispatch, state }) {
-            return axios.get("Property/PropertyInfo?" + "PossessionId=" + state.PossessionId + "&SessionKey=" + state.SessionKey)
-                .then((response) => {
-                    return response.data
-                })
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
+        async GetPropertyInfo({ dispatch, state }) {
+            try {
+                const response = await axios.get("Property/PropertyInfo?" + "PossessionId=" + state.PossessionId + "&SessionKey=" + state.SessionKey)
+                return response.data
+            } catch (error) {
+                dispatch("SetError", error)
+            }
         },
-        GetBookingHistory({ dispatch, state }) {
-            return axios.get("Property/BookingHistory?" + "PossessionId=" + state.PossessionId + "&SessionKey=" + state.SessionKey)
-                .then((response) => {
-                    return response.data
-                })
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
+        async GetBookingHistory({ dispatch, state }) {
+            try {
+                const response = await axios.get("Property/BookingHistory?" + "PossessionId=" + state.PossessionId + "&SessionKey=" + state.SessionKey)
+                return response.data
+            } catch (error) {
+                dispatch("SetError", error)
+            }
         },
-        SetPossessionType({ dispatch, state }, PossessionType ) {
-            return axios.post("Property/SetPossessionType?" + "PossessionId=" + state.PossessionId + "&PossessionType=" + PossessionType + "&SessionKey=" + state.SessionKey)
-                .then((response) => {
-                    return response.data
-                })
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
+        async SetPossessionType({ dispatch, state }, PossessionType ) {
+            try {
+                const response = await axios.post("Property/SetPossessionType?" + "PossessionId=" + state.PossessionId + "&PossessionType=" + PossessionType + "&SessionKey=" + state.SessionKey)
+                return response.data
+            } catch (error) {
+                dispatch("SetError", error)
+            }
         },
-        GetRentableInfo({ dispatch, state }) {
-            return axios.get("Property/RentableInfo?" + "PossessionId=" + state.PossessionId + "&SessionKey=" + state.SessionKey)
-                .then((response) => {
-                    return response.data
-                })
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
+        async GetRentableInfo({ dispatch, state }) {
+            try {
+                const response = await axios.get("Property/RentableInfo?" + "PossessionId=" + state.PossessionId + "&SessionKey=" + state.SessionKey)
+                return response.data
+            } catch (error) {
+                dispatch("SetError", error)
+            }
         },
-        SetRentable({ dispatch, state }, RentData ) {
-            return axios.post("Property/AddRentable?" + "PossessionId=" + state.PossessionId + "&Year=" + RentData.Year + 
-                "&Info=" + RentData.Info + "&timeList=" + RentData.TimeList + "&SessionKey=" + state.SessionKey)
-                .then((response) => {
-                    return response.data
-                })
-                .catch((error) => {
-                    dispatch("SetError", error)
-                })
+        async SetRentable({ dispatch, state }, RentData ) {
+            try {
+                const response = await axios.post("Property/AddRentable?" + "PossessionId=" + state.PossessionId + "&Year=" + RentData.Year +
+                    "&Info=" + RentData.Info + "&timeList=" + RentData.TimeList + "&SessionKey=" + state.SessionKey)
+                return response.data
+            } catch (error) {
+                dispatch("SetError", error)
+            }
         },
 
         //No Session
-        ListMansionsNS({ commit, state }) {
-            axios.get("Property/ListMansionsNS")
-            .then(response => {
-                state.Mansions = []
-                let data = response.data;
-                for (let key in data) {
-                    commit("updateMansions", data[key]);
-                }
-            })
+        async ListMansionsNS({ commit, state }) {
+            const response = await axios.get("Property/ListMansionsNS")
+            state.Mansions = []
+            let data = response.data
+            for (let key in data) {
+                commit("updateMansions", data[key])
+            }
         },
-        ListBlocksNS({ commit, state }, MansionId) {
-            axios.get("Property/ListBlocksNS?MansionId=" + MansionId)
-            .then(response => {
-                state.Blocks = []
-                let data = response.data;
-                for (let key in data) {
-                    commit("updateBlocks", data[key]);
-                }
-            })
+        async ListBlocksNS({ commit, state }, MansionId) {
+            const response = await axios.get("Property/ListBlocksNS?MansionId=" + MansionId)
+            state.Blocks = []
+            let data = response.data
+            for (let key in data) {
+                commit("updateBlocks", data[key])
+            }
         },
-        ListPossessionsNS({ commit, state }, Payload) {
-            axios.get("Property/ListPossessionsNS?MansionId=" + Payload.MansionId + "&BlockId=" + Payload.BlockId)
-            .then(response => {
-                state.Possessions = []
-                let data = response.data;
-                for (let key in data) {
-                    commit("updatePossessions", data[key]);
-                }
-            })
+        async ListPossessionsNS({ commit, state }, Payload) {
+            const response = await axios.get("Property/ListPossessionsNS?MansionId=" + Payload.MansionId + "&BlockId=" + Payload.BlockId)
+            state.Possessions = []
+            let data = response.data
+            for (let key in data) {
+                commit("updatePossessions", data[key])
+            }
         },
 
         //Error Management

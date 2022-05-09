@@ -141,7 +141,7 @@
 
                 <div class="button-container d-flex  flex-column align-items-center buttonControl" @blur="$v.searchData.EndDate.$touch()">
                     <button type="submit" class="btn btn-block mb-2 button-yellow" @click="onSearched" :disabled="$v.$invalid">
-                        {{ $t('Request.label.hotelSearch') }}
+                        {{ $t('Request.label.newRequest') }}
                     </button>
                 </div>
             </div>

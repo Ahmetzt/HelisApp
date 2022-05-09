@@ -162,9 +162,9 @@
             "placeholder": "Rol Seçiniz"
         },
         "MansionId": {
-            "title": "Hotel:",
-            "placeholder": "Hotel Seçiniz",
-            "minValue": "Lütfen Otel Seçiniz"
+            "title": "Proje:",
+            "placeholder": "Proje Seçiniz",
+            "minValue": "Lütfen Proje Seçiniz"
         },
         "BlockId": {
             "title": "Blok:",

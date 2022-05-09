@@ -94,9 +94,6 @@
 
         "-900": "API error"
     },
-    "Login": {
-        "mail": "E-"
-    },
     "Auth": {
         "Lmail": {
             "title": "E-mail",
@@ -165,14 +162,14 @@
             "placeholder": "Enter Role"
         },
         "MansionId": {
-            "title": "Mansion:",
-            "placeholder": "Pick Mansion",
-            "minValue": "Please Pick Mansion"
+            "title": "Project:",
+            "placeholder": "Pick Project",
+            "minValue": "Please Pick Project"
         },
         "BlockId": {
-            "title": "Mansion:",
-            "placeholder": "Pick Mansion",
-            "minValue": "Please Pick Mansion"
+            "title": "Block:",
+            "placeholder": "Pick Block",
+            "minValue": "Please Pick Block"
         },
         "PossessionId": {
             "title": "Room:",
