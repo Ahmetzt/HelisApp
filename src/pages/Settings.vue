@@ -3,7 +3,7 @@
 
         <b-form @submit.prevent="onSubmit" class="formNew">
 
-            <b-form-group label="Dil:">
+            <b-form-group :label="$t('Auth.Language.title')">
                 <b-form-radio-group v-model="Form.Language" buttons button-variant="outline-info" size="lg" @input="setLanguage">
                     <b-form-radio size="xl" name="Lang" value="tr"><flag iso="tr" /></b-form-radio>
                     <b-form-radio size="xl" name="Lang" value="en"><flag iso="gb" /></b-form-radio>

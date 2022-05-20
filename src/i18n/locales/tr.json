@@ -198,6 +198,11 @@
         "Language": {
             "title": "Dil:"
         },
+        "Secondary": {
+            "Index": "Sıra",
+            "User": "Kullanıcı",
+            "Details": "İşlem"
+        },
         "submit": "Gönder",
         "reset": "Temizle",
         "cancel": "İptal",

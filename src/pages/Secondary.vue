@@ -163,6 +163,12 @@
             </div>
             <div v-else>
                 <b-table striped hover :items="getSecondary" :fields="fields" show-empty>
+                    <template #head()="scope">
+                        <div class="text-nowrap">
+                            {{ $t(`Auth.Secondary.${scope.label}`) }} 
+                        </div>
+                    </template>
+                    
                     <template #head(Details)="data">
                         <span>{{ data.label }}</span>
                         <b-button 
@@ -205,8 +211,8 @@
             return {
                 fields: [ 
                     'index',
-                    { key: 'FullName', label: 'Kullanıcı' },
-                    { key: 'Details', label: 'İşlem' }, 
+                    { key: 'FullName', label: 'User' },
+                    { key: 'Details', label: 'Details' }, 
                 ],
                 isNew: false,
                 isEdit: false,

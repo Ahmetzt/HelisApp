@@ -366,6 +366,7 @@
         display: inline-flex;
         flex-direction: column;
         align-items: center;
+        min-height: 350px;
     }
 
     .mybuttonGroup {

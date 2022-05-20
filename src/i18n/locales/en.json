@@ -198,6 +198,11 @@
         "Language": {
             "title": "Language:"
         },
+        "Secondary": {
+            "Index":"Index",
+            "User": "User",
+            "Details": "Details"
+        },
         "submit": "Send",
         "reset": "Clear",
         "cancel": "Cancel",
