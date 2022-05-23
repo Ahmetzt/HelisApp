@@ -17,7 +17,7 @@
                     <i class="fa fa-random faclass fa-lg"></i> <strong>{{ $t('Request.label.vehicleType') }}</strong> </label>
                 <label class="formRadio">
                     <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="1"/>
-                    <i class="fa fa-car faclass fa-lg"></i> {{ $t('Request.label.vehicle') }}
+                    <i class="fa fa-car faclass fa-lg"></i> {{ $t('Request.label.car') }}
                 </label>    
                 <label class="formRadio">
                     <input type="radio" name="VehicleType" v-model="VehicleType" @change="changeType" value="2"/>
@@ -27,16 +27,16 @@
             <div class="form-group formControl">
                 <label class="formLabel"> 
                     <span v-show="VehicleType == 2" ><i class="fa fa-ship faclass fa-lg"></i> <strong>{{ $t('Request.label.boat') }}</strong></span> 
-                    <span v-show="VehicleType == 1" ><i class="fa fa-car faclass fa-lg"></i> <strong>{{ $t('Request.label.vehicle') }}</strong></span>  </label>
+                    <span v-show="VehicleType == 1" ><i class="fa fa-car faclass fa-lg"></i> <strong>{{ $t('Request.label.car') }}</strong></span>  </label>
                 <select 
                     class="form-control formElement" 
                     v-model="$v.selectedVehicle.$model" 
                     @blur="$v.selectedVehicle.$touch()">
-                    <option selected disabled value=-1>{{ VehicleType == 1 ? $t('Request.placeholder.selectVehicle')  : VehicleType == 2 ? $t('Request.placeholder.selectBoat')  : '' }}</option>
+                    <option selected disabled value=-1>{{ VehicleType == 1 ? $t('Request.placeholder.selectCar')  : VehicleType == 2 ? $t('Request.placeholder.selectBoat')  : '' }}</option>
                     <option 
                         :disabled="vehicle.count == 0"
                         :value="vehicle.VehicleId"
-                        v-for="vehicle in getVehiclesByType(VehicleType == 1 ? 'Araç' : VehicleType == 2 ? 'Tekne' : '')"
+                        v-for="vehicle in getVehiclesByType(VehicleType == 1 ? 'Otomobil' : VehicleType == 2 ? 'Tekne' : '')"
                         :key="vehicle.VehicleId">
                         {{ vehicle.Model }}</option>
                 </select>

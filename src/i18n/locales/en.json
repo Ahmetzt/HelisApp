@@ -232,7 +232,7 @@
             "adultObliged": "At least 1 adult required",
             "noNote": "Please enter comment",
             "noProduct": "Please add minimum 1 product",
-            "noVehicle": "Please choose boat or vehicle",
+            "noVehicle": "Please choose boat or car",
             "noProject": "Please choose a project",
             "noRestaurantSelected": "Please choose a restaurant"
         },
@@ -260,7 +260,7 @@
             "productCP": "Child products",
             "location": "Location",
             "hotelSearch": "Search room",
-            "vehicle": "Vehicle",
+            "car": "Car",
             "boat": "Boat",
             "vehicleType": "Vehicle type",
             "mansion": "Project",
@@ -273,7 +273,7 @@
             "time": "Set Time",
             "people": "Select passenger",
             "note": "Write your comment",
-            "selectVehicle": "Vehicle",
+            "selectCar": "Car",
             "selectBoat": "Boat",
             "selectProject": "Select Project",
             "selectRestaurant": "Select Restaurant"
