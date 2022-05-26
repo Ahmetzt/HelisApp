@@ -199,17 +199,16 @@
                             id="select1"
                             v-model="Form.MansionId"
                             :state="$v.Form.MansionId.$dirty ? !$v.Form.MansionId.$anyError : null"
-                            @input="setMansion"
-                        >
+                            @input="setMansion">
                             <option selected disabled value="-1">{{ $t('Auth.MansionId.placeholder') }}</option>
                             <option v-for="Mansion in getMansions" :value="Mansion.MansionId" :key="Mansion.MansionId">{{ Mansion.Name }}
                             </option>
                         </b-form-select>
-                            <div v-if="$v.Form.MansionId.$dirty">
-                                <b-form-invalid-feedback v-if="!$v.Form.MansionId.minValue" :state="$v.Form.MansionId.minValue">
-                                    {{ $t('Auth.MansionId.minValue') }}
-                                </b-form-invalid-feedback>
-                            </div>
+                        <div v-if="$v.Form.MansionId.$dirty">
+                            <b-form-invalid-feedback v-if="!$v.Form.MansionId.minValue" :state="$v.Form.MansionId.minValue">
+                                {{ $t('Auth.MansionId.minValue') }}
+                            </b-form-invalid-feedback>
+                        </div>
                     </b-form-group>
 
                     <b-form-group 
@@ -220,18 +219,18 @@
                             id="select2"
                             v-model="Form.BlockId"
                             :state="$v.Form.BlockId.$dirty ? !$v.Form.BlockId.$anyError : null"
-                            @input="setBlock"
-                        >
+                            @input="setBlock">
                             <option selected disabled value="-1">{{ $t('Auth.BlockId.placeholder') }}</option>
                             <option v-for="Block in getBlocks" :value="Block.BlockId" :key="Block.BlockId">{{ Block.Name }}
                             </option>
                         </b-form-select>
-                            <div v-if="$v.Form.BlockId.$dirty">
-                                <b-form-invalid-feedback v-if="!$v.Form.BlockId.minValue" :state="$v.Form.BlockId.minValue">
-                                    {{ $t('Auth.BlockId.minValue') }}
-                                </b-form-invalid-feedback>
-                            </div>
+                        <div v-if="$v.Form.BlockId.$dirty">
+                            <b-form-invalid-feedback v-if="!$v.Form.BlockId.minValue" :state="$v.Form.BlockId.minValue">
+                                {{ $t('Auth.BlockId.minValue') }}
+                            </b-form-invalid-feedback>
+                        </div>
                     </b-form-group>
+                    
                     <b-form-group 
                         :label="$t('Auth.PossessionId.title')"
                         label-for="select3" 
@@ -241,17 +240,16 @@
                             id="select3"
                             v-model="Form.PossessionId"
                             :state="$v.Form.PossessionId.$dirty ? !$v.Form.PossessionId.$anyError : null"
-                            @input="$v.Form.PossessionId.$touch()"
-                        >
+                            @input="setRoom">
                             <option selected disabled value="-1">{{ $t('Auth.PossessionId.placeholder') }}</option>
                             <option v-for="Possession in getPossessions" :value="Possession.PossessionId" :key="Possession.PossessionId">{{ Possession.No }}
                             </option>
                         </b-form-select>
-                            <div v-if="$v.Form.PossessionId.$dirty">
-                                <b-form-invalid-feedback v-if="!$v.Form.PossessionId.minValue" :state="$v.Form.PossessionId.minValue">
-                                    {{ $t('Auth.PossessionId.minValue') }}
-                                </b-form-invalid-feedback>
-                            </div>
+                        <div v-if="$v.Form.PossessionId.$dirty">
+                            <b-form-invalid-feedback v-if="!$v.Form.PossessionId.minValue" :state="$v.Form.PossessionId.minValue">
+                                {{ $t('Auth.PossessionId.minValue') }}
+                            </b-form-invalid-feedback>
+                        </div>
                     </b-form-group>
                     
                     <b-form-group 
@@ -325,9 +323,7 @@
                 </b-form>
             </div>
         </div>
-        <!-- <div class="footerAuth">
-            <img src="../../../../images/logo/logoBlack.png" alt="Helis">
-        </div> -->
+        
         <Footer/>
     </div>
 </template>
@@ -525,6 +521,14 @@
                     .then(() => {
                         this.$v.Form.PossessionId.$reset()
                     })
+            },
+            setRoom() {
+                this.$v.Form.PossessionId.$touch()
+                this.$v.Form.BeginDate.$reset()
+                this.$v.Form.EndDate.$reset()
+
+                let Possession = this.$store.getters.getPossessions.find(x => x.PossessionId == this.Form.PossessionId)
+                this.IsDated = Possession.PossessionType == 4
             },
             onReset() {
                 this.IsBlocky = false

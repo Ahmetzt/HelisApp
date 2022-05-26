@@ -89,7 +89,7 @@
 
         "-300": "Bu sayfaya girmeye yetkiniz bulunmamaktadır",
 
-        "-500": "Belirtilen Tarih Aralığında Oda Kiralandı",
+        "-500": "Belirtilen Tarih Aralığında Daire Kiralandı",
         "-510": "Belirtilen Tarih Aralığında Mülk Kiralandı",
 
         "-900": "API hatası"
@@ -172,9 +172,9 @@
             "minValue": "Lütfen Blok Seçiniz"
         },
         "PossessionId": {
-            "title": "Oda No:",
-            "placeholder": "Oda No Seçiniz",
-            "minValue": "Lütfen Oda No Seçiniz"
+            "title": "Daire No:",
+            "placeholder": "Daire No Seçiniz",
+            "minValue": "Lütfen Daire No Seçiniz"
         },
         "BeginDate": {
             "title": "Giriş Tarihi:",
@@ -182,14 +182,14 @@
             "required": "Lütfen Giriş Tarihi Seçiniz",
             "dateMax": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
             "noPast": "Geçmiş Tarih Seçimi Yapılamaz",
-            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
+            "busyRoom": "Belirtilen Tarihler Arası Daire Müsaitliği Bulunmuyor"
         },
         "EndDate": {
             "title": "Çıkış Tarihi:",
             "placeholder": "Çıkış Tarihi Seçiniz",
             "required": "Lütfen Çıkış Tarihi Seçiniz",
             "dateMin": "Başlangıç Tarihi Bitiş Tarihinden Sonra Olamaz",
-            "busyRoom": "Belirtilen Tarihler Arası Oda Müsaitliği Bulunmuyor"
+            "busyRoom": "Belirtilen Tarihler Arası Daire Müsaitliği Bulunmuyor"
         },
         "IsApproved": {
             "title": "Şartları ve koşulları kabul ediyorum",
