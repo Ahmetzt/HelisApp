@@ -26,10 +26,7 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-Axios.defaults.baseURL = "http://192.168.10.71/HelisAppWebAPI/api"
-// Axios.defaults.baseURL = "https://testwebapi.helisapp.com/api"
-// Axios.defaults.baseURL = "http://192.168.1.63/HelisAppWebAPI/api"
-// Axios.defaults.baseURL = "http://192.168.1.39/HelisAppWebAPI/api"
+Axios.defaults.baseURL = "http://testServer/HotelAppWebAPI/api"
 
 export const eventBus = new Vue();
 
